@@ -1,0 +1,29 @@
+#!/bin/bash
+
+
+if [ $(grep -c "^uniclient:" /etc/passwd) -ne 0 ];
+then
+		echo "Not creating uniclient: user exists!"
+else
+	useradd -r uniclient;
+fi
+
+echo "DONE!";
+
+if [ $(grep -c "^uniclient:" /etc/group) -ne 0 ];
+then
+		echo "Not creating uniclient: group exists!"
+else
+	addgroup uniclient;
+	usermod -a -G uniclient uniclient;
+fi
+
+if [ $(id -nG $SUDO_USER | grep -c uniclient) -ne 0 ];
+then
+	echo "Not adding user to group: entry exists!"
+else
+	usermod -a -G uniclient $SUDO_USER;
+fi
+
+
+echo "DONE!";
