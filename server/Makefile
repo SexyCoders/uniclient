@@ -13,7 +13,7 @@ SHARED=./lib/shared/
 STATIC=./lib/static/
 CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I $(FUNCTION_DECLARATIONS)
 #LD_FLAGS=-shared -lstdc++ -shared-libgcc -lsqlite3 -lssl -lcrypto -L /usr/local/lib/ -ltime.cc 
-LD_FLAGS=-lstdc++ -shared-libgcc -lmariadb -L /usr/local/lib/ -ltime.cc 
+LD_FLAGS=-lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc 
 AR_FLAGS=rvs
 SHELL=/bin/bash
 PROFILE_D=/etc/profile.d/

@@ -2,6 +2,7 @@
 #include <database.h>
 #include <mariadb/mysql.h>
 #include <stdlib.h>
+#include <POST.h>
 
 int main()
 	{
@@ -23,4 +24,7 @@ int main()
 		//t->exec("INSERT INTO CUSTOMERS VALUES(1,'Γ.ΔΙΑΚΟΥΜΑΚΟΥ Κ ΣΙΑ Ε.Ε.','ΓΑΡΥΦΑΛΙΑ','ΔΙΑΚΟΥΜΑΚΟΥ',6932320122,'diakumakos@microsun.gr','ΣΕΛΕΓΟΥΔΙ, ΓΥΘΕΙΟ',23200,800091939,'SOME NOTES','3;14;4;21;13;31;12;','3;14;4;21;13;31;12;');");
 		//t->get("test",2,&C);
 		//t->put("test",&C);
+		char* response;
+		POST("localhost:56083/php/src/external.php","malakies",&response);
+		printf("%s\n",response);
 	}
