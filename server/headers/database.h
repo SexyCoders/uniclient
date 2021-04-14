@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <string.h>
 #include <string>
+#include <vector>
+#include <customer.h>
 
 #ifndef DATABASE_H
 #define DATABASE_H
@@ -38,8 +40,11 @@ class Database
                     free(this->passwd);
                     free(this->database);
                 }
+            int get(std::string param,unsigned int id,UniClient::Customer* out);
+            int put(std::string param,UniClient::Customer* in);
         //private:
             int exec(const char* SQL);
+            int exec(const char* SQL,std::vector<std::vector<std::string>>* out); 
             int exec(std::string SQL)
                 {
                     this->exec(SQL.c_str());

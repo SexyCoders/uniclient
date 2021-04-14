@@ -1,5 +1,6 @@
 #include <string>
 #include <uniclient.h>
+#include <my_time.h>
 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
@@ -20,8 +21,9 @@ class Customer
 			int zip;
 			std::string Notes;
 			int TIN;
+			Time added;
+			Time last_interaction;
 		public:
-			Customer();
 			Customer operator=(Customer src)
 				{
 					this->ID=src.ID;
@@ -34,6 +36,8 @@ class Customer
 					this->zip=src.zip;
 					this->TIN=src.TIN;
 					this->Notes=src.Notes;
+					this->added=src.added;
+					this->last_interaction=src.last_interaction;
 				return *this;
 				}
 
@@ -77,6 +81,14 @@ class Customer
 				{
 					this->TIN=tin;
 				}
+			void setAdded(Time time)
+				{
+					this->added=time;
+				}
+			void setLastInteraction(Time time)
+				{
+					this->last_interaction=time;
+				}
 
 
 
@@ -119,6 +131,14 @@ class Customer
 			int getTIN()
 				{
 					return this->TIN;
+				}
+			Time getAdded(void)
+				{
+					return this->added;
+				}
+			Time getLastInteraction(void)
+				{
+					return this->last_interaction;
 				}
 
 	};
