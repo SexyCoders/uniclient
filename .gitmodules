@@ -1,0 +1,6 @@
+[submodule "server/dep/curl-php"]
+	path = server/dep/curl-php
+	url = git@gitlab.com:sexycoders/curl-php.git
+[submodule "server/dep/PHP-CPP"]
+	path = server/dep/PHP-CPP
+	url = https://github.com/CopernicaMarketingSoftware/PHP-CPP.git

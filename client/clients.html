@@ -25,7 +25,7 @@
 
 </head>
 
-<body id="page-top">
+<body id="page-top" onload="handshake(window.system);">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
@@ -477,7 +477,16 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <!--libauth.js runtime-->
-    <script src="http://localhost:56082/lib/libauth-runtime.min.js">
+    <script src="http://localhost:56082/lib/libauth-runtime.min.js"></script>
+
+    <!--<script>-->
+        <!--window.addEventListener("SYSTEM_INIT",function(){-->
+        <!--handshake(system);-->
+        <!--var t=new Object();-->
+        <!--//t.t="test";-->
+        <!--//console.log(POST(window.system,t));-->
+        <!--});-->
+    <!--</script>-->
 
 </body>
 
