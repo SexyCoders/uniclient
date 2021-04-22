@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Tables</title>
+    <title>UniClient - Clients</title>
 
     <!-- Custom fonts for this template -->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -38,7 +38,7 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3">UniClient</div>
             </a>
 
             <!-- Divider -->
@@ -364,47 +364,65 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                    <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                        For more information about DataTables, please visit the <a target="_blank"
-                            href="https://datatables.net">official DataTables documentation</a>.</p>
+                    <h1 class="h3 mb-2 text-gray-800">Clients</h1>
+                    <!--<p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.-->
+                        <!--For more information about DataTables, please visit the <a target="_blank"-->
+                            <!--href="https://datatables.net">official DataTables documentation</a>.</p>-->
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
-                        <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
-                        </div>
+                        <!--<div class="card-header py-3">-->
+                            <!--<h6 class="m-0 font-weight-bold text-primary">Clients</h6>-->
+                        <!--</div>-->
                         <div class="card-body">
                             <div class="table-responsive">
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>ID</th>
+                                            <th>company</th>
+                                            <th>name</th>
+                                            <th>last name</th>
+                                            <th>phone</th>
+                                            <th>email</th>
+                                            <th>address</th>
+                                            <th>ZIP</th>
+                                            <th>TIN</th>
+                                            <th>notes</th>
+                                            <th>added</th>
+                                            <th>last seen</th>
                                         </tr>
                                     </thead>
                                     <tfoot>
                                         <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
-                                            <th>Salary</th>
+                                            <th>ID</th>
+                                            <th>company</th>
+                                            <th>name</th>
+                                            <th>last name</th>
+                                            <th>phone</th>
+                                            <th>email</th>
+                                            <th>address</th>
+                                            <th>ZIP</th>
+                                            <th>TIN</th>
+                                            <th>notes</th>
+                                            <th>added</th>
+                                            <th>last seen</th>
                                         </tr>
                                     </tfoot>
                                     <tbody onload="load_customers();">
                                         <tr>
-                                            <td>Donna Snider</td>
-                                            <td>Customer Support</td>
-                                            <td>New York</td>
-                                            <td>27</td>
-                                            <td>2011/01/25</td>
-                                            <td>$112,000</td>
+                                            <td>1892812</td>
+                                            <td>Γαρυφαλιά Διακουμάκου και Σωτήριος Διακουμάκος</td>
+                                            <td>Γαρυφαλιά</td>
+                                            <td>Διακουμάκου</td>
+                                            <td>+306932320122</td>
+                                            <td>info@microsun.gr</td>
+                                            <td>Σελεγούδι Λακωνίας</td>
+                                            <td>23200</td>
+                                            <td>998299283</td>
+                                            <td>TESTING</td>
+                                            <td>22-04-21</td>
+                                            <td>22-04-21</td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -422,7 +440,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2020</span>
+                        <span>Copyright &copy; SexyCoders 2021</span>
                     </div>
                 </div>
             </footer>
@@ -478,7 +496,7 @@
     <script src="js/demo/datatables-demo.js"></script>
 
     <!--libauth.js runtime-->
-    <script src="http://localhost:56082/lib/libauth-runtime.min.js"></script>
+    <!--<script src="http://localhost:56082/lib/libauth-runtime.min.js"></script>-->
 
 </body>
 
