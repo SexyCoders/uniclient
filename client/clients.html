@@ -493,16 +493,16 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <!--<script src="js/demo/datatables-demo.js"></script>-->
+    <script>
+        window.addEventListener("message",(event) => {
+                    console.log("test");
+});
+
+    </script>
 
     <!--libauth.js runtime-->
-    <script src="http://localhost:56082/lib/libauth-runtime.min.js"></script>
-    <!--<script>-->
-        <!--var url_string=window.location.href;-->
-        <!--var url = new URL(url_string);-->
-        <!--var token = url.searchParams.get("test");-->
-        <!--console.log("alskjhfbalksjdfblaksbf "+token);-->
-    <!--</script>-->
+    <!--<script src="http://auth.localhost/lib/libauth-runtime.min.js"></script>-->
 
 </body>
 
