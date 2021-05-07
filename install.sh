@@ -1,5 +1,5 @@
 #!/bin/bash
 
-cd ./install;
+cd ./etc/install;
 
 run-parts .;

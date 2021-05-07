@@ -32,5 +32,11 @@ else
 	usermod -a -G uniclient $SUDO_USER;
 fi
 
+if [ $(id -nG www-data | grep -c uniclient) -ne 0 ];
+then
+	echo "Not adding user www-data (apache) to group uniclient : entry exists!"
+else
+	usermod -a -G uniclient www-data;
+fi
 
 echo "DONE!";

@@ -2,7 +2,8 @@
 #include <database.h>
 #include <mariadb/mysql.h>
 #include <stdlib.h>
-#include <POST.h>
+#include <curl-php.h>
+//#include <POST.h>
 
 int main()
 	{

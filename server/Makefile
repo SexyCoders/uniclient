@@ -1,4 +1,4 @@
-NAME=UniClient
+NAME=libuniclient
 CC=gcc
 LD=gcc
 AR=ar
@@ -13,21 +13,21 @@ SHARED=./lib/shared/
 STATIC=./lib/static/
 CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I $(FUNCTION_DECLARATIONS)
 #LD_FLAGS=-shared -lstdc++ -shared-libgcc -lsqlite3 -lssl -lcrypto -L /usr/local/lib/ -ltime.cc 
-LD_FLAGS=-lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc 
+LD_FLAGS=-shared -lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php
 AR_FLAGS=rvs
 SHELL=/bin/bash
 PROFILE_D=/etc/profile.d/
-INCLUDE_PATH=/usr/local/include/libauthjs
-SCRIPT_NAME=libauthjs.sh
+INCLUDE_PATH=/usr/local/include/uniclient
+SCRIPT_NAME=uniclient.sh
 PHP=./php/
 
-PHP_NAME=libauth.php
+PHP_NAME=uniclient.php
 PHP_CC=gcc
 PHP_LD=gcc
 PHP_SOURCEDIR=./php/ext/
 PHP_OBJDIR=./php/obj/
 PHP_LIB=./php/lib/
-PHP_INI=./php/libauth.js.ini
+PHP_INI=./php/uniclient.ini
 PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I $(FUNCTION_DECLARATIONS)
 PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -L$(STATIC) -l:libauth.js.a -l:libtime.cc.a  
 #PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -l:libtime.cc.a  
@@ -43,7 +43,7 @@ all:build php
 
 build:
 	@echo "##########################################################";
-	@echo "Building libAuth.js library";
+	@echo "Building UniClient library";
 	@echo "##########################################################";
 	@if [ -f $(OBJDIR).lock ]; then \
 		echo "Removing objects from previous build"; \
@@ -56,9 +56,9 @@ build:
 		$(CC) "$$i"$(SOURCES) $(CC_FLAGS); \
 	done
 	@mv ./*.o $(OBJDIR);
-	#$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o $(SHARED)$(NAME);
-	$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o ./$(NAME);
-	#$(AR) $(AR_FLAGS) $(STATIC)$(NAME).a $(OBJDIR)$(OBJ);
+	$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o $(SHARED)$(NAME).so;
+	#$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o ./$(NAME);
+	$(AR) $(AR_FLAGS) $(STATIC)$(NAME).a $(OBJDIR)$(OBJ);
 	@touch $(OBJDIR).lock;
 	@echo "##########################################################";
 	@echo "Building lib DONE!";
@@ -90,27 +90,27 @@ build:
 	#@echo "##########################################################";
 	#@echo "##########################################################";
 
-#lib-install:
-	#@echo "##########################################################";
-	#@echo "Installing libauth.js libraries";
-	#@echo "##########################################################";
-	#@if [ "$$USER" != "root" ]; then \
-		#echo "Please run install as root! Aborting." >&2; \
-		#@echo "##########################################################"; \
-		#exit 1; \
-	#fi
-	#cp -v $(SHARED)* /usr/local/lib/;
-	#cp -v $(STATIC)* /usr/local/lib/;
-	#@if [ ! -d "$(INCLUDE_PATH)" ];then \
-	#mkdir -p $(INCLUDE_PATH); \
-	#fi
-	#cp -rv $(HEADDIR)* /usr/local/include/libauthjs;
-	#@echo "#!/bin/bash" > $(PROFILE_D)$(SCRIPT_NAME);
-	#@echo "export CPATH=\"/usr/local/include/libauthjs:/usr/local/include/libauthjs/functions:\$$CPATH\";" >> $(PROFILE_D)$(SCRIPT_NAME);
-	#@echo "##########################################################";
-	#@echo "libauth.js install successful!";
-	#@echo "PLEASE SOURCE THE PROFILE BEFORE USING!";
-	#@echo "##########################################################";
+lib-install:
+	@echo "##########################################################";
+	@echo "Installing uniclient libraries";
+	@echo "##########################################################";
+	@if [ "$$USER" != "root" ]; then \
+		echo "Please run install as root! Aborting." >&2; \
+		@echo "##########################################################"; \
+		exit 1; \
+	fi
+	cp -v $(SHARED)* /usr/local/lib/;
+	cp -v $(STATIC)* /usr/local/lib/;
+	@if [ ! -d "$(INCLUDE_PATH)" ];then \
+	mkdir -p $(INCLUDE_PATH); \
+	fi
+	cp -rv $(HEADDIR)* /usr/local/include/uniclient;
+	@echo "#!/bin/bash" > $(PROFILE_D)$(SCRIPT_NAME);
+	@echo "export CPATH=\"/usr/local/include/uniclient:\$$CPATH\";" >> $(PROFILE_D)$(SCRIPT_NAME);
+	@echo "##########################################################";
+	@echo "uniclient install successful!";
+	@echo "PLEASE SOURCE THE PROFILE BEFORE USING!";
+	@echo "##########################################################";
 
 #php-install:
 	#@echo "##########################################################";
@@ -123,7 +123,7 @@ build:
 	#@echo "##########################################################";
 
 #install:lib-install php-install
-#install:lib-install
+install:lib-install
 
 #clean:
 	#rm -fv $(OBJDIR)$(OBJ);

@@ -1,0 +1,15 @@
+#!/bin/bash
+
+NAME=a0-user-group
+RC_LINK=../rc/$NAME;
+if ! [ -L "$RC_LINK" ];
+ then
+ ln -s ../install/$NAME $RC_LINK;
+fi
+
+NAME=z8-generate-rc3
+RC_LINK=../rc/$NAME;
+if ! [ -L "$RC_LINK" ];
+ then
+ ln -s ../install/$NAME $RC_LINK;
+fi
