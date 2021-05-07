@@ -494,15 +494,18 @@
 
     <!-- Page level custom scripts -->
     <!--<script src="js/demo/datatables-demo.js"></script>-->
-    <script>
-        window.addEventListener("message",(event) => {
-                    console.log("test");
-});
+    <!--<script defer >-->
+    <!--window.addEventListener('message', messageListener, false);-->
 
-    </script>
+    <!--function messageListener(event) {-->
+        <!--console.log(event.data);-->
+    <!--}-->
+
+    <!--window.opener.postMessage('MOVE_READY_SIG','*');-->
+    <!--</script>-->
 
     <!--libauth.js runtime-->
-    <!--<script src="http://auth.localhost/lib/libauth-runtime.min.js"></script>-->
+    <script src="http://auth.localhost/lib/libauth-runtime.min.js"></script>
 
 </body>
 

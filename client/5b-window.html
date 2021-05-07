@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="author" content="SexyCoders">
+  <link rel="shortcut icon" href="visual/img/logo.png">
+
+  <title>Sexy Coders SSO - Login</title>
+
+</head>
+<body>
+<script>
+  function test(){
+      console.log("TESTING");
+
+      console.log(first); // Foo Bar
+  console.log(second); // ["Hello", "World"]
+    };
+ 
+  window.addEventListener("SYSTEM_MOVE",function(){
+        //const sys = new Event('SSH_INIT');
+        //window.dispatchEvent(sys);
+        test();
+    });
+ //
+ // window.addEventListener("SSH_INIT",function(){
+ //       handshake(system);
+ //   });
+    window.addEventListener('message', messageListener, false);
+
+    function messageListener(event) {
+        console.log(event.data);
+    }
+
+    window.opener.postMessage('MOVE_READY_SIG','*');
+
+
+</script>
+
+  <!--runtime libs-->
+  <script src="lib/libauth-runtime.min.js"></script>
+</body>
+</html>
