@@ -1,38 +1,50 @@
+#shell/makefile info
+SHELL=/bin/bash
 NAME=libuniclient
+
+#declare compiler and linker
 CC=gcc
 LD=gcc
 AR=ar
-SOURCEDIR=./sources/
+
+#helper vars to not use full path every time
+#ALL PATHS STILL START FROM ROOT THIS IS JUST FOR EASE OF ACCESS
+#as you can propably see they work recursively so changing one of them 
+#is sufficient to change all sub-variables
+ROOT=$(realpath $(dir $(lastword $(MAKEFILE_LIST))))
+VAR=$(ROOT)/var
+TMP=$(VAR)/tmp
+LOCAL=$(ROOT)/local
+SOURCEDIR=$(LOCAL)/src/c++
+HEADDIR=$(LOCAL)/include
+OBJDIR=$(TMP)/objects
+LIB=$(LOCAL)/lib
+
+#declare sources
 SOURCES=*.cc
 C_SOURCES=*.c
-HEADDIR=./headers/
-FUNCTION_DECLARATIONS=./headers/functions/
-OBJDIR=./objects/
 OBJ=*.o
-SHARED=./lib/shared/
-STATIC=./lib/static/
-CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I $(FUNCTION_DECLARATIONS)
-#LD_FLAGS=-shared -lstdc++ -shared-libgcc -lsqlite3 -lssl -lcrypto -L /usr/local/lib/ -ltime.cc 
+
+#declare flags
+CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR)
 LD_FLAGS=-shared -lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php
 AR_FLAGS=rvs
-SHELL=/bin/bash
-PROFILE_D=/etc/profile.d/
+
+#system config
+PROFILE_D=/etc/profile.d
 INCLUDE_PATH=/usr/local/include/uniclient
 SCRIPT_NAME=uniclient.sh
 PHP=./php/
 
+#php extension compile parameter config
 PHP_NAME=uniclient.php
-PHP_CC=gcc
-PHP_LD=gcc
 PHP_SOURCEDIR=./php/ext/
-PHP_OBJDIR=./php/obj/
-PHP_LIB=./php/lib/
-PHP_INI=./php/uniclient.ini
-PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I $(FUNCTION_DECLARATIONS)
-PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -L$(STATIC) -l:libauth.js.a -l:libtime.cc.a  
-#PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -l:libtime.cc.a  
-PHP_SHELL=/bin/bash
-PHP_SYS_INI_DIR=/etc/php/7.4/cli/conf.d
+PHP_OBJDIR=$(TMP)/php_obj/
+PHP_INI=uniclient.ini
+PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR)
+PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -L$(LIB) -l:libuniclient.a -l:libtime.cc.a  
+PHP_CLI_INI_DIR=/etc/php/7.4/cli/conf.d
+PHP_APACHE2_INI_DIR=/etc/php/7.4/apache2/conf.d
 PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
 
 .PHONY:php
@@ -56,16 +68,14 @@ build:
 		$(CC) "$$i"$(SOURCES) $(CC_FLAGS); \
 	done
 	@mv ./*.o $(OBJDIR);
-	$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o $(SHARED)$(NAME).so;
+	$(LD) $(OBJDIR)/$(OBJ) $(LD_FLAGS) -o $(LIB)/$(NAME).so;
 	#$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o ./$(NAME);
-	$(AR) $(AR_FLAGS) $(STATIC)$(NAME).a $(OBJDIR)$(OBJ);
+	$(AR) $(AR_FLAGS) $(LIB)/$(NAME).a $(OBJDIR)/$(OBJ);
 	@touch $(OBJDIR).lock;
 	@echo "##########################################################";
 	@echo "Building lib DONE!";
 	@echo "Shared and static libs located under lib directory.";
 	@echo "To install system-wide use 'make install' as root";
-	@echo "CAUTION:This does not install the full service! This is just the lib installer!";
-	@echo "To install the full service please run the install bash script located in the root dir of the project";
 	@echo "##########################################################";
 
 #php:
@@ -99,28 +109,28 @@ lib-install:
 		@echo "##########################################################"; \
 		exit 1; \
 	fi
-	cp -v $(SHARED)* /usr/local/lib/;
-	cp -v $(STATIC)* /usr/local/lib/;
+	cp -v $(LIB)* /usr/local/lib/;
 	@if [ ! -d "$(INCLUDE_PATH)" ];then \
 	mkdir -p $(INCLUDE_PATH); \
 	fi
 	cp -rv $(HEADDIR)* /usr/local/include/uniclient;
-	@echo "#!/bin/bash" > $(PROFILE_D)$(SCRIPT_NAME);
-	@echo "export CPATH=\"/usr/local/include/uniclient:\$$CPATH\";" >> $(PROFILE_D)$(SCRIPT_NAME);
+	@echo "#!/bin/bash" > $(PROFILE_D)/$(SCRIPT_NAME);
+	@echo "export CPATH=\"/usr/local/include/uniclient:\$$CPATH\";" >> $(PROFILE_D)/$(SCRIPT_NAME);
 	@echo "##########################################################";
 	@echo "uniclient install successful!";
 	@echo "PLEASE SOURCE THE PROFILE BEFORE USING!";
 	@echo "##########################################################";
 
-#php-install:
-	#@echo "##########################################################";
-	#@echo "Installing the php extension for libauth.js";
-	#@echo "##########################################################";
-	#cp -v $(PHP_LIB)/* $(PHP_SYS_EXTENSION_DIR);
-	#cp -v $(PHP_INI) $(PHP_SYS_INI_DIR); 
-	#@echo "##########################################################";
-	#@echo "DONE!";
-	#@echo "##########################################################";
+php-install:
+	@echo "##########################################################";
+	@echo "Installing the php extension for libauth.js";
+	@echo "##########################################################";
+	cp -v $(PHP_LIB)/* $(PHP_SYS_EXTENSION_DIR);
+	echo "extension=$(PHP_NAME).so" > $(PHP_CLI_INI_DIR); 
+	echo "extension=$(PHP_NAME).so" > $(PHP_APACHE2_INI_DIR); 
+	@echo "##########################################################";
+	@echo "DONE!";
+	@echo "##########################################################";
 
 #install:lib-install php-install
 install:lib-install

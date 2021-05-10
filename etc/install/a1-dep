@@ -1,9 +1,0 @@
-#!/bin/bash
-
-cd ../../server/dep/curl-php;
-make && make install;
-
-cd ../PHP-CPP;
-make && make install;
-
-cd ../../../etc/install;
