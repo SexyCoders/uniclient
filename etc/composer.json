@@ -32,7 +32,6 @@
         "mollie/polyfill-libsodium": "^1.1"
     },
     "require-dev": {
-        "concurrent-php/async-api": "dev-master",
         "friendsofphp/php-cs-fixer": "^2.2",
         "php-http/client-integration-tests": "dev-master",
         "php-http/message": "^1.0",

@@ -13,15 +13,3 @@ ROOT=$DIR/..
 cd $ROOT/etc/install.d;
 
 run-parts .;
-
-cd $ROOT/etc;
-
-npm install;
-
-mv $ROOT/etc/node_modules $ROOT/lib/;
-
-cd $ROOT/var/slim;
-
-composer install;
-
-mv $ROOT/var/slim/vendor $ROOT/lib/;
