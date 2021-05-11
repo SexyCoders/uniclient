@@ -20,4 +20,7 @@ require "$conf->root/etc/php/routes.php";
 
  //Run app
 //$app->run();
+
+$t=new PhpUniClientObject;
+
 ?>

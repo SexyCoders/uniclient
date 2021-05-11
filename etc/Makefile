@@ -16,9 +16,11 @@ VAR=$(ROOT)/var
 TMP=$(VAR)/tmp
 LOCAL=$(ROOT)/local
 SOURCEDIR=$(LOCAL)/src/c++
+PHPFILE=$(LOCAL)/src/export.cc
 HEADDIR=$(LOCAL)/include
 OBJDIR=$(TMP)/objects
 LIB=$(LOCAL)/lib
+TESTDIR=$(TMP)/test
 
 #declare sources
 SOURCES=*.cc
@@ -27,7 +29,8 @@ OBJ=*.o
 
 #declare flags
 CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR)
-LD_FLAGS=-shared -lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php
+LD_FLAGS=-shared -lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php -luniclient
+LD_TESTS=-lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php -luniclient
 AR_FLAGS=rvs
 
 #system config
@@ -38,7 +41,7 @@ PHP=./php/
 
 #php extension compile parameter config
 PHP_NAME=uniclient.php
-PHP_SOURCEDIR=./php/ext/
+PHP_SOURCEDIR=$
 PHP_OBJDIR=$(TMP)/php_obj/
 PHP_INI=uniclient.ini
 PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR)
@@ -59,7 +62,7 @@ build:
 	@echo "##########################################################";
 	@if [ -f $(OBJDIR).lock ]; then \
 		echo "Removing objects from previous build"; \
-		rm -f $(OBJDIR)*; \
+		rm -f $(OBJDIR)/*; \
 		rm -f $(OBJDIR).lock; \
 	fi
 	@for i in $(SOURCEDIR)/*/; \
@@ -78,27 +81,27 @@ build:
 	@echo "To install system-wide use 'make install' as root";
 	@echo "##########################################################";
 
-#php:
-	#@echo "##########################################################";
-	#@echo "##########################################################";
-	#@echo "Building PHP extension for LibAuth.js server";
-	#@echo "##########################################################";
-	#@if [ -f $(PHP_OBJDIR).lock ]; then \
-		#echo "Removing objects from previous build"; \
-		#rm -f $(PHP_OBJDIR)*; \
-		#rm -f $(PHP_OBJDIR).lock; \
-	#fi
-	#$(PHP_CC) $(PHP_SOURCEDIR)$(SOURCES) $(PHP_C_FLAGS);
-	#@mv ./*.o $(PHP_OBJDIR);
-	#$(PHP_LD) $(PHP_OBJDIR)$(OBJ) ./lib/static/libauth.js.a  $(PHP_LD_FLAGS) -o $(PHP_LIB)$(PHP_NAME).so;
-	#@touch $(PHP_OBJDIR).lock;
-	#@echo "##########################################################";
-	#@echo "Done building LibAuth.js php extension!";
-	#@echo "##########################################################";
-	#@echo "Libs are located in the lib directory.";
-	#@echo "To install system-wide use 'make install' as root.";
-	#@echo "##########################################################";
-	#@echo "##########################################################";
+php:
+	@echo "##########################################################";
+	@echo "##########################################################";
+	@echo "Building PHP extension for LibAuth.js server";
+	@echo "##########################################################";
+	@if [ -f $(OBJDIR)/.lock ]; then \
+		echo "Removing objects from previous build"; \
+		rm -f $(OBJDIR)/*; \
+		rm -f $(OBJDIR)/.lock; \
+	fi
+	$(CC) $(PHPFILE) $(PHP_C_FLAGS);
+	@mv ./*.o $(OBJDIR);
+	$(LD) $(OBJDIR)/$(OBJ) -l:libauth.js.a  $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
+	@touch $(OBJDIR).lock;
+	@echo "##########################################################";
+	@echo "Done building LibAuth.js php extension!";
+	@echo "##########################################################";
+	@echo "Libs are located in the lib directory.";
+	@echo "To install system-wide use 'make install' as root.";
+	@echo "##########################################################";
+	@echo "##########################################################";
 
 lib-install:
 	@echo "##########################################################";
@@ -109,11 +112,13 @@ lib-install:
 		@echo "##########################################################"; \
 		exit 1; \
 	fi
-	cp -v $(LIB)* /usr/local/lib/;
+	cp -v $(LIB)/uniclient.php.so /usr/local/lib/;
+	cp -v $(LIB)/libuniclient.so /usr/local/lib/;
+	cp -v $(LIB)/libuniclient.a /usr/local/lib/;
 	@if [ ! -d "$(INCLUDE_PATH)" ];then \
 	mkdir -p $(INCLUDE_PATH); \
 	fi
-	cp -rv $(HEADDIR)* /usr/local/include/uniclient;
+	cp -rv $(HEADDIR)/* $(INCLUDE_PATH);
 	@echo "#!/bin/bash" > $(PROFILE_D)/$(SCRIPT_NAME);
 	@echo "export CPATH=\"/usr/local/include/uniclient:\$$CPATH\";" >> $(PROFILE_D)/$(SCRIPT_NAME);
 	@echo "##########################################################";
@@ -135,7 +140,7 @@ php-install:
 #install:lib-install php-install
 install:lib-install
 
-#clean:
+clean:
 	#rm -fv $(OBJDIR)$(OBJ);
 	#rm -fv $(PHP_OBJDIR)$(OBJ);
 	#rm -fv $(STATIC)*;
@@ -145,3 +150,28 @@ install:lib-install
 	#rm -fv $(PHP_SYS_INI_DIR)$(PHP_INI);
 	#rm -rf $(INCLUDE_PATH);
 	#rm -fv $(PROFILE_D)$(SCRIPT_NAME);
+
+test: build
+	@echo "##########################################################";
+	@echo "Compiling tests for UniClient";
+	@echo "##########################################################";
+	@if [ -f $(OBJDIR).lock ]; then \
+		echo "Removing objects from previous build"; \
+		rm -f $(OBJDIR)/*; \
+		rm -f $(OBJDIR).lock; \
+	fi
+	@for i in $(TESTDIR)/*; \
+	do \
+		CUR_SOURCE=`echo $$i | awk -F" +|/" '{print $$NF}'`; \
+		CUR_NAME=`echo $$CUR_SOURCE | awk -F"." '{print $$1}'`; \
+		echo $$CUR_SOURCE; \
+		echo $$CUR_NAME; \
+		echo "making $$CUR_NAME test"; \
+		$(CC) "$$i" $(CC_FLAGS) -o $$CUR_NAME.o; \
+		mv $$CUR_NAME.o $(OBJDIR); \
+		$(LD) $(OBJDIR)/$$CUR_NAME.o $(LD_TESTS) -o $(TMP)/bin/$$CUR_NAME; \
+	done
+	@touch $(OBJDIR).lock;
+	@echo "##########################################################";
+	@echo "building tests done!";
+	@echo "##########################################################";

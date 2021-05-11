@@ -8,8 +8,11 @@ int UniClient::Database::exec(const char* SQL,std::vector<std::vector<std::strin
 	{
 		MYSQL *conn;
 		conn = mysql_init(NULL);
+		char* buffer=(char*)malloc(2*strlen(SQL)*sizeof(char));
 		mysql_real_connect(conn,this->host,this->user,this->passwd,this->database,0,NULL,0);
-		mysql_real_query(conn,SQL,strlen(SQL));
+		mysql_real_escape_string(conn,buffer,SQL,strlen(SQL));
+		mysql_real_query(conn,buffer,strlen(buffer));
+		free(buffer);
 		MYSQL_RES* result = mysql_store_result(conn);
 		MYSQL_ROW t;
 		int count=mysql_num_rows(result);
@@ -36,8 +39,11 @@ int UniClient::Database::exec(const char* SQL)
 	{
 		MYSQL *conn;
 		conn = mysql_init(NULL);
+		char* buffer=(char*)malloc(2*strlen(SQL)*sizeof(char));
 		mysql_real_connect(conn,this->host,this->user,this->passwd,this->database,0,NULL,0);
-		mysql_real_query(conn,SQL,strlen(SQL));
+		mysql_real_escape_string(conn,buffer,SQL,strlen(SQL));
+		mysql_real_query(conn,buffer,strlen(buffer));
+		free(buffer);
 		mysql_close(conn);
 	return 0;
 	}
