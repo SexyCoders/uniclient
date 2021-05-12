@@ -181,6 +181,7 @@ Mkfile.old
 dkms.conf
 
 composer.phar
+local/lib/vendor/
 vendor/
 vendor.old/
 

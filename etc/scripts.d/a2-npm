@@ -14,7 +14,7 @@ cd $ROOT/etc;
 
 npm install;
 
-if [! -d $ROOT/lib/node_modules ];then
+if [ ! -d $ROOT/lib/node_modules ]; then
 	mv $ROOT/etc/node_modules $ROOT/local/lib/node_modules;
-	ln -s $ROOT/etc/node_modules $ROOT/lib/node_modules;
+	ln -s $ROOT/lib/node_modules $ROOT/etc/node_modules;
 fi

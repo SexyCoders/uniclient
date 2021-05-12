@@ -1,54 +1,70 @@
 {
-    "title": "SB Admin 2",
-    "name": "startbootstrap-sb-admin-2",
-    "version": "4.1.3",
-    "scripts": {
-        "start": "node_modules/.bin/gulp watch"
+  "name": "uniclient",
+  "version": "0.0.1",
+  "private": true,
+  "description": "A client and billing management application that directly connects to sexy coders accounting platform.",
+  "author": {
+    "name": "Shane"
+  },
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint"
+  },
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "5.15.1",
+    "core-js": "^3.6.5",
+    "jquery": "^3.6.0",
+    "vue": "^3.0.4",
+    "vue-plugin-load-script": "^1.3.2"
+  },
+  "devDependencies": {
+    "@vue/cli": "^4.5.13",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-eslint": "^4.5.13",
+    "@vue/cli-service": "~4.5.0",
+    "@vue/compiler-sfc": "^3.0.4",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^6.7.2",
+    "eslint-plugin-vue": "^7.0.0"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
     },
-    "description": "An open source Bootstrap 4 admin theme.",
-    "keywords": [
-        "css",
-        "sass",
-        "html",
-        "responsive",
-        "theme",
-        "template",
-        "admin",
-        "app"
+    "extends": [
+      "plugin:vue/essential",
+      "eslint:recommended",
+      "plugin:vue/vue3-essential"
     ],
-    "homepage": "https://startbootstrap.com/theme/sb-admin-2",
-    "bugs": {
-        "url": "https://github.com/StartBootstrap/startbootstrap-sb-admin-2/issues",
-        "email": "feedback@startbootstrap.com"
-    },
-    "license": "MIT",
-    "author": "Start Bootstrap",
-    "contributors": [
-        "David Miller (https://davidmiller.io/)"
-    ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git"
-    },
-    "dependencies": {
-        "@fortawesome/fontawesome-free": "5.15.1",
-        "bootstrap": "4.5.3",
-        "chart.js": "2.9.4",
-        "datatables.net-bs4": "1.10.22",
-        "jquery": "3.5.1",
-        "jquery.easing": "^1.4.1"
-    },
-    "devDependencies": {
-        "browser-sync": "^2.26.14",
-        "del": "6.0.0",
-        "gulp": "4.0.2",
-        "gulp-autoprefixer": "7.0.1",
-        "gulp-clean-css": "4.3.0",
-        "gulp-header": "2.0.9",
-        "gulp-plumber": "^1.2.1",
-        "gulp-rename": "2.0.0",
-        "gulp-sass": "4.1.0",
-        "gulp-uglify": "3.0.2",
-        "merge-stream": "2.0.0"
+    "rules": {},
+    "parserOptions": {
+      "parser": "babel-eslint"
     }
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8",
+    "not dead"
+  ],
+  "_id": "uniclient@0.0.1",
+  "bugs": {
+    "url": "https://gitlab.com/sexycoders/uniclient/issues"
+  },
+  "homepage": "https://gitlab.com/sexycoders/uniclient#readme",
+  "keywords": [
+    "accounting",
+    "clients",
+    "product",
+    "management"
+  ],
+  "license": "GPL-3.0-or-later",
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/sexycoders/uniclient.git"
+  },
+  "title": "UniClient"
 }

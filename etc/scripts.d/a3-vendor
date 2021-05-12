@@ -12,9 +12,9 @@ ROOT=$DIR/../..
 
 cd $ROOT/etc;
 
-composer install;
+composer install --no-plugins --no-scripts;
 
-if [ ! -d $ROOT/lib/vendor ];then
+if [ ! -d $ROOT/lib/vendor ]; then
 	mv $ROOT/etc/vendor $ROOT/local/lib/vendor;
-	ln -s $ROOT/etc/vendor $ROOT/lib/vendor;
+	ln -s $ROOT/lib/vendor $ROOT/etc/vendor;
 fi
