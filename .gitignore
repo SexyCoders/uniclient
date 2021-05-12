@@ -91,7 +91,7 @@ package-lock.json
 ###########################################################
 
 # Prerequisites
-*.d
+#*.d
 
 # Compiled Object files
 *.slo
@@ -128,7 +128,7 @@ package-lock.json
 ###########################################################
 
 # Prerequisites
-*.d
+#*.d
 
 # Object files
 *.o
