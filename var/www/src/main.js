@@ -1,8 +1,11 @@
-import { createApp } from 'vue'
-import App from './App.vue'
-import $ from "jquery"
-import './index.css'
+import App from './App.vue';
+import { createApp } from 'vue';
+import './index.css';
+import LoadScript from "vue-plugin-load-script";
 
-require("../../lib/js/sb-admin-2.min.js");
 
-createApp(App).mount('#app')
+const app=createApp(App);
+app.use(LoadScript);
+
+
+app.mount('#app');

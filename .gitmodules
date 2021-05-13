@@ -4,3 +4,6 @@
 [submodule "local/lib/PHP-CPP"]
 	path = local/lib/PHP-CPP
 	url = https://github.com/CopernicaMarketingSoftware/PHP-CPP.git
+[submodule "startbootstrap-sb-admin-2"]
+	path = startbootstrap-sb-admin-2
+	url = https://github.com/StartBootstrap/startbootstrap-sb-admin-2.git

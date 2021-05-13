@@ -119,25 +119,24 @@
 </template>
 
 <script>
-  import { ref } from 'vue'
-  //import SearchResults from './SearchResults.vue'
-  export default {
-    components: {
-      //SearchResults
-    },
-    setup () {
-      const query = ref('')
+    import { ref } from 'vue'
+    export default {
+        components: {
+        //SearchResults
+        },
+        setup () {
+        const query = ref('')
 
-      //const reset = (evt) => {
-        //query.value = '' // clears the query
-      //}
-      
-      return {
-        //reset,
-        query
-      }
+        //const reset = (evt) => {
+            //query.value = '' // clears the query
+        //}
+        
+        return {
+            //reset,
+            query
+        }
+        }
     }
-  }
 </script>
 
 <style>
