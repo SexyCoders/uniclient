@@ -1,36 +1,54 @@
 <template>
-  <div>
-    <Menu/>
-    <!--<div id="content-wrapper" class="d-flex flex-column">-->
-      <!--<CustomerTable/>-->
-    <!--</div>-->
-  </div>
+      <Head/>
 </template>
 
 <script>
-
-//import CustomerTable from "../src/components/CustomerTable.vue";
-import Menu from "../src/components/Menu.vue";
-
+import Head from "../src/Head.vue";
+import init from "../temp.js";
+import onINIT from "../temp.js";
 
 export default {
   name: 'App',
   components: {
-    Menu//,
-    //CustomerTable
+    Head
   },
-  created()  {
-    this.$loadScript("../../../../local/lib/js/sb-admin-2.min.js").then(()=>{console.log("sb admin script loaded");});
+  data() {
+  return{
+    kalhmera : [],
+    kalhspera : {}
+  }
+  },
+  methods : {
+  //egoeimaimalakas()
+      //{
+        //console.log("Eimai malakas eipame!");
+        //this.kalhmera.push("geia!");
+        //console.log(JSON.stringify(this.kalhmera));
+        //init();
+      //}
   },
   mounted() {
-    var t=document.createElement("script");
-    t.setAttribute("src","http://auth.localhost/client/lib/libauth-runtime.min.js");
-    document.body.appendChild(t);
+    //this.$root.$on("HelloWorld",()=>{
+      // console.log("eimai malakas"); 
+    //});
+  },
+  beforeUnmount() {
+  },
+  computed : {
+  },
+
+
+  created()  {
     init();
+    //onINIT();
   }
 }
+
+
+
 </script>
 
-<!--<style scoped>-->
-  <!--@import "../../../lib/css/sb-admin-2.min.css";-->
-<!--</style>-->
+<style>
+
+  @import "../../../lib/css/sb-admin-2.min.css";
+</style>

@@ -7,16 +7,19 @@
     "name": "Shane"
   },
   "scripts": {
-    "serve": "vue-cli-service serve --host uniclient.localhost --port 80",
+    "serve": "vue-cli-service serve --host test.uniclient.localhost --port 8088",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.1",
+    "@fortawesome/free-solid-svg-icons": "^5.15.3",
+    "@fortawesome/vue-fontawesome": "^3.0.0-3",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
     "vue": "^3.0.4",
-    "vue-plugin-load-script": "^2.0.1"
+    "vue-plugin-load-script": "^2.0.1",
+    "vuex": "^4.0.0"
   },
   "devDependencies": {
     "@vue/cli": "^4.5.13",
