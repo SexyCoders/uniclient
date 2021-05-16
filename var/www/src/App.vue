@@ -4,8 +4,7 @@
 
 <script>
 import Head from "../src/Head.vue";
-import init from "../temp.js";
-import onINIT from "../temp.js";
+import init from "../../../local/lib/js/libauth-runtime-modules.min.js";
 
 export default {
   name: 'App',
@@ -40,7 +39,6 @@ export default {
 
   created()  {
     init();
-    //onINIT();
   }
 }
 
