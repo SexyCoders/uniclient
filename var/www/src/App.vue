@@ -1,10 +1,10 @@
 <template>
-      <Head/>
+  <Head />
 </template>
 
 <script>
 import Head from "../src/Head.vue";
-//import init from "../../../local/lib/js/libauth-runtime-modules.min.js";
+import init from "../../../local/lib/js/libauth-runtime-modules.js";
 
 export default {
   name: 'App',
@@ -17,14 +17,7 @@ export default {
     kalhspera : {}
   }
   },
-  methods : {
-  //egoeimaimalakas()
-      //{
-        //console.log("Eimai malakas eipame!");
-        //this.kalhmera.push("geia!");
-        //console.log(JSON.stringify(this.kalhmera));
-        //init();
-      //}
+  computed : {
   },
   mounted() {
     //this.$root.$on("HelloWorld",()=>{
@@ -33,12 +26,17 @@ export default {
   },
   beforeUnmount() {
   },
-  computed : {
-  },
-
-
   created()  {
-    //init();
+    init();
+  },
+  methods : {
+  //egoeimaimalakas()
+      //{
+        //console.log("Eimai malakas eipame!");
+        //this.kalhmera.push("geia!");
+        //console.log(JSON.stringify(this.kalhmera));
+        //init();
+      //}
   }
 }
 
