@@ -12,5 +12,7 @@
 		"parser": "babel-eslint",
 		"sourceType" : "module"
 		},
-	"rules": {}
+	"rules": {
+		"indent":"off"
+	}
 }
