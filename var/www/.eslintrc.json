@@ -9,8 +9,12 @@
 	],
 	"parser": "vue-eslint-parser",
 	"parserOptions": {
-		"parser": "babel-eslint",
-		"sourceType" : "module"
+		"sourceType" : "module",
+		"ecmaVersion": 2018,
+		"ecmaFeatures": {
+			"impliedStrict": false,
+			"classes": true
+			}
 		},
 	"rules": {
 		"indent":"off"
