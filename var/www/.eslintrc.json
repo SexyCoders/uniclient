@@ -19,6 +19,7 @@
 		},
 	"rules": {
 		"indent":"off",
-		"strict": 0
+		"strict": 0,
+		"no-func-assign":"off"
 	}
 }
