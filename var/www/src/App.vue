@@ -32,6 +32,5 @@ export default {
 </script>
 
 <style>
-
   @import "../../../lib/css/sb-admin-2.min.css";
 </style>
