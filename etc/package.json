@@ -9,7 +9,8 @@
   "scripts": {
     "serve": "vue-cli-service serve --host test.uniclient.localhost --port 8088",
     "build": "vue-cli-service build",
-    "lint": "vue-cli-service lint"
+    "lint": "vue-cli-service lint",
+    "start": "vue-cli-service serve --open"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "5.15.1",
@@ -19,6 +20,7 @@
     "bootstrap": "^5.0.1",
     "core-js": "^3.6.5",
     "jquery": "^3.6.0",
+    "mdbvue": "6.7.2",
     "vue": "^3.0.4",
     "vue-loading-overlay": "^4.0.2",
     "vuejs-overlay": "^0.0.28"
@@ -33,7 +35,8 @@
     "@vue/compiler-sfc": "^3.0.0",
     "eslint": "^7.26.0",
     "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-vue": "^7.9.0"
+    "eslint-plugin-vue": "^7.9.0",
+    "vue-cli-plugin-mdb": "~2.1.0"
   },
   "homepage": "https://gitlab.com/sexycoders/uniclient#readme",
   "keywords": [
