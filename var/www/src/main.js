@@ -9,6 +9,8 @@ library.add(fas);
 
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
+import "bootstrap/dist/css/bootstrap.min.css";
+
 
 createApp(App)
 .component("font-awesome-icon",FontAwesomeIcon)
