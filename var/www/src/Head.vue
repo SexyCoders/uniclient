@@ -1,5 +1,5 @@
 <template>
-    <TopBar/>
+  <TopBar />
 </template>
 
 <script>
