@@ -1,8 +1,8 @@
 <template>
-  <div v-if="AUTH">
-    <Lock />
-  </div>
-  <!--<Head />-->
+  <!--<div v-if="AUTH">-->
+    <!--<Head />-->
+  <!--</div>-->
+  <Lock />
 </template>
 
 <script>
@@ -13,7 +13,7 @@ import "../../../local/lib/js/libauth-runtime-modules.js";
 export default {
   name: 'App',
   components: {
-   // Head,
+    //Head,
     Lock
   },
   data() {
@@ -33,10 +33,9 @@ export default {
   methods : {
     test()
       {
-    console.log(window.NOAUTH);
-    if(!Object.hasOwnProperty.call(window,"NOAUTH"))
+        console.log(this.AUTH);
         this.AUTH=1;
-    console.log(this.AUTH);
+        console.log(this.AUTH);
       }
   }
 }
