@@ -1,10 +1,11 @@
 <template>
-  <Lock />
+  <Lock v-if="NOAUTH">
+  </Lock>
 </template>
 
 <script>
 import Lock from "../src/components/Lock.vue";
-import { handshake } from "../../../local/lib/js/libauth-runtime-modules.js";
+//import { handshake } from "../../../local/lib/js/libauth-runtime-modules.js";
 
 export default {
   name: 'App',
@@ -13,11 +14,14 @@ export default {
   },
   data() {
   return{
+    NOAUTH:1
   }
   },
   computed : {
   },
   mounted() {
+    if(window.__auth_system==undefined)
+      this.NOAUTH=true;
   },
   beforeUnmount() {
   },
