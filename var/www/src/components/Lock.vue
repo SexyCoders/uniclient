@@ -31,7 +31,7 @@
       <form class="form">
         <label for="password">Password</label>
         <input type="password" name="password" id="password">
-        <input type="submit" id="submit" value="GO" v-on:click="REFRESH">
+        <input type="button" id="submit" value="GO" v-on:click="UNLOCK">
       </form>
     </div>
   </div>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import { refresh } from "../../../../local/lib/js/libauth-runtime-modules.js";
+import { unlock } from "../../../../local/lib/js/libauth-runtime-modules.js";
 
 export default {
   name: 'Lock',
@@ -59,9 +59,9 @@ export default {
   created()  {
   },
   methods : {
-    REFRESH()
+    UNLOCK()
       {
-        refresh();
+        unlock();
       }
   }
 }
