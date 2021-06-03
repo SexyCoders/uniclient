@@ -20,13 +20,17 @@ export default {
   computed : {
   },
   mounted() {
-    if(window.__auth_system==undefined)
+    window.addEventListener("HASH_RECEIVED_SIG",function(){
+      this.NOAUTH=false;
+    },{once:true});
+
+
+    if(window.__auth_system.hash==undefined)
       this.NOAUTH=true;
   },
   beforeUnmount() {
   },
   created()  {
-    //handshake(window.__auth_system);
   },
   methods : {
   }
