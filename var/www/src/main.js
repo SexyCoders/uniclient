@@ -1,17 +1,28 @@
 import App from './App.vue';
 import { createApp } from 'vue';
 
-import { library } from "@fortawesome/fontawesome-svg-core";
-import { fas } from "@fortawesome/free-solid-svg-icons";
-
-library.add(fas);
-
-import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { createStore } from 'vuex'
 
-createApp(App)
-.component("font-awesome-icon",FontAwesomeIcon)
-.mount('#app');
+// Create a new store instance.
+const store = createStore({
+  state () {
+    return {
+      NOAUTH: 0,
+      PAGE: 0
+    }
+  },
+  mutations: {
+    set_auth_flag(state,t) {
+      state.NOAUTH=t;
+    }
+  }
+})
 
+
+const app=createApp(App)
+
+app.use(store);
+
+app.mount('#app');

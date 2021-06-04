@@ -1,38 +1,50 @@
 <template>
-  <Lock v-if="NOAUTH">
+  <Lock v-if="this.$store.state.NOAUTH">
   </Lock>
 </template>
 
 <script>
 import Lock from "../src/components/Lock.vue";
-//import { handshake } from "../../../local/lib/js/libauth-runtime-modules.js";
+//import Menu from "../src/components/Menu.vue";
 
 export default {
   name: 'App',
   components: {
-    Lock
+    Lock//,
+    //Menu
   },
   data() {
   return{
-    NOAUTH:1
   }
   },
-  computed : {
+  computed () {
   },
   mounted() {
-    window.addEventListener("HASH_RECEIVED_SIG",function(){
-      this.NOAUTH=false;
-    },{once:true});
-
 
     if(window.__auth_system.hash==undefined)
-      this.NOAUTH=true;
+      this.$store.state.NOAUTH=true;
   },
   beforeUnmount() {
   },
   created()  {
+    this.listen_for_auth();
   },
   methods : {
+    listen_for_auth()
+      {
+        for(var j=0;j<1000000;j++)
+          {
+            console.log("running"+j);
+            if(window.__auth_flag)
+              {
+                console.log(window.__auth_flag);
+                this.$store.state.NOAUTH=false;
+              }
+          setTimeout("",100);
+          }
+      }
+  },
+  watch:{
   }
 }
 
