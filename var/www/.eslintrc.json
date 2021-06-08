@@ -19,6 +19,8 @@
 	"rules": {
 		"indent":"off",
 		"strict": 0,
-		"no-func-assign":"off"
+		"no-func-assign":"off",
+		"no-mixed-spaces-and-tabs":"off",
+		"no-console":"off"
 	}
 }

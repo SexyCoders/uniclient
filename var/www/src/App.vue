@@ -1,17 +1,19 @@
 <template>
   <Lock v-if="this.$store.state.NOAUTH">
   </Lock>
+  <Menu v-else>
+  </Menu>
 </template>
 
 <script>
 import Lock from "../src/components/Lock.vue";
-//import Menu from "../src/components/Menu.vue";
+import Menu from "../src/components/Menu.vue";
 
 export default {
   name: 'App',
   components: {
-    Lock//,
-    //Menu
+    Lock,
+    Menu
   },
   data() {
   return{
@@ -27,22 +29,16 @@ export default {
   beforeUnmount() {
   },
   created()  {
-    this.listen_for_auth();
+    setInterval(this.AuthWatcher,50);
   },
   methods : {
-    listen_for_auth()
+    AuthWatcher()
       {
-        for(var j=0;j<1000000;j++)
+        if(window.__auth_flag==true)
           {
-            console.log("running"+j);
-            if(window.__auth_flag)
-              {
-                console.log(window.__auth_flag);
-                this.$store.state.NOAUTH=false;
-              }
-          setTimeout("",100);
+            this.$store.state.NOAUTH=false;
           }
-      }
+      },
   },
   watch:{
   }
