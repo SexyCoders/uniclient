@@ -1,6 +1,8 @@
 import App from './App.vue';
 import { createApp } from 'vue';
 
+import Vue from 'vue'
+
 import "bootstrap/dist/css/bootstrap.min.css";
 
 import { createStore } from 'vuex'
@@ -21,6 +23,8 @@ const store = createStore({
 })
 
 import router from './router';
+
+
 
 
 const app=createApp(App)
