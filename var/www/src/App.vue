@@ -1,19 +1,20 @@
 <template>
   <Lock v-if="this.$store.state.NOAUTH">
   </Lock>
-  <Menu v-else>
-  </Menu>
+  <div id="main" v-else>
+    <Main />
+  </div>
 </template>
 
 <script>
 import Lock from "../src/components/Lock.vue";
-import Menu from "../src/components/Menu.vue";
+import Main from "../src/Main.vue";
 
 export default {
   name: 'App',
   components: {
     Lock,
-    Menu
+    Main,
   },
   data() {
   return{
