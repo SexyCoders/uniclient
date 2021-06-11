@@ -140,6 +140,12 @@ php-install:
 #install:lib-install php-install
 install:lib-install
 
+microsun:
+	@echo "##########################################################";
+	@echo "copmiling microsun extension for uniclient";
+	@echo "##########################################################"
+
+
 clean:
 	#rm -fv $(OBJDIR)$(OBJ);
 	#rm -fv $(PHP_OBJDIR)$(OBJ);
