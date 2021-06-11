@@ -26,9 +26,5 @@ app.use(store);
 import router from './router';
 app.use(router);
 
-import { createVuetify } from 'vuetify';
-const vuetify = createVuetify();
-app.use(vuetify)
-
 app.mount('#app');
 
