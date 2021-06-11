@@ -1,4 +1,5 @@
 <template>
+  <div>
         <slide :is="currentMenu" :right="side === 'right' ? true: false">
             <a href="#">
                 <i class="fa fa-fw fa-star-o"></i>
@@ -27,6 +28,7 @@
         </slide>
   <CustomerTable>
   </CustomerTable>
+  </div>
 </template>
 
 <script>
@@ -34,7 +36,7 @@
     import CustomerTable from "./components/CustomerTable.vue";
 
     export default {
-      name:"Menu",
+      name:"Main",
       data() {
         return {
           menus: {
