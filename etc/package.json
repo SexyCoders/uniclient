@@ -13,14 +13,11 @@
     "start": "vue-cli-service serve --open"
   },
   "dependencies": {
-    "@mdi/font": "5.9.55",
-    "@revolist/vue3-datagrid": "^3.0.52",
+    "ag-grid-vue3": "^25.3.0",
     "core-js": "^3.14.0",
-    "roboto-fontface": "*",
     "vue": "^3.0.11",
     "vue-burger-menu": "^2.0.5",
     "vue-router": "^4.0.8",
-    "vuetify": "^3.0.0-alpha.0",
     "vuex": "^4.0.1"
   },
   "devDependencies": {
@@ -28,10 +25,7 @@
     "@vue/cli-plugin-eslint": "^4.5.13",
     "@vue/compiler-sfc": "^3.1.1",
     "@vue/eslint-plugin": "^4.2.0",
-    "eslint": "^4.19.1",
-    "sass": "~1.32.0",
-    "sass-loader": "^10.0.0",
-    "vue-cli-plugin-vuetify": "~2.4.1"
+    "eslint": "^7.28.0"
   },
   "homepage": "https://gitlab.com/sexycoders/uniclient#readme",
   "keywords": [

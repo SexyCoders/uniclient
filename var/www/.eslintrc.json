@@ -15,6 +15,7 @@
 			"impliedStrict": false,
 			"classes": true
 			}
+
 		},
 	"rules": {
 		"indent":"off",
