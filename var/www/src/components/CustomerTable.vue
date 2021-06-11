@@ -1,5 +1,5 @@
 <template>
-    <ag-grid-vue style="width: 500px; height: 500px;"
+    <ag-grid-vue style="width: 100%; height: 500px;"
         class="ag-theme-alpine"
         :columnDefs="columnDefs"
         :rowData="rowData">
@@ -22,9 +22,15 @@
         },
         beforeMount() {
             this.columnDefs = [
-                { field: 'make' },
-                { field: 'model' },
-                { field: 'price' }
+                { field: 'ID' },
+                { field: 'Company' },
+                { field: 'First Name' },
+                { field: 'Last Name' },
+                { field: 'Phone' },
+                { field: 'email' },
+                { field: 'Address' },
+                { field: 'ZIP' },
+                { field: 'TIN' }
             ];
 
             this.rowData = [
