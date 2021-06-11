@@ -22,6 +22,8 @@ OBJDIR=$(TMP)/objects
 LIB=$(LOCAL)/lib
 TESTDIR=$(TMP)/test
 
+#microsun extension variables
+
 #declare sources
 SOURCES=*.cc
 C_SOURCES=*.c
