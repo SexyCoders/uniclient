@@ -26,8 +26,29 @@
                 <span>Reading</span>
             </a>
         </slide>
-  <CustomerTable>
-  </CustomerTable>
+        <main id="page-wrap">
+            <img src="https://img.shields.io/npm/dt/vue-burger-menu.svg" /> &emsp;
+            <img src="https://img.shields.io/github/stars/mbj36/vue-burger-menu.svg" />
+            <h1>
+                <a href="https://github.com/mbj36/vue-burger-menu">vue-burger-menu</a> <br/>
+            </h1>
+
+            <h2 class="description">An off-canvas sidebar vue component with a collection of effects and styles using CSS transitions and SVG path animations.</h2>
+            <CustomerTable />
+
+            <nav class="demo-buttons">
+                <span v-for="(menu, index) in menus" :key="index">
+                    <span>
+                        <a :class="currentMenu === menu.buttonText.replace(/ +/g, '').toLowerCase() ? {currentDemo:true}: {currentDemo:false}" @click="changeMenu(menu.buttonText)">
+                            {{menu.buttonText}}
+                        </a>
+                    </span>
+                </span>
+            </nav>
+            Inspired by
+            <a href="https://github.com/codrops/OffCanvasMenuEffects">Off-Canvas Menu Effects</a> and
+            <a href="https://github.com/codrops/SidebarTransitions">Sidebar Transitions</a> by Codrops
+        </main>
   </div>
 </template>
 
@@ -62,7 +83,7 @@
     };
 </script>
 
- <style>
+ <style scoped>
    *, *:after, *:before {
 	 -webkit-box-sizing: border-box;
 	 box-sizing: border-box;
