@@ -1,9 +1,8 @@
-import App from './App.vue';
-import { createApp } from 'vue';
-
 import Vue from 'vue'
 
-import "bootstrap/dist/css/bootstrap.min.css";
+import App from './App.vue';
+import { createApp } from 'vue';
+const app=createApp(App)
 
 import { createStore } from 'vuex'
 
@@ -22,14 +21,14 @@ const store = createStore({
   }
 })
 
-import router from './router';
-
-
-
-
-const app=createApp(App)
-
 app.use(store);
+
+import router from './router';
 app.use(router);
 
+import { createVuetify } from 'vuetify';
+const vuetify = createVuetify();
+app.use(vuetify)
+
 app.mount('#app');
+
