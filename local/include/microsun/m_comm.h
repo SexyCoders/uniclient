@@ -1,5 +1,5 @@
 #include <microsun.h>
-#include <problem.h>
+#include <m_problem.h>
 
 #ifndef COMM_H
 #define COMM_H

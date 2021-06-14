@@ -6,7 +6,7 @@
 //use Slim\Http\Response;
 
 //create the basic app
-//$app = new Slim\App();
+$app = new Slim\App();
 
 // Routes
 //require_once ("../myapp/myfunctions.php");
@@ -19,6 +19,7 @@
 //require_once ("routes/post/token.php");
 //require_once ("routes/post/lab-schedule.php");
 //require_once ("routes/post/swarmexec.php");
+require_once("../../local/src/php/get_customers.php");
 // Catch-all route to serve a 404 Not Found page if none of the routes match
 // NOTE: make sure this route is defined last
 
