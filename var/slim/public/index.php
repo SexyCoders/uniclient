@@ -19,8 +19,8 @@ require "$conf->root/local/lib/vendor/autoload.php";
 require "$conf->root/etc/php/routes.php";
 
  //Run app
-//$app->run();
+$app->run();
 
-$t=new PhpUniClientObject;
+/*$t=new PhpUniClientObject;*/
 
 ?>

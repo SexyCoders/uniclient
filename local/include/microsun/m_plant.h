@@ -1,13 +1,13 @@
 #include <phpcpp.h>
 #include <string>
 #include <my_time.h>
-#include <customer.h>
-#include <county.h>
-#include <constructor.h>
-#include <panel.h>
-#include <mounter.h>
-#include <cboard.h>
-#include <inverter.h>
+#include <m_customer.h>
+#include <m_county.h>
+#include <m_constructor.h>
+#include <m_panel.h>
+#include <m_mounter.h>
+#include <m_cboard.h>
+#include <m_inverter.h>
 
 
 #ifndef PLANT_H

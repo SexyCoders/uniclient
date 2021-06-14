@@ -1,8 +1,9 @@
-#include <database.h>
+#include <m_database.h>
 #include <sqlite3.h>
 #include <stdlib.h>
 #include <iostream>
 #include <string>
+#include <phpcpp.h>
 
 Php::Value Microsun::Database::del(Php::Parameters &arg)
     {
