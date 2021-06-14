@@ -23,6 +23,9 @@ LIB=$(LOCAL)/lib
 TESTDIR=$(TMP)/test
 
 #microsun extension variables
+MIC_SRC=$(SOURCEDIR)/microsun
+MIC_HEAD=$(HEADDIR)/microsun
+MIC_PHP=$(LOCAL)/src/microsun.cc
 
 #declare sources
 SOURCES=*.cc
@@ -30,9 +33,10 @@ C_SOURCES=*.c
 OBJ=*.o
 
 #declare flags
-CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR)
-LD_FLAGS=-shared -lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php -luniclient
-LD_TESTS=-lstdc++ -shared-libgcc -lmariadb -lcurl -L /usr/local/lib/ -ltime.cc  -lcurl-php -luniclient
+CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I$(MIC_HEAD)
+LD_GENERAL=-shared -lstdc++ -shared-libgcc
+LD_MICROSUN=$(LD_GENERAL) -lsqlite3 -L/usr/local/lib -l:libtime.cc.a
+LD_UNICLIENT=$(LD_GENERAL) -lmariadb -lcurl -ltime.cc  -lcurl-php
 AR_FLAGS=rvs
 
 #system config
@@ -56,9 +60,12 @@ PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
 
 default:all
 
-all:build php
+all:uniclient microsun php
 
-build:
+install:uniclient-lib-install uniclient-php-install
+
+
+uniclient:
 	@echo "##########################################################";
 	@echo "Building UniClient library";
 	@echo "##########################################################";
@@ -73,8 +80,7 @@ build:
 		$(CC) "$$i"$(SOURCES) $(CC_FLAGS); \
 	done
 	@mv ./*.o $(OBJDIR);
-	$(LD) $(OBJDIR)/$(OBJ) $(LD_FLAGS) -o $(LIB)/$(NAME).so;
-	#$(LD) $(OBJDIR)$(OBJ) $(LD_FLAGS) -o ./$(NAME);
+	$(LD) $(OBJDIR)/$(OBJ) $(LD_UNICLIENT) -o $(LIB)/$(NAME).so;
 	$(AR) $(AR_FLAGS) $(LIB)/$(NAME).a $(OBJDIR)/$(OBJ);
 	@touch $(OBJDIR).lock;
 	@echo "##########################################################";
@@ -95,7 +101,7 @@ php:
 	fi
 	$(CC) $(PHPFILE) $(PHP_C_FLAGS);
 	@mv ./*.o $(OBJDIR);
-	$(LD) $(OBJDIR)/$(OBJ) -l:libauth.js.a  $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
+	$(LD) $(OBJDIR)/$(OBJ) -l:libauth.js.a -l:libmicrosun.a  $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
 	@touch $(OBJDIR).lock;
 	@echo "##########################################################";
 	@echo "Done building LibAuth.js php extension!";
@@ -105,7 +111,7 @@ php:
 	@echo "##########################################################";
 	@echo "##########################################################";
 
-lib-install:
+uniclient-lib-install:
 	@echo "##########################################################";
 	@echo "Installing uniclient libraries";
 	@echo "##########################################################";
@@ -128,7 +134,7 @@ lib-install:
 	@echo "PLEASE SOURCE THE PROFILE BEFORE USING!";
 	@echo "##########################################################";
 
-php-install:
+uniclient-php-install:
 	@echo "##########################################################";
 	@echo "Installing the php extension for libauth.js";
 	@echo "##########################################################";
@@ -139,12 +145,25 @@ php-install:
 	@echo "DONE!";
 	@echo "##########################################################";
 
-#install:lib-install php-install
-install:lib-install
-
 microsun:
 	@echo "##########################################################";
 	@echo "copmiling microsun extension for uniclient";
+	@echo "##########################################################"
+	@rm -f $(OBJDIR)/*;
+	$(CC) $(MIC_SRC)/$(SOURCES) $(CC_FLAGS);
+	@if [ ! -d $(OBJDIR) ]; then \
+		mkdir $(OBJDIR); \
+	fi
+	@if [ -f $(OBJDIR)/.lock ]; then \
+		echo "Removing objects from previous build"; \
+		rm -f $(OBJDIR)/*; \
+		rm -f $(OBJDIR)/.lock; \
+	fi
+	@mv ./$(OBJ) $(OBJDIR);
+	$(LD) $(OBJDIR)/$(OBJ) $(LD_MICROSUN) -o $(LIB)/libmicrosun.so;
+	$(AR) $(AR_FLAGS) $(LIB)/libmicrosun.a $(OBJDIR)/$(OBJ);
+	@echo "##########################################################";
+	@echo "DONE!";
 	@echo "##########################################################"
 
 
@@ -158,28 +177,3 @@ clean:
 	#rm -fv $(PHP_SYS_INI_DIR)$(PHP_INI);
 	#rm -rf $(INCLUDE_PATH);
 	#rm -fv $(PROFILE_D)$(SCRIPT_NAME);
-
-test: build
-	@echo "##########################################################";
-	@echo "Compiling tests for UniClient";
-	@echo "##########################################################";
-	@if [ -f $(OBJDIR).lock ]; then \
-		echo "Removing objects from previous build"; \
-		rm -f $(OBJDIR)/*; \
-		rm -f $(OBJDIR).lock; \
-	fi
-	@for i in $(TESTDIR)/*; \
-	do \
-		CUR_SOURCE=`echo $$i | awk -F" +|/" '{print $$NF}'`; \
-		CUR_NAME=`echo $$CUR_SOURCE | awk -F"." '{print $$1}'`; \
-		echo $$CUR_SOURCE; \
-		echo $$CUR_NAME; \
-		echo "making $$CUR_NAME test"; \
-		$(CC) "$$i" $(CC_FLAGS) -o $$CUR_NAME.o; \
-		mv $$CUR_NAME.o $(OBJDIR); \
-		$(LD) $(OBJDIR)/$$CUR_NAME.o $(LD_TESTS) -o $(TMP)/bin/$$CUR_NAME; \
-	done
-	@touch $(OBJDIR).lock;
-	@echo "##########################################################";
-	@echo "building tests done!";
-	@echo "##########################################################";

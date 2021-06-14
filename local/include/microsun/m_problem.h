@@ -1,8 +1,8 @@
 #include <string>
 #include <phpcpp.h>
 #include <my_time.h>
-#include <plant.h>
-#include <user.h>
+#include <m_plant.h>
+#include <m_user.h>
 
 #ifndef PROBLEM_H
 #define PROBLEM_H
