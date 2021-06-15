@@ -50,8 +50,8 @@ PHP_NAME=uniclient.php
 PHP_SOURCEDIR=$
 PHP_OBJDIR=$(TMP)/php_obj/
 PHP_INI=uniclient.ini
-PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR)
-PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -L$(LIB) -l:libuniclient.a -l:libtime.cc.a  
+PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I$(MIC_HEAD)
+PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -L$(LIB) -l:libuniclient.a -l:libtime.cc.a -l:libmicrosun.a 
 PHP_CLI_INI_DIR=/etc/php/7.4/cli/conf.d
 PHP_APACHE2_INI_DIR=/etc/php/7.4/apache2/conf.d
 PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
@@ -62,7 +62,7 @@ default:all
 
 all:uniclient microsun php
 
-install:uniclient-lib-install uniclient-php-install
+install:lib-install php-install
 
 
 uniclient:
@@ -111,7 +111,7 @@ php:
 	@echo "##########################################################";
 	@echo "##########################################################";
 
-uniclient-lib-install:
+lib-install:
 	@echo "##########################################################";
 	@echo "Installing uniclient libraries";
 	@echo "##########################################################";
@@ -120,27 +120,23 @@ uniclient-lib-install:
 		@echo "##########################################################"; \
 		exit 1; \
 	fi
-	cp -v $(LIB)/uniclient.php.so /usr/local/lib/;
 	cp -v $(LIB)/libuniclient.so /usr/local/lib/;
 	cp -v $(LIB)/libuniclient.a /usr/local/lib/;
 	@if [ ! -d "$(INCLUDE_PATH)" ];then \
 	mkdir -p $(INCLUDE_PATH); \
 	fi
 	cp -rv $(HEADDIR)/* $(INCLUDE_PATH);
-	@echo "#!/bin/bash" > $(PROFILE_D)/$(SCRIPT_NAME);
-	@echo "export CPATH=\"/usr/local/include/uniclient:\$$CPATH\";" >> $(PROFILE_D)/$(SCRIPT_NAME);
 	@echo "##########################################################";
 	@echo "uniclient install successful!";
-	@echo "PLEASE SOURCE THE PROFILE BEFORE USING!";
 	@echo "##########################################################";
 
-uniclient-php-install:
+php-install:
 	@echo "##########################################################";
 	@echo "Installing the php extension for libauth.js";
 	@echo "##########################################################";
-	cp -v $(PHP_LIB)/* $(PHP_SYS_EXTENSION_DIR);
-	echo "extension=$(PHP_NAME).so" > $(PHP_CLI_INI_DIR); 
-	echo "extension=$(PHP_NAME).so" > $(PHP_APACHE2_INI_DIR); 
+	@cp -v $(LIB)/uniclient.php.so $(PHP_SYS_EXTENSION_DIR);
+	echo "extension=$(PHP_NAME).so" > $(PHP_CLI_INI_DIR)/$(PHP_INI); 
+	echo "extension=$(PHP_NAME).so" > $(PHP_APACHE2_INI_DIR)/$(PHP_INI); 
 	@echo "##########################################################";
 	@echo "DONE!";
 	@echo "##########################################################";

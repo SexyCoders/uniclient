@@ -1,26 +1,15 @@
 <?php
-if (PHP_SAPI == 'cli-server') 
-    {
-        // To help the built-in PHP dev server, check if the request was actually for
-        // something which should probably be served as a static file
-        $url  = parse_url($_SERVER['REQUEST_URI']);
-        $file = __DIR__ . $url['path'];
-        if (is_file($file)) {
-            return false;
-        }
-    }
+use \Psr\Http\Message\ServerRequestInterface as Request;
+use \Psr\Http\Message\ResponseInterface as Response;
 
-$conf=json_decode(file_get_contents("../../etc/slim.conf"));
-echo "root dir is $conf->root\n";
+require '../vendor/autoload.php';
 
-require "$conf->root/local/lib/vendor/autoload.php";
+$app = new \Slim\App;
+$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+    $name = $args['name'];
+    $response->getBody()->write("Hello, $name");
 
-// Register routes
-require "$conf->root/etc/php/routes.php";
-
- //Run app
+    return $response;
+});
 $app->run();
 
-/*$t=new PhpUniClientObject;*/
-
-?>

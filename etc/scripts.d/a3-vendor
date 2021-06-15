@@ -16,6 +16,5 @@ composer install --no-plugins --no-scripts;
 
 if [ ! -d $ROOT/lib/vendor ]; then
 	mv $ROOT/etc/vendor ../local/lib;
-    cd $ROOT/etc;
 	ln -s ../local/lib/vendor ./vendor;
 fi
