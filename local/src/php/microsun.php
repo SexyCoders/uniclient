@@ -23,4 +23,4 @@ $customer_data=function($data, $response)
 		$response->getBody()->write(json_encode($to_return));
 		return $response;
 	};
-$app->get('/get_customer_data',$customer_data);
+

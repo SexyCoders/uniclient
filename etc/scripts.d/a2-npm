@@ -12,10 +12,9 @@ ROOT=$DIR/../..
 
 cd $ROOT/etc;
 
-npm install;
+npm install --force;
 
 if [ ! -d $ROOT/local/lib/node_modules ]; then
 	mv $ROOT/etc/node_modules ../local/lib/node_modules;
-    cd ../local/lib/;
-	ln -s ../../etc/node_modules ./node_modules;
+	ln -s ../local/lib/node_modules ./node_modules;
 fi
