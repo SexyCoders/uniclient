@@ -24,7 +24,9 @@ export default {
   },
   mounted() {
 
-    if(window.__auth_system.hash==undefined)
+    if(window.__auth_system==undefined)
+      this.$store.state.NOAUTH=true;
+    else if(window.__auth_system.hash==undefined)
       this.$store.state.NOAUTH=true;
   },
   beforeUnmount() {
