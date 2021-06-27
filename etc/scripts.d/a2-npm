@@ -10,11 +10,15 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 ROOT=$DIR/../..
 
-cd $ROOT/etc;
-
-npm install --force;
 
 if [ ! -d $ROOT/local/lib/node_modules ]; then
-	mv $ROOT/etc/node_modules ../local/lib/node_modules;
+	mkdir $ROOT/lib/node_modules;
 	ln -s ../local/lib/node_modules ./node_modules;
 fi
+
+
+cd $ROOT/etc;
+
+npm install --legacy-peer-deps;
+
+chown -R $(logname) $ROOT/lib/node_modules;

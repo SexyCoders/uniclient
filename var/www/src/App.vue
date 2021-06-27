@@ -1,9 +1,9 @@
 <template>
-  <Lock v-if="this.$store.state.NOAUTH">
-  </Lock>
-  <div id="main" v-else>
+  <!--<Lock v-if="this.$store.state.NOAUTH">-->
+  <!--</Lock>-->
+  <!--<div id="main" v-else>-->
     <Main />
-  </div>
+  <!--</div>-->
 </template>
 
 <script>
