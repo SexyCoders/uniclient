@@ -4,3 +4,6 @@
 [submodule "local/lib/PHP-CPP"]
 	path = local/lib/PHP-CPP
 	url = https://github.com/CopernicaMarketingSoftware/PHP-CPP.git
+[submodule "var/slim/oauth2"]
+	path = var/slim/oauth2
+	url = https://github.com/bshaffer/oauth2-server-php.git
