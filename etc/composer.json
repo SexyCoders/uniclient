@@ -1,5 +1,6 @@
 {
     "require": {
-        "slim/slim": "3.*"
+        "slim/slim": "3.*",
+        "bshaffer/oauth2-server-php": "^1.11"
     }
 }
