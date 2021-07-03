@@ -11,7 +11,9 @@ const store = createStore({
   state () {
     return {
       NOAUTH: 0,
-      PAGE: 0
+      copyright:"",
+      title:"",
+      customers:""
     }
   },
   mutations: {
