@@ -16,7 +16,7 @@ namespace Microsun{
 class Database : public Php::Base
 {
 private:
-    std::string DataPath="/home/sotiris/Projects/MicrosunWeb/server/DATA";
+    std::string DataPath="/var/lib/uniclient";
     std::string Path=this->DataPath+"/MICROSUN_DATABASE";
     std::string buffer=this->DataPath+"/buffer";
     std::string BUFFER=this->DataPath+"/BUFFER";
@@ -70,7 +70,7 @@ public:
         {
             std::vector<Php::Object> tmp;
             for(int j=0;j<this->stored_customers.size();j++)
-                tmp.push_back(Php::Object("Customer",this->stored_customers[j]));
+                tmp.push_back(Php::Object("MicrosunCustomer",this->stored_customers[j]));
             return tmp;
         }
     Php::Value getStoredPlants()

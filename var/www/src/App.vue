@@ -2,7 +2,7 @@
   <Lock v-if="this.$store.state.NOAUTH">
   </Lock>
   <div id="main" v-else>
-    <Main />
+    <router-view />
   </div>
 </template>
 

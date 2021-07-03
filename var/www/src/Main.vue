@@ -1,42 +1,19 @@
 <template>
         <slide :is="currentMenu" :right="side === 'right' ? true: false">
-            <a href="#">
-                <i class="fa fa-fw fa-star-o"></i>
-                <span>Favourites</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-fw fa-bell-o"></i>
-                <span>Alerts</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-fw fa-envelope-o"></i>
-                <span>Messages</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-fw fa-comment-o"></i>
-                <span>Comments</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-fw fa-bar-chart-o"></i>
-                <span>Analytics</span>
-            </a>
-            <a href="#">
-                <i class="fa fa-fw fa-newspaper-o"></i>
-                <span>Reading</span>
-            </a>
+        <router-link to="/">Home</router-link>
+        <router-link to="/customers">Home</router-link>
         </slide>
         <main id="page-wrap">
             <h1>
               {{$store.title}}<br/>
             </h1>
-            <CustomerTable />
+            <router-view></router-view>
               {{$store.copyright}}
         </main>
 </template>
 
 <script>
     import slide from './files/slide.vue';
-    import RichGridExample from './components/rich-grid-example/RichGridExample.vue';
     import CustomerTable from './components/CustomerTable.vue';
 
     export default {
@@ -53,7 +30,6 @@
       },
       components: {
         slide,
-        RichGridExample,
         CustomerTable
       },
       methods: {
