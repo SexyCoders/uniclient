@@ -13,7 +13,8 @@ const store = createStore({
       NOAUTH: 0,
       copyright:"",
       title:"",
-      customers:""
+      customers:"",
+      page:""
     }
   },
   mutations: {
@@ -25,7 +26,7 @@ const store = createStore({
 
 app.use(store);
 
-import router from './router';
+import router from './router.js';
 app.use(router);
 
 app.mount('#app');

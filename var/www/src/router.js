@@ -1,12 +1,24 @@
-import RichGridExample from './components/rich-grid-example/RichGridExample.vue';
+import { createWebHistory, createRouter } from "vue-router";
+import Main from "./Main.vue";
+import CustomerTable from './components/CustomerTable.vue';
 
-import {createRouter, createWebHistory} from 'vue-router';
+const routes = [
+  {
+    path: "/",
+    name: "Home",
+    component: Main,
+  },
+  {
+    path: "/customers",
+    name: "About",
+    component: CustomerTable,
+  },
+];
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        {path: '/', component: RichGridExample, name: 'Rich Grid with Pure JavaScript'},
-    ],
-})
+  history: createWebHistory(),
+  routes,
+});
 
 export default router;
+
