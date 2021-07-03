@@ -1,4 +1,5 @@
 <template>
+  <div>
         <slide :is="currentMenu" :right="side === 'right' ? true: false">
             <a href="#">
                 <i class="fa fa-fw fa-star-o"></i>
@@ -27,17 +28,27 @@
         </slide>
         <main id="page-wrap">
             <h1>
-              {{$store.title}}<br/>
+                <a href="https://github.com/mbj36/vue-burger-menu">customers</a> <br/>
             </h1>
             <CustomerTable />
-              {{$store.copyright}}
+
+            <nav class="demo-buttons">
+                <span v-for="(menu, index) in menus" :key="index">
+                    <span>
+                        <a :class="currentMenu === menu.buttonText.replace(/ +/g, '').toLowerCase() ? {currentDemo:true}: {currentDemo:false}" @click="changeMenu(menu.buttonText)">
+                            {{menu.buttonText}}
+                        </a>
+                    </span>
+                </span>
+            </nav>
+            Developed and maintained by SexyCoders team.
         </main>
+  </div>
 </template>
 
 <script>
     import slide from './files/slide.vue';
-    import RichGridExample from './components/rich-grid-example/RichGridExample.vue';
-    import CustomerTable from './components/CustomerTable.vue';
+    import CustomerTable from "./components/CustomerTable.vue";
 
     export default {
       name:"Main",
@@ -47,13 +58,11 @@
             //slide: { buttonText: 'Slide' }
           },
           side: 'left',
-          currentMenu: 'slide',
-          title: 'main'
+          currentMenu: 'slide'
         };
       },
       components: {
         slide,
-        RichGridExample,
         CustomerTable
       },
       methods: {
@@ -63,26 +72,8 @@
         },
         changeSide(side) {
           this.side = side;
-        },
-        setTitle(title)
-          {
-            this.$store.title=title;
-          },
-        setCopyright(cr)
-          {
-          this.$store.copyright=cr;
         }
-    },
-  computed: {
-    routes() {
-      return this.$router.getRoutes()
-    }
-  },
-      created() {
-        this.setTitle('Customers');
-        this.setCopyright('Developed by SexyCoders');
       }
-
     };
 </script>
 
