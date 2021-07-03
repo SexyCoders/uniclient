@@ -1,9 +1,9 @@
 <?php
 
-$customer_data=function($data, $response) 
+function customer_data_all()
 	{
 		$database=new MicrosunDatabase;
-        $database->get("customer_single",strval($data->parameter[2]));
+        $database->get("customer_all");
         $to_return=new stdClass;
         $customers=$database->getStoredCustomers();
         for($j=0;$j<count($customers);$j++)
@@ -20,7 +20,6 @@ $customer_data=function($data, $response)
                 $to_return->{$j}->TIN=$customers[$j]->getTIN();
                 $to_return->{$j}->Notes=$customers[$j]->getNotes();
             }
-		$response->getBody()->write(json_encode($to_return));
-		return $response;
+		return $to_return;
 	};
 

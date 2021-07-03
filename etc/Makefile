@@ -63,6 +63,7 @@ default:all
 all:uniclient microsun php
 
 install:lib-install php-install
+	service apache2 restart;
 
 
 uniclient:
