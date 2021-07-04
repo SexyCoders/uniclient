@@ -2,7 +2,7 @@
   <Lock v-if="this.$store.state.NOAUTH">
   </Lock>
   <div id="main" v-else>
-    <router-view />
+    <Main />
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import $ from "jquery";
 import Lock from "../src/components/Lock.vue";
 import Main from "../src/Main.vue";
+import {AuthSystem} from '../../../lib/js/libauth-runtime-modules.js';
 
 export default {
   name: 'App',
@@ -24,11 +25,16 @@ export default {
   computed () {
   },
   mounted() {
-
-    if(window.__auth_system==undefined)
-      this.$store.state.NOAUTH=true;
-    else if(window.__auth_system.oauth2.token==undefined)
-      this.$store.state.NOAUTH=true;
+      if(window.__auth_system==undefined)
+        window.__auth_system=new AuthSystem();
+      var token=localStorage.getItem("oauth2_token");
+      if(token==null)
+        this.$store.state.NOAUTH=true;
+      else
+        {
+          window.__auth_system.oauth2.token=token;
+          this.verifyToken();
+        }
   },
   beforeUnmount() {
   },
@@ -43,9 +49,27 @@ export default {
             this.$store.state.NOAUTH=false;
           }
       },
-  },
+    verifyToken()
+      {
+      $.ajax({
+          type: 'POST',
+          url: window.__auth_system.site.oauth2.validate,
+          data: "access_token="+window.__auth_system.oauth2.token,
+          success:
+        (response) =>
+              {
+                var data=JSON.parse(response);
+                if(data.active!=true)
+                  this.$store.state.NOAUTH=true;
+                else
+                  console.log(data.message);
+              },
+          async:false
+          });
+        },
   watch:{
   }
 }
 
+}
 </script>
