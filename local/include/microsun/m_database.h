@@ -21,19 +21,19 @@ private:
     std::string buffer=this->DataPath+"/buffer";
     std::string BUFFER=this->DataPath+"/BUFFER";
 public:
-    std::vector<Customer*> stored_customers;
-    std::vector<User*> stored_users;
-    std::vector<Problem*> stored_problems;
+    std::vector<Microsun::Customer*> stored_customers;
+    std::vector<Microsun::User*> stored_users;
+    std::vector<Microsun::Problem*> stored_problems;
     //std::vector<Plant*> stored_plants;
     std::string string_buffer;
-    Plant* plant;
+    Microsun::Plant* plant;
     std::vector<std::string> id;
     std::vector<std::string> user_names;
     int stored_int;
 public:
     Database() 
         {
-            this->plant=new Plant();
+            this->plant=new Microsun::Plant();
         }
     virtual ~Database() {}
     Php::Value phpResolveError(Php::Parameters &arg)
@@ -75,7 +75,7 @@ public:
         }
     Php::Value getStoredPlants()
         {
-            return Php::Object("Plant",this->plant);
+            return Php::Object("MicrosunPlant",this->plant);
         }
     Php::Value getID()
         {
@@ -85,7 +85,7 @@ public:
         {
             std::vector<Php::Object> tmp;
             for(int j=0;j<this->stored_problems.size();j++)
-                tmp.push_back(Php::Object("Problem",this->stored_problems[j]));
+                tmp.push_back(Php::Object("MicrosunProblem",this->stored_problems[j]));
             return tmp;
         }
     std::any get(std::string);

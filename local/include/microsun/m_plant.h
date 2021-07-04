@@ -35,15 +35,15 @@ class Plant : public Php::Base
 		Time* TrackerBegin;
 		float SellPrice;
 		public:
-			Plant()
+		Plant()
 				{
-						this->Owner=new Customer();
-						this->county=new County();
-						this->panel=new Panel();
-						this->Mounting=new Mounter();
-						this->inverter=new Inverter();
-						this->cboard=new CBoard();
-						this->constructor=new Constructor();
+						this->Owner=new Microsun::Customer();
+						this->county=new Microsun::County();
+						this->panel=new Microsun::Panel();
+						this->Mounting=new Microsun::Mounter();
+						this->inverter=new Microsun::Inverter();
+						this->cboard=new Microsun::CBoard();
+						this->constructor=new Microsun::Constructor();
 						this->ConnectionDate=new Time();
 						this->TrackerBegin=new Time();
 
@@ -56,24 +56,24 @@ class Plant : public Php::Base
 				{
 					this->ID=ID;
 					this->Power=Power;
-					this->Owner=new Customer();
+					this->Owner=new Microsun::Customer();
 					*this->Owner=Owner;
-					this->county=new County();
+					this->county=new Microsun::County();
 					*this->county=county;
 					this->Borough=Borough;
 					this->Location=Location;
 					this->Area=Area;
 					this->NPanels=NPanels;
-					this->panel=new Panel();
+					this->panel=new Microsun::Panel();
 					*this->panel=panel;
 					this->Strings=Strings;
-					this->Mounting=new Mounter();
+					this->Mounting=new Microsun::Mounter();
 					*this->Mounting=mounting;
-					this->inverter=new Inverter();
+					this->inverter=new Microsun::Inverter();
 					*this->inverter=inverter;
-					this->cboard=new CBoard();
+					this->cboard=new Microsun::CBoard();
 					*this->cboard=cboard;
-					this->constructor=new Constructor();
+					this->constructor=new Microsun::Constructor();
 					*this->constructor=constructor;
 					this->ConnectionNumber=ConnectionNumber;
 					*this->ConnectionDate=ConnectionDate;
@@ -95,11 +95,11 @@ class Plant : public Php::Base
 				}
 			Php::Value getOwner(void)
 				{
-				return Php::Object("Customer",this->Owner);
+				return Php::Object("MicrosunCustomer",this->Owner);
 				}
 			Php::Value getCounty(void)
 				{
-				return Php::Object("County",this->county);
+				return Php::Object("MicrosunCounty",this->county);
 				}
 			Php::Value getBorough(void)
 				{
@@ -119,7 +119,7 @@ class Plant : public Php::Base
 				}
 			Php::Value getPanel(void)
 				{
-				return Php::Object("Panel",this->panel);
+				return Php::Object("MicrosunPanel",this->panel);
 				}
 			Php::Value getStrings(void)
 				{
@@ -127,19 +127,19 @@ class Plant : public Php::Base
 				}
 			Php::Value getMounting(void)
 				{
-				return Php::Object("Mounter",this->Mounting);
+				return Php::Object("MicrosunMounter",this->Mounting);
 				}
 			Php::Value getInverter(void)
 				{
-				return Php::Object("Inverter",this->inverter);
+				return Php::Object("MicrosunInverter",this->inverter);
 				}
 			Php::Value getCBoard(void)
 				{
-				return Php::Object("CBoard",this->cboard);
+				return Php::Object("MicrosunCBoard",this->cboard);
 				}
 			Php::Value getConstructor(void)
 				{
-				return Php::Object("Constructor",this->constructor);
+				return Php::Object("MicrosunConstructor",this->constructor);
 				}
 			Php::Value getConnectionNumber(void)
 				{
@@ -147,11 +147,11 @@ class Plant : public Php::Base
 				}
 			Php::Value getConnectionDate(void)
 				{
-				return Php::Object("Time",this->ConnectionDate);
+				return this->ConnectionDate->toString();
 				}
 			Php::Value getTrackerBegin(void)
 				{
-				return Php::Object("Time",this->TrackerBegin);
+				return this->TrackerBegin->toString();
 				}
 			Php::Value getSellPrice(void)
 				{
