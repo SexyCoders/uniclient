@@ -17,16 +17,15 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 
     return $response;
 });
-//$app->post('/get_customer_data',function(Request $request,Response $response)
-    //{
-        //$data=$request->getBody();
-        //$data=json_decode(base64_decode($data));
-        //$t=customer_data($data->customer_id);
-        //$response->getBody()->write(json_encode($t));
-    //});
 $app->post('/get_customer_data_full',function(Request $request,Response $response)
     {
         $t=customer_data_all();
+        $response->getBody()->write(json_encode($t));
+        return $response;
+    });
+$app->post('/get_plant_data_full',function(Request $request,Response $response)
+    {
+        $t=plant_data_all();
         $response->getBody()->write(json_encode($t));
         return $response;
     });
