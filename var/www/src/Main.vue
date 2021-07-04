@@ -1,20 +1,21 @@
 <template>
         <slide :is="currentMenu" :right="side === 'right' ? true: false">
-        <router-link to="/">Home</router-link>
-        <router-link to="/customers">Home</router-link>
+          <router-link to="/">Home</router-link>
+          <router-link to="/customers">Customers</router-link>
+          <router-link to="/plants">Plants</router-link>
         </slide>
         <main id="page-wrap">
             <h1>
               {{$store.title}}<br/>
             </h1>
-            <router-view></router-view>
+                <router-view>
+                </router-view>
               {{$store.copyright}}
         </main>
 </template>
 
 <script>
     import slide from './files/slide.vue';
-    import CustomerTable from './components/CustomerTable.vue';
 
     export default {
       name:"Main",
@@ -29,8 +30,7 @@
         };
       },
       components: {
-        slide,
-        CustomerTable
+        slide
       },
       methods: {
         changeMenu(menu) {
