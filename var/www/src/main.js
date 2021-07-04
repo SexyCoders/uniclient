@@ -14,7 +14,8 @@ const store = createStore({
       copyright:"",
       title:"",
       customers:"",
-      page:""
+      page:"",
+      plants:""
     }
   },
   mutations: {

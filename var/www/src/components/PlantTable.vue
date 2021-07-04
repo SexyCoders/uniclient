@@ -17,14 +17,12 @@ import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
 
 const cols = [
   { field: "ID"},
-  { field: "Company"},
-  { field: "FirstName" },
-  { field: "LastName" },
-  { field: "email"},
-  { field: "PhoneNumber" },
-  { field: "Address" },
-  { field: "zip" },
-  { field: "TIN" },
+  { field: "Power"},
+  { field: "Owner" },
+  { field: "County" },
+  { field: "Borough"},
+  { field: "Location" },
+  { field: "Area" },
 ];
 export default {
   components: {
@@ -40,23 +38,24 @@ export default {
     console.log(AgGridVue);
   },
   methods: {
-    storeCustomers(customers)
+    storePlants(plants)
       {
-        this.$store.customers=customers;
+        this.$store.plants=plants;
       },
     onGridReady(params) {
       const updateData = (dummy) => {
-        params.api.setRowData(Object.values(this.$store.customers));
+        var $t=new Object();
+        params.api.setRowData(Object.values(this.$store.plants));
       };
 
       $.ajax({
           type: 'POST',
-          url: window.__SCD.datacenter+"/get_customer_data_full",
+          url: window.__SCD.datacenter+"/get_plant_data_full",
           data: "",
           success:
         (response) =>
               {
-                  this.storeCustomers(JSON.parse(response));
+                  this.storePlants(JSON.parse(response));
                   updateData();
               },
           async:false

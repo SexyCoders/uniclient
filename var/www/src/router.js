@@ -1,17 +1,24 @@
 import { createWebHistory, createRouter } from "vue-router";
 import Main from "./Main.vue";
 import CustomerTable from './components/CustomerTable.vue';
+import PlantTable from './components/PlantTable.vue';
+import Logo from './components/Logo.vue';
 
 const routes = [
   {
     path: "/",
     name: "Home",
-    component: Main,
+    component: Logo,
   },
   {
     path: "/customers",
-    name: "About",
+    name: "Customers",
     component: CustomerTable,
+  },
+  {
+    path: "/plants",
+    name: "Plants",
+    component: PlantTable,
   },
 ];
 
