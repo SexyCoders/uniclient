@@ -88,6 +88,26 @@ extern "C"
             constructor.method<&Microsun::Constructor::phpgetID> ("getID",{});
             constructor.method<&Microsun::Constructor::phpgetCompany> ("getCompany",{});
             myExtension.add(std::move(constructor));
+        Php::Class<Microsun::Plant> plant("MicrosunPlant");
+            plant.method<&Microsun::Plant::getID> ("getID",{});
+            plant.method<&Microsun::Plant::getPower> ("getPower",{});
+            plant.method<&Microsun::Plant::getOwner> ("getOwner",{});
+            plant.method<&Microsun::Plant::getCounty> ("getCounty",{});
+            plant.method<&Microsun::Plant::getBorough> ("getBorough",{});
+            plant.method<&Microsun::Plant::getLocation> ("getLocation",{});
+            plant.method<&Microsun::Plant::getArea> ("getArea",{});
+            plant.method<&Microsun::Plant::getNPanels> ("getNPanels",{});
+            plant.method<&Microsun::Plant::getPanel> ("getPanel",{});
+            plant.method<&Microsun::Plant::getStrings> ("getStrings",{});
+            plant.method<&Microsun::Plant::getMounting> ("getMounting",{});
+            plant.method<&Microsun::Plant::getInverter> ("getInverter",{});
+            plant.method<&Microsun::Plant::getCBoard> ("getCBoard",{});
+            plant.method<&Microsun::Plant::getConstructor> ("getConstructor",{});
+            plant.method<&Microsun::Plant::getConnectionNumber> ("getConnectionNumber",{});
+            plant.method<&Microsun::Plant::getConnectionDate> ("getConnectionDate",{});
+            plant.method<&Microsun::Plant::getTrackerBegin> ("getTrackerBegin",{});
+            plant.method<&Microsun::Plant::getSellPrice> ("getSellPrice",{});
+            myExtension.add(std::move(plant));
             return myExtension;
             }
     }
