@@ -55,7 +55,7 @@
     }
   },
       created() {
-        this.setTitle('Customers');
+        this.setTitle('UniClient');
         this.setCopyright('Developed by SexyCoders');
       }
 
