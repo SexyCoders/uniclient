@@ -56,7 +56,7 @@ export default {
           url: window.__auth_system.site.oauth2.validate,
           data: "access_token="+window.__auth_system.oauth2.token,
           success:
-        (response) =>
+          (response) =>
               {
                 var data=JSON.parse(response);
                 if(data.active!=true)
@@ -64,8 +64,14 @@ export default {
                 else
                   console.log(data.message);
               },
-          async:false
-          });
+          error:
+          (response) =>
+                {
+                    localStorage.removeItem("oauth2_token");
+                    this.$store.state.NOAUTH=true;
+                },
+            async:false
+            });
         },
   watch:{
   }

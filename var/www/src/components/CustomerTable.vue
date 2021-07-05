@@ -40,6 +40,10 @@ export default {
     console.log(AgGridVue);
   },
   methods: {
+    setTitle(title)
+      {
+        this.$store.title=title;
+      },
     storeCustomers(customers)
       {
         this.$store.customers=customers;
@@ -64,6 +68,10 @@ export default {
 
       }
     },
+  created()
+    {
+      this.setTitle('Customers');
+    }
 };
 
 </script>
