@@ -1,4 +1,5 @@
 <template>
+  <h3>{{$store.page_title}}</h3>
   <ag-grid-vue
     style="height: 500px"
     class="ag-theme-alpine"
@@ -37,12 +38,11 @@ export default {
     };
   },
   mounted() {
-    console.log(AgGridVue);
   },
   methods: {
     setTitle(title)
       {
-        this.$store.title=title;
+        this.$store.page_title=title;
       },
     storeCustomers(customers)
       {
@@ -58,13 +58,13 @@ export default {
           url: window.__SCD.datacenter+"/get_customer_data_full",
           data: "",
           success:
-        (response) =>
+          (response) =>
               {
                   this.storeCustomers(JSON.parse(response));
                   updateData();
               },
-          async:false
-          });
+            async:false
+            });
 
       }
     },
