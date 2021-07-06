@@ -1,46 +1,51 @@
 <template>
+  <h3>{{$store.page_title}}</h3>
   <div class="container">
 <div class="row">
     <div class="col-lg-4 col-xl-4">
         <div class="card-box text-center">
-            <img src="https://bootdey.com/img/Content/avatar/avatar7.png" class="rounded-circle avatar-xl img-thumbnail" alt="profile-image">
 
-            <h4 class="mb-0">Nik G. Patel</h4>
-            <p class="text-muted">@webdesigner</p>
+            <h4 class="mb-0">{{$store.selection.ID}}</h4>
 
-            <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Follow</button>
-            <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Message</button>
+            <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Edit</button>
+            <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Delete</button>
 
             <div class="text-left mt-3">
-                <h4 class="font-13 text-uppercase">About Me :</h4>
-                <p class="text-muted font-13 mb-3">
-                    Hi I'm Johnathn Deo,has been the industry's standard dummy text ever since the
-                    1500s, when an unknown printer took a galley of type.
-                </p>
-                <p class="text-muted mb-2 font-13"><strong>Full Name :</strong> <span class="ml-2">Nik G. Patel</span></p>
-
-                <p class="text-muted mb-2 font-13"><strong>Mobile :</strong><span class="ml-2">(123)
-                        123 1234</span></p>
-
-                <p class="text-muted mb-2 font-13"><strong>Email :</strong> <span class="ml-2 ">user@email.domain</span></p>
-
-                <p class="text-muted mb-1 font-13"><strong>Location :</strong> <span class="ml-2">USA</span></p>
+                <h5 class="font-13 text-uppercase">Details:</h5>
+                <p class="text-muted mb-2 font-13"><strong>Power :</strong> 
+                    <span class="ml-2">{{$store.selection.Power}} MW</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Owner :</strong> 
+                    <span class="ml-2 ">{{$store.selection.Owner}}</span></p>
+                <p class="text-muted mb-1 font-13"><strong>County :</strong> 
+                    <span class="ml-2">{{$store.selection.County}}</span></p>
+                <p class="text-muted mb-1 font-13"><strong>Borough :</strong> 
+                    <span class="ml-2">{{$store.selection.Borough}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Location :</strong> 
+                    <span class="ml-2">{{$store.selection.Location}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Area :</strong> 
+                    <span class="ml-2">{{$store.selection.Area}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Panel :</strong> 
+                    <span class="ml-2">{{$store.selection.Panel}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Strings :</strong> 
+                    <span class="ml-2">{{$store.selection.Strings}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Mounter :</strong> 
+                    <span class="ml-2">{{$store.selection.Mounter}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Inverter :</strong> 
+                    <span class="ml-2">{{$store.selection.Inverter}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>CBoard :</strong> 
+                    <span class="ml-2">{{$store.selection.CBoard}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Constuctor :</strong> 
+                    <span class="ml-2">{{$store.selection.Constructor}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Connection Number :</strong> 
+                    <span class="ml-2">{{$store.selection.ConnectionNumber}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Connection Date :</strong> 
+                    <span class="ml-2">{{$store.selection.ConnectionDate}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Tracker Begin :</strong> 
+                    <span class="ml-2">{{$store.selection.TrackerBegin}}</span></p>
+                <p class="text-muted mb-2 font-13"><strong>Sell Price :</strong> 
+                    <span class="ml-2">{{$store.selection.SellPrice}}</span></p>
             </div>
 
-            <ul class="social-list list-inline mt-3 mb-0">
-                <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-purple text-purple"><i class="fab fa-facebook"></i></a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-danger text-danger"><i class="fab fa-google"></i></a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-info text-info"><i class="fab fa-twitter"></i></a>
-                </li>
-                <li class="list-inline-item">
-                    <a href="javascript: void(0);" class="social-list-item border-secondary text-secondary"><i class="fab fa-github"></i></a>
-                </li>
-            </ul>
         </div> <!-- end card-box -->
 
         <div class="card-box">

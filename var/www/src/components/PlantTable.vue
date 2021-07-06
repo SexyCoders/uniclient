@@ -126,9 +126,11 @@ export default {
       },
     onSelectionChanged() {
       var selectedRows = this.gridApi.getSelectedRows();
-      this.$store.selection=selectedRows[0].ID;
-      console.log(selectedRows);
-      console.log(this.$store.selection);
+      //this.$store.selection=selectedRows[0].ID;
+      //console.log(selectedRows);
+      var plant=Object.values(this.$store.plants).filter((plant)=>plant.ID==selectedRows[0].ID);
+      this.$store.selection=plant[0];
+      console.log(JSON.stringify(this.$store.selection));
       this.$router.push('plantprofile');
     },
     },
