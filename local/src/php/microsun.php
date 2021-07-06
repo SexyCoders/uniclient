@@ -48,17 +48,18 @@ function plant_data_all()
                 //Power
                 $to_json->Power=$check->getPower();
                 //owner
-                $to_json->Owner=new stdClass;
-                $to_json->Owner->ID=$owner->getID();
-                $to_json->Owner->Company=$owner->getCompany();
-                $to_json->Owner->FirstName=$owner->getFirstName();
-                $to_json->Owner->LastName=$owner->getLastName();
-                $to_json->Owner->PhoneNumber=$owner->getPhoneNumber();
-                $to_json->Owner->Email=$owner->getEmail();
-                $to_json->Owner->Address=$owner->getAddress();
-                $to_json->Owner->zip=$owner->getzip();
-                $to_json->Owner->TIN=$owner->getTIN();
-                $to_json->Owner->Notes=$owner->getNotes();
+                $to_json->Owner=$owner->getID();
+                //$to_json->Owner=new stdClass;
+                //$to_json->Owner->ID=$owner->getID();
+                //$to_json->Owner->Company=$owner->getCompany();
+                //$to_json->Owner->FirstName=$owner->getFirstName();
+                //$to_json->Owner->LastName=$owner->getLastName();
+                //$to_json->Owner->PhoneNumber=$owner->getPhoneNumber();
+                //$to_json->Owner->Email=$owner->getEmail();
+                //$to_json->Owner->Address=$owner->getAddress();
+                //$to_json->Owner->zip=$owner->getzip();
+                //$to_json->Owner->TIN=$owner->getTIN();
+                //$to_json->Owner->Notes=$owner->getNotes();
                 //county
                 $to_json->County=new stdClass;
                 $to_json->County->ID=$county->getID();

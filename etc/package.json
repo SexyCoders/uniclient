@@ -25,6 +25,7 @@
     "vue": "^3.0.11",
     "vue-burger-menu": "^2.0.5",
     "vue-class-component": "^8.0.0-rc.1",
+    "vue-notifyjs": "^0.4.3",
     "vue-router": "^4.0.8",
     "vuex": "^4.0.1"
   },
