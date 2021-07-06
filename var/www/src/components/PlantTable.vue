@@ -3,9 +3,13 @@
   <ag-grid-vue
     style="height: 500px"
     class="ag-theme-alpine"
+    id="myGrid"
     @grid-ready="onGridReady"
+    :gridOptions="gridOptions"
     :columnDefs="columnDefs"
     :modules="modules"
+    :rowSelection="rowSelection"
+    @selection-changed="onSelectionChanged"
   >
   </ag-grid-vue>
 </template>
@@ -33,16 +37,30 @@ export default {
   },
   data() {
     return {
-      columnDefs: cols,
+      gridOptions: null,
+      gridApi: null,
+      columnDefs: null,
       modules: [ClientSideRowModelModule],
+      rowSelection:null,
     };
   },
+  beforeMount(){
+    this.gridOptions={};
+    this.columnDefs=cols;
+    this.rowSelection = 'single';
+  },
   mounted() {
+    this.gridApi = this.gridOptions.api;
+    this.gridColumnApi = this.gridOptions.columnApi;
   },
   methods: {
     setTitle(title)
       {
         this.$store.page_title=title;
+      },
+    storeCustomers(customers)
+      {
+        this.$store.customers=customers;
       },
     storePlants(plants)
       {
@@ -56,7 +74,10 @@ export default {
           var t=new Object();
           t.ID=value.ID;
           t.Power=value.Power;
-          t.Owner=value.Owner.Company;
+          var owner=Object.values(this.$store.customers).filter((customer)=>customer.ID==value.Owner);
+          //console.log(owner);
+
+          t.Owner=owner[0].Company;
           t.County=value.County.Name;
           t.Borough=value.Borough;
           t.Location=value.Location;
@@ -76,6 +97,18 @@ export default {
         });
         params.api.setRowData(table);
       };
+      
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_customer_data_full",
+          data: "",
+          success:
+          (response) =>
+              {
+                  this.storeCustomers(JSON.parse(response));
+              },
+            async:false
+            });
 
       $.ajax({
           type: 'POST',
@@ -90,7 +123,14 @@ export default {
           async:false
           });
 
-      }
+      },
+    onSelectionChanged() {
+      var selectedRows = this.gridApi.getSelectedRows();
+      this.$store.selection=selectedRows[0].ID;
+      console.log(selectedRows);
+      console.log(this.$store.selection);
+      this.$router.push('plantprofile');
+    },
     },
   created() {
       this.setTitle('Plants');
