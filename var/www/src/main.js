@@ -13,6 +13,7 @@ const store = createStore({
       NOAUTH: 0,
       copyright:"",
       title:"",
+      page_title:"",
       customers:"",
       page:"",
       plants:""
