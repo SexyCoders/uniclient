@@ -16,7 +16,8 @@ const store = createStore({
       page_title:"",
       customers:"",
       page:"",
-      plants:""
+      plants:"",
+      selection:null,
     }
   },
   mutations: {
@@ -30,6 +31,8 @@ app.use(store);
 
 import router from './router.js';
 app.use(router);
+
+import "vue-notifyjs/themes/default.css";
 
 app.mount('#app');
 
