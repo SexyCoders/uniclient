@@ -10,7 +10,8 @@
             </h1>
                 <router-view>
                 </router-view>
-              {{$store.copyright}}
+              {{$store.copyright}} 
+              <i class="far fa-copyright"></i>
         </main>
 </template>
 
