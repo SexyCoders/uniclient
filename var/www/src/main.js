@@ -6,6 +6,7 @@ const app=createApp(App)
 
 import { createStore } from 'vuex'
 
+
 // Create a new store instance.
 const store = createStore({
   state () {
@@ -19,12 +20,8 @@ const store = createStore({
       plants:"",
       selection:null,
     }
-  },
-  mutations: {
-    set_auth_flag(state,t) {
-      state.NOAUTH=t;
-    }
   }
+
 })
 
 app.use(store);

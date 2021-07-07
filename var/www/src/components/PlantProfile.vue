@@ -39,9 +39,9 @@
                 <p class="text-muted mb-2 font-13"><strong>Connection Number :</strong> 
                     <span class="ml-2">{{$store.selection.ConnectionNumber}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Connection Date :</strong> 
-                    <span class="ml-2">{{$store.selection.ConnectionDate}}</span></p>
+                    <span class="ml-2">{{$data.connection_time}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Tracker Begin :</strong> 
-                    <span class="ml-2">{{$store.selection.TrackerBegin}}</span></p>
+                    <span class="ml-2">{{$data.tracker_time}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Sell Price :</strong> 
                     <span class="ml-2">{{$store.selection.SellPrice}}</span></p>
             </div>
@@ -369,10 +369,38 @@
 </div>
 </template>
 <script>
-
+import {Time} from "@sexycoders/time.js"
 export default {
-  components: {
-  }
+    components: {
+    },
+    data() {
+        return {
+            connection_time:"",
+            tracker_time:""
+        };
+  },
+    computed()
+        {
+        },
+    mounted() {
+    },
+    methods: {
+        setTitle(title)
+        {
+            this.$store.page_title=title;
+        },
+        },
+     created()
+        {
+        if(this.$store.selection=='nothing')
+            this.$router.push('plants');
+        this.setTitle('Plant Profile');
+        var t=new Time();
+        t.fromString(this.$store.selection.ConnectionDate);
+        this.connection_time=t.toStringf("dmyl-","c",1);
+        t.fromString(this.$store.selection.TrackerBegin);
+        this.tracker_time=t.toStringf("dmyl-","c",1);
+        }
 };
 </script>
 <style scoped>
