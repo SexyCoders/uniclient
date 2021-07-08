@@ -4,17 +4,18 @@
 
 #include <m_customer.h>
 #include <m_database.h>
+#include <m_user.h>
 
 
 extern "C" 
     {
-        PHPCPP_EXPORT void *get_module() 
-            {
-                static Php::Extension myExtension("PhpUniClient", "1.0");
-                Php::Class<UniClient::PhpUniClient> PhpUniClient("UniClientObject");
-                //database.method<&Database::CheckDb>("CheckDb", {});
-                PhpUniClient.method<&UniClient::PhpUniClient::GET>("GET",{Php::ByVal("parameter",Php::Type::String,true)});
-                myExtension.add(std::move(PhpUniClient));
+PHPCPP_EXPORT void *get_module() 
+    {
+        static Php::Extension myExtension("PhpUniClient", "1.0");
+        Php::Class<UniClient::PhpUniClient> PhpUniClient("UniClientObject");
+        //database.method<&Database::CheckDb>("CheckDb", {});
+        PhpUniClient.method<&UniClient::PhpUniClient::GET>("GET",{Php::ByVal("parameter",Php::Type::String,true)});
+        myExtension.add(std::move(PhpUniClient));
         Php::Class<Microsun::Database> database("MicrosunDatabase");
             database.method<&Microsun::Database::getDBPath>("getDBPath", {});
             database.method<&Microsun::Database::getBUFFERPath>("getBBUFFERPath", {});
@@ -108,6 +109,13 @@ extern "C"
             plant.method<&Microsun::Plant::getTrackerBegin> ("getTrackerBegin",{});
             plant.method<&Microsun::Plant::getSellPrice> ("getSellPrice",{});
             myExtension.add(std::move(plant));
+        Php::Class<Microsun::User>user("MicrosunUser");
+            //user.method<&Microsun::User::authenticate>("authenticate",{});
+            //user.method<&Microsun::User::init>("init",{Php::ByVal("parameter",Php::Type::String,true)});
+            //user.method<&Microsun::User::phpgetAuthKey>("getAuthKey",{});
+            //user.method<&Microsun::User::phpgetusername>("getUsername",{});
+            myExtension.add(std::move(user));
+
             return myExtension;
             }
     }
