@@ -1,9 +1,8 @@
 #include <microsun.h>
 #include <string>
 #include <phpcpp.h>
-#include <sqlite3.h>
 #include <vector>
-#include <customer.h>
+#include <my_time.h>
 
 #ifndef USER_H
 #define USER_H
@@ -11,46 +10,36 @@
 namespace Microsun{
 class User : public Php::Base
 	{
-		private:
-			std::string username;
-			std::string passwd;
+		public:
+			unsigned int ID;
+			std::string FName;
+			std::string LName;
+			Time DateOfBirth;
 			std::string email;
-			std::string group="customers";
-			std::vector<std::string> user_groups;
+			unsigned long int PhoneNumber;
+			unsigned long int zip;
+			std::string Address;
+			std::string Notes;
+			Time HireDate;
+			std::string group;
 		public:
-				std::string DatabasePath="/var/lib/uniclient/MICROSUN_DATABASE";
-		public:
-			User();
+			User(){};
 		public:
 			User operator=(User src)
 				{
-					this->username=src.username;
-					this->passwd=src.passwd;
+					this->ID=src.ID;
+					this->FName=src.FName;
+					this->LName=src.LName;
+					this->DateOfBirth=src.DateOfBirth;
 					this->email=src.email;
+					this->PhoneNumber=src.PhoneNumber;
+					this->zip=src.zip;
+					this->Address=src.Address;
+					this->Notes=src.Notes;
+					this->HireDate=src.HireDate;
 					this->group=src.group;
 				return *this;
 				}
-
-			Php::Value phpgetusername();
-			Php::Value phpgetpasswd();
-			Php::Value phpgetemail();
-			Php::Value phpgetgroup();
-			Php::Value phpgetAuthKey();
-
-			std::string getusername();
-			std::string getpasswd();
-			std::string getemail();
-			std::string getgroup();
-
-			void phpsetusername(Php::Parameters);
-			void phpsetpasswd(Php::Parameters);
-			void phpsetemail(Php::Parameters);
-			void phpsetgroup(Php::Parameters);
-
-			void setusername(std::string);
-			void setpasswd(std::string);
-			void setemail(std::string);
-			void setgroup(std::string);
 	};
 };
 #endif

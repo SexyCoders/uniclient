@@ -29,5 +29,11 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($t));
         return $response;
     });
+$app->post('/get_pending_errors_all',function(Request $request,Response $response)
+    {
+        $t=pending_errors_all();
+        $response->getBody()->write(json_encode($t));
+        return $response;
+    });
 $app->run();
 
