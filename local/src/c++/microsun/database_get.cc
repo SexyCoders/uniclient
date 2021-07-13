@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include <my_time.h>
 #include <m_user.h>
+#include <sstream>
 
 static int callback_customer_all(void*,int,char**,char**);
 static int callback_user(void*,int,char**,char**);
@@ -36,7 +37,7 @@ Php::Value Microsun::Database::phpget(Php::Parameters &arg)
 std::any Microsun::Database::get(std::string command)
     {
         sqlite3* db;
-        sqlite3_open(this->getDBPath(),&db);
+        sqlite3_open(this->getDBPath().c_str(),&db);
         char* errmsg=(char*) malloc(1000*sizeof(char));
         std::string sql;
         int check=-1;
@@ -59,10 +60,11 @@ std::any Microsun::Database::get(std::string command)
                 }
             return 123;
     }
+
 std::any Microsun::Database::get(std::string command,std::string arg)
     {
         sqlite3* db;
-        sqlite3_open(this->getDBPath(),&db);
+        sqlite3_open(this->getDBPath().c_str(),&db);
         char* errmsg=(char*) malloc(1000*sizeof(char));
         std::string sql;
         int check=-1;
@@ -125,6 +127,67 @@ std::any Microsun::Database::get(std::string command,std::string arg)
         return 0;
     }
 
+static int split(std::string str,std::vector<std::string>* vect)
+    {
+        std::stringstream ss(str);
+
+        for (std::string i; ss >> i;) {
+            vect->push_back(i);
+            if (ss.peek() == ',')
+                ss.ignore();
+        }
+    }
+
+static int user_callback(void* passthrough,int argc,char** argv,char** col)
+    {
+        Microsun::User* U=(Microsun::User*) passthrough;
+        U->ID=atoi(argv[0]);
+        U->FName=argv[1];
+        U->LName=argv[2];
+        U->DateOfBirth.fromString(argv[3]);
+        U->email=argv[4];
+        U->PhoneNumber=atoi(argv[5]);
+        U->zip=atoi(argv[6]);
+        U->Address=argv[7];
+        U->Notes=argv[8];
+        U->HireDate.fromString(argv[9]);
+        U->username=argv[10];
+        U->group=argv[11];
+    return 0;
+    }
+
+static int group_callback(void* passthrough,int argc,char** argv,char** col)
+    {
+        Microsun::Database* THIS=(Microsun::Database*) passthrough;
+        Microsun::Group t;
+        t.name=*argv;
+        std::vector<std::string> T;
+        split(argv[1],&T);
+        
+        sqlite3* db;
+        sqlite3_open(THIS->getDBPath().c_str(),&db);
+        char* errmsg;
+        int size=T.size();
+        for(int j=0;size;j++)
+            {
+                Microsun::User temp;
+                std::string sql="SELECT \
+                ID,FNAME,LNAME,DATEOFBIRTH,EMAIL,PHONE,ZIP,ADDRESS,NOTES,HIREDATE,USERNAME,USERGROUP\
+                FROM USERS WHERE USERNAME'="+T[j]+"';";
+                sqlite3_exec(db,sql.c_str(),user_callback,(void*)&temp,&errmsg);
+                t.users.push_back(temp);
+            }
+        sqlite3_close(db);
+        THIS->groups.push_back(t);
+    }
+
+void Microsun::Database::get_groups()
+    {
+        sqlite3* db;
+        sqlite3_open(this->getDBPath().c_str(),&db);
+        char* errmsg;
+        sqlite3_exec(db,"SELECT * FROM GROUPS;",group_callback,(void*)this,&errmsg);
+    }
 
 static int callback_customer_all(void* passthrough,int argc,char** argv,char** col)
         {
@@ -179,7 +242,7 @@ static int callback_plant_id(void* passthrough,int argc,char** argv,char** col)
         {
                 std::vector<std::string>* ID=(std::vector<std::string>*) passthrough;
                 for(int j=0;j<argc;j++)
-                        ID->push_back(argv[j]); 
+                    ID->push_back(argv[j]); 
         return 0;
         }
 
