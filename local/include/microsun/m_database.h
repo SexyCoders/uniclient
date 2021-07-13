@@ -26,6 +26,7 @@ private:
 public:
     std::vector<Microsun::Customer*> stored_customers;
     std::vector<Microsun::User*> stored_users;
+    std::vector<Microsun::Problem*> stored_problems;
     std::string string_buffer;
     Microsun::Plant* plant;
     std::vector<std::string> id;
