@@ -8,6 +8,7 @@
 #include <m_user.h>
 #include <m_problem.h>
 #include <any>
+#include <m_group.h>
 
 #ifndef DATABASE_H
 #define DATABASE_H
@@ -20,44 +21,34 @@ private:
     std::string Path=this->DataPath+"/MICROSUN_DATABASE";
     std::string buffer=this->DataPath+"/buffer";
     std::string BUFFER=this->DataPath+"/BUFFER";
+    std::string ErrorPath=this->DataPath+"/ERROR_DATABASE";
+
 public:
     std::vector<Microsun::Customer*> stored_customers;
     std::vector<Microsun::User*> stored_users;
-    std::vector<Microsun::Problem*> stored_problems;
-    //std::vector<Plant*> stored_plants;
     std::string string_buffer;
     Microsun::Plant* plant;
     std::vector<std::string> id;
-    std::vector<std::string> user_names;
-    int stored_int;
+
+    std::vector<Microsun::Group> groups;
+
 public:
+    void get_groups();
     Database() 
         {
             this->plant=new Microsun::Plant();
+            this->get_groups();
         }
     virtual ~Database() {}
-    Php::Value phpResolveError(Php::Parameters &arg)
-        {
-        return this->ResolveError(arg[0],arg[1].stringValue());
-        }
-    int ResolveError(int,std::string);
     Php::Value CheckDb();
-    Php::Value phpgetStoredInt()
-        {
-        return this->stored_int;
-        }
-    Php::Value getDataPath() const 
-    { 
-        return DataPath; 
-    }
-    Php::Value getDBPath() const 
-    { 
+    std::string getDBPath()
+        { 
         return Path; 
-    }
-    Php::Value getbufferPath() const 
-    { 
-        return buffer; 
-    }
+        }
+    Php::Value phpgetID() 
+        { 
+        return this->id; 
+        }
     Php::Value getBUFFERPath() const 
     { 
         return BUFFER; 
@@ -77,28 +68,9 @@ public:
         {
             return Php::Object("MicrosunPlant",this->plant);
         }
-    Php::Value getID()
-        {
-            return this->id;
-        }
-    Php::Value getStoredProblems()
-        {
-            std::vector<Php::Object> tmp;
-            for(int j=0;j<this->stored_problems.size();j++)
-                tmp.push_back(Php::Object("MicrosunProblem",this->stored_problems[j]));
-            return tmp;
-        }
     std::any get(std::string);
     std::any get(std::string,std::string);
-    std::any put(std::string);
-    std::any put(std::string,std::string,std::string,int,std::string,std::string,std::string,std::string);
-    Php::Value phpput(Php::Parameters &arg);
-    Php::Value del(Php::Parameters &arg);
     Php::Value phpget(Php::Parameters &arg);
-    Php::Value phpgetUserNames()
-        {
-            return this->user_names;
-        }
         };
 };
 #endif

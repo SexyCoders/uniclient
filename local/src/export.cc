@@ -17,22 +17,10 @@ PHPCPP_EXPORT void *get_module()
         PhpUniClient.method<&UniClient::PhpUniClient::GET>("GET",{Php::ByVal("parameter",Php::Type::String,true)});
         myExtension.add(std::move(PhpUniClient));
         Php::Class<Microsun::Database> database("MicrosunDatabase");
-            database.method<&Microsun::Database::getDBPath>("getDBPath", {});
-            database.method<&Microsun::Database::getBUFFERPath>("getBBUFFERPath", {});
-            database.method<&Microsun::Database::getbufferPath>("getbufferPath", {});
-            database.method<&Microsun::Database::getDataPath>("getDataPath", {});
-            database.method<&Microsun::Database::getStringBuffer>("getStringBuffer", {});
+            database.method<&Microsun::Database::phpgetID>("getID", {});
             database.method<&Microsun::Database::getStoredCustomers>("getStoredCustomers", {});
-            database.method<&Microsun::Database::getStoredProblems>("getStoredProblems", {});
             database.method<&Microsun::Database::getStoredPlants>("getStoredPlants", {});
-            database.method<&Microsun::Database::phpgetStoredInt>("getStoredInt", {});
-            database.method<&Microsun::Database::getID>("getID", {});
-            database.method<&Microsun::Database::CheckDb>("CheckDb", {});
             database.method<&Microsun::Database::phpget>("get",{Php::ByVal("parameter",Php::Type::String,true)});
-            database.method<&Microsun::Database::phpput>("put",{Php::ByVal("parameter",Php::Type::String,true)});
-            database.method<&Microsun::Database::del>("del",{Php::ByVal("parameter",Php::Type::String,true)});
-            database.method<&Microsun::Database::phpgetUserNames>("getUserNames", {});
-            database.method<&Microsun::Database::phpResolveError>("ResolveError", {});
             myExtension.add(std::move(database));
 
         Php::Class<Microsun::Customer> customer("MicrosunCustomer");

@@ -5,10 +5,10 @@
 #include <variant>
 #include <any>
 
-static int callback_keep(void*,int,char**,char**);
+//static int callback_keep(void*,int,char**,char**);
 
-int Microsun::Database::ResolveError(int id,std::string notes)
-    {
+//int Microsun::Database::ResolveError(int id,std::string notes)
+    //{
         //sqlite3* db;
         //char* errmsg=(char*) malloc(1000*sizeof(char));
         //sqlite3_open(this->Path.c_str(),&db);
@@ -33,13 +33,13 @@ int Microsun::Database::ResolveError(int id,std::string notes)
         //if(check)
             //return check;
         //std::cout<<sql<<"\n";
-    return 0;
-    }
+    //return 0;
+    //}
 
-static int callback_keep(void* data,int argc,char** argv,char** col)
-    {
-        std::vector<std::string>* RETURN=(std::vector<std::string>*) data;
-        for(int j=0;j<argc;j++)
-            RETURN->push_back(argv[j]);
-    return 0;
-    }
+//static int callback_keep(void* data,int argc,char** argv,char** col)
+    //{
+        //std::vector<std::string>* RETURN=(std::vector<std::string>*) data;
+        //for(int j=0;j<argc;j++)
+            //RETURN->push_back(argv[j]);
+    //return 0;
+    //}
