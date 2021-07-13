@@ -58,6 +58,17 @@ std::any Microsun::Database::get(std::string command)
                         check=sqlite3_exec(db,sql.c_str(),callback_plant_id,(void*) &this->id,&errmsg);
                 return 0;
                 }
+            else if(!command.compare("pending"))
+                {
+                    sql="SELECT * FROM PENDING_ERRORS;";
+                    check=sqlite3_exec(db, sql.c_str(),callback_pending,(void*) this,&errmsg);
+                    if(!check)
+                        {
+                            return 0;
+                        }
+                    else
+                        return check;
+                }
             return 123;
     }
 
