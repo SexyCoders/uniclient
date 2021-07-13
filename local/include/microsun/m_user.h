@@ -22,6 +22,7 @@ class User : public Php::Base
 			std::string Notes;
 			Time HireDate;
 			std::string group;
+			std::string username;
 		public:
 			User(){};
 		public:
