@@ -20,7 +20,7 @@ int UniClient::Database::exec(const char* SQL,std::vector<std::vector<std::strin
 		for(int j=0;j<count;j++)
 			{
 				std::vector<std::string> tmp;
-				size_t size=0;
+				//size_t size=0;
 				t=mysql_fetch_row(result);
 				for(int i=0;i<fields;i++)
 					{
