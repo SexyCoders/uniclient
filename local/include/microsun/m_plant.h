@@ -15,75 +15,50 @@
 namespace Microsun{
 class Plant : public Php::Base
 	{
-		private:
-		std::string ID;
-		float Power;
-		Customer* Owner;
-		County* county;
-		std::string Borough;
-		std::string Location;
-		double Area;
-		long int NPanels;
-		Panel* panel;
-		std::string Strings;
-		Mounter*  Mounting;
-		Inverter* inverter;
-		CBoard* cboard;
-		Constructor* constructor;
-		unsigned long int ConnectionNumber;
-		Time* ConnectionDate;
-		Time* TrackerBegin;
-		float SellPrice;
 		public:
-		Plant()
-				{
-						this->Owner=new Microsun::Customer();
-						this->county=new Microsun::County();
-						this->panel=new Microsun::Panel();
-						this->Mounting=new Microsun::Mounter();
-						this->inverter=new Microsun::Inverter();
-						this->cboard=new Microsun::CBoard();
-						this->constructor=new Microsun::Constructor();
-						this->ConnectionDate=new Time();
-						this->TrackerBegin=new Time();
-
-				}
-
-			Plant(std::string ID,float Power,Customer Owner,County county,
-					std::string Borough,std::string Location,double Area,long int NPanels,
-					Panel panel,std::string Strings,Mounter mounting,Inverter inverter,CBoard cboard,
-					Constructor constructor,unsigned long int ConnectionNumber,Time ConnectionDate,Time TrackerBegin,float SellPrice)
-				{
-					this->ID=ID;
-					this->Power=Power;
-					this->Owner=new Microsun::Customer();
-					*this->Owner=Owner;
-					this->county=new Microsun::County();
-					*this->county=county;
-					this->Borough=Borough;
-					this->Location=Location;
-					this->Area=Area;
-					this->NPanels=NPanels;
-					this->panel=new Microsun::Panel();
-					*this->panel=panel;
-					this->Strings=Strings;
-					this->Mounting=new Microsun::Mounter();
-					*this->Mounting=mounting;
-					this->inverter=new Microsun::Inverter();
-					*this->inverter=inverter;
-					this->cboard=new Microsun::CBoard();
-					*this->cboard=cboard;
-					this->constructor=new Microsun::Constructor();
-					*this->constructor=constructor;
-					this->ConnectionNumber=ConnectionNumber;
-					*this->ConnectionDate=ConnectionDate;
-					*this->TrackerBegin=TrackerBegin;
-					this->SellPrice=SellPrice;
-				}
+			std::string ID;
+			float Power;
+			Customer Owner;
+			County county;
+			std::string Borough;
+			std::string Location;
+			double Area;
+			long int NPanels;
+			Panel panel;
+			std::string Strings;
+			Mounter  Mounting;
+			Inverter inverter;
+			CBoard cboard;
+			Constructor constructor;
+			unsigned long int ConnectionNumber;
+			Time ConnectionDate;
+			Time TrackerBegin;
+			float SellPrice;
 		public:
-			void setID(std::string ID)
+			Plant()
+					{
+					}
+			Plant operator=(Plant src)
 				{
-						this->ID=ID;
+					this->ID=src.ID;
+					this->Power=src.Power;
+					this->Owner=src.Owner;
+					this->county=src.county;
+					this->Borough=src.Borough;
+					this->Location=src.Location;
+					this->Area=src.Area;
+					this->NPanels=src.NPanels;
+					this->panel=src.panel;
+					this->Strings=src.Strings;
+					this->Mounting=src.Mounting;
+					this->inverter=src.inverter;
+					this->cboard=src.cboard;
+					this->constructor=src.constructor;
+					this->ConnectionNumber=src.ConnectionNumber;
+					this->ConnectionDate=src.ConnectionDate;
+					this->TrackerBegin=src.TrackerBegin;
+					this->SellPrice=src.SellPrice;
+				return *this;
 				}
 			Php::Value getID(void)
 				{
@@ -95,11 +70,11 @@ class Plant : public Php::Base
 				}
 			Php::Value getOwner(void)
 				{
-				return Php::Object("MicrosunCustomer",this->Owner);
+				return Php::Object("MicrosunCustomer",&this->Owner);
 				}
 			Php::Value getCounty(void)
 				{
-				return Php::Object("MicrosunCounty",this->county);
+				return Php::Object("MicrosunCounty",&this->county);
 				}
 			Php::Value getBorough(void)
 				{
@@ -119,7 +94,7 @@ class Plant : public Php::Base
 				}
 			Php::Value getPanel(void)
 				{
-				return Php::Object("MicrosunPanel",this->panel);
+				return Php::Object("MicrosunPanel",&this->panel);
 				}
 			Php::Value getStrings(void)
 				{
@@ -127,19 +102,19 @@ class Plant : public Php::Base
 				}
 			Php::Value getMounting(void)
 				{
-				return Php::Object("MicrosunMounter",this->Mounting);
+				return Php::Object("MicrosunMounter",&this->Mounting);
 				}
 			Php::Value getInverter(void)
 				{
-				return Php::Object("MicrosunInverter",this->inverter);
+				return Php::Object("MicrosunInverter",&this->inverter);
 				}
 			Php::Value getCBoard(void)
 				{
-				return Php::Object("MicrosunCBoard",this->cboard);
+				return Php::Object("MicrosunCBoard",&this->cboard);
 				}
 			Php::Value getConstructor(void)
 				{
-				return Php::Object("MicrosunConstructor",this->constructor);
+				return Php::Object("MicrosunConstructor",&this->constructor);
 				}
 			Php::Value getConnectionNumber(void)
 				{
@@ -147,85 +122,15 @@ class Plant : public Php::Base
 				}
 			Php::Value getConnectionDate(void)
 				{
-				return this->ConnectionDate->toString();
+				return this->ConnectionDate.toString();
 				}
 			Php::Value getTrackerBegin(void)
 				{
-				return this->TrackerBegin->toString();
+				return this->TrackerBegin.toString();
 				}
 			Php::Value getSellPrice(void)
 				{
 				return (double) this->SellPrice;
-				}
-
-		
-			void setPower(float Power)
-				{
-						this->Power=Power;
-				}
-			void setOwner(Customer owner)
-				{
-						*this->Owner=owner;
-				}
-			void setCounty(County county)
-				{
-						*this->county=county;
-				}
-			void setBorough(std::string Borough)
-				{
-						this->Borough=Borough;
-				}
-			void setLocation(std::string Location)
-				{
-						this->Location=Location;
-				}
-			void setArea(double Area)
-				{
-						this->Area=Area;
-				}
-			void setNPanels(long int NPanels)
-				{
-						this->NPanels=NPanels;
-				}
-			void setPanel(Panel panel)
-				{
-						*this->panel=panel;
-				}
-			void setStrings(std::string Strings)
-				{
-						this->Strings=Strings;
-				}
-			void setMounting(Mounter mounting)
-				{
-						*this->Mounting=mounting;
-				}
-			void setInverter(Inverter inverter)
-				{
-						*this->inverter=inverter;
-				}
-			void setCBoard(CBoard cboard)
-				{
-						*this->cboard=cboard;
-				}
-			void setConstructor(Constructor constructor)
-				{
-						*this->constructor=constructor;
-				}
-			void setConnectionNumber(unsigned long int ConnNum)
-				{
-						this->ConnectionNumber=ConnNum;
-				}
-			void setConnectionDate(Time ConnDate)
-				{
-						*this->ConnectionDate=ConnDate;
-				}
-			void setTrackerBeggin(Time TrackerBegin)
-				{
-						*this->TrackerBegin=TrackerBegin;
-				}
-			void setSellPrice(float Price)
-				{
-						this->SellPrice=Price;
 				}
 	};
 };

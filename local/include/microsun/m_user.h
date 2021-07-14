@@ -39,6 +39,7 @@ class User : public Php::Base
 					this->Notes=src.Notes;
 					this->HireDate=src.HireDate;
 					this->group=src.group;
+					this->username=src.username;
 				return *this;
 				}
 	};
