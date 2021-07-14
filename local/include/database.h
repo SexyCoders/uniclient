@@ -47,7 +47,7 @@ class Database
             int exec(const char* SQL,std::vector<std::vector<std::string>>* out); 
             int exec(std::string SQL)
                 {
-                    this->exec(SQL.c_str());
+                    return this->exec(SQL.c_str());
                 };
     };
 

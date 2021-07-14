@@ -12,28 +12,21 @@ extern "C"
 PHPCPP_EXPORT void *get_module() 
     {
         static Php::Extension myExtension("PhpUniClient", "1.0");
-        Php::Class<UniClient::PhpUniClient> PhpUniClient("UniClientObject");
+        //Php::Class<UniClient::PhpUniClient> PhpUniClient("UniClientObject");
         //database.method<&Database::CheckDb>("CheckDb", {});
-        PhpUniClient.method<&UniClient::PhpUniClient::GET>("GET",{Php::ByVal("parameter",Php::Type::String,true)});
-        myExtension.add(std::move(PhpUniClient));
+        //PhpUniClient.method<&UniClient::PhpUniClient::GET>("GET",{Php::ByVal("parameter",Php::Type::String,true)});
+        //myExtension.add(std::move(PhpUniClient));
+        Php::Class<Microsun::Problem> problem("MicrosunProblem");
+            myExtension.add(std::move(problem));
         Php::Class<Microsun::Database> database("MicrosunDatabase");
             database.method<&Microsun::Database::phpgetID>("getID", {});
             database.method<&Microsun::Database::getStoredCustomers>("getStoredCustomers", {});
             database.method<&Microsun::Database::getStoredPlants>("getStoredPlants", {});
+            database.method<&Microsun::Database::getStoredProblems>("getStoredProblems", {});
             database.method<&Microsun::Database::phpget>("get",{Php::ByVal("parameter",Php::Type::String,true)});
             myExtension.add(std::move(database));
 
         Php::Class<Microsun::Customer> customer("MicrosunCustomer");
-            customer.method<&Microsun::Customer::setID>("setID",{Php::ByVal("ID",Php::Type::Numeric,true)});
-            customer.method<&Microsun::Customer::setCompany>("setCompany",{Php::ByVal("Company",Php::Type::String,true)});
-            customer.method<&Microsun::Customer::setFirstName>("setFirstName",{Php::ByVal("FirstName",Php::Type::String,true)});
-            customer.method<&Microsun::Customer::setLastName>("setLastName",{Php::ByVal("LastName",Php::Type::String,true)});
-            customer.method<&Microsun::Customer::setPhoneNumber>("setPhoneNumber",{Php::ByVal("PhoneNumber",Php::Type::Numeric,true)});
-            customer.method<&Microsun::Customer::setemail>("setemail",{Php::ByVal("email",Php::Type::String,true)});
-            customer.method<&Microsun::Customer::setAddress>("setAddress",{Php::ByVal("Address",Php::Type::String,true)});
-            customer.method<&Microsun::Customer::setzip>("setzip",{Php::ByVal("zip",Php::Type::Numeric,true)});
-            customer.method<&Microsun::Customer::setTIN>("setTIN",{Php::ByVal("TIN ",Php::Type::Numeric,true)});
-            customer.method<&Microsun::Customer::setNotes>("setNotes",{Php::ByVal("Notes",Php::Type::String,true)});
             customer.method<&Microsun::Customer::phpgetID>("getID",{});
             customer.method<&Microsun::Customer::phpgetCompany>("getCompany",{});
             customer.method<&Microsun::Customer::phpgetFirstName>("getFirstName",{});
@@ -98,10 +91,6 @@ PHPCPP_EXPORT void *get_module()
             plant.method<&Microsun::Plant::getSellPrice> ("getSellPrice",{});
             myExtension.add(std::move(plant));
         Php::Class<Microsun::User>user("MicrosunUser");
-            //user.method<&Microsun::User::authenticate>("authenticate",{});
-            //user.method<&Microsun::User::init>("init",{Php::ByVal("parameter",Php::Type::String,true)});
-            //user.method<&Microsun::User::phpgetAuthKey>("getAuthKey",{});
-            //user.method<&Microsun::User::phpgetusername>("getUsername",{});
             myExtension.add(std::move(user));
 
             return myExtension;
