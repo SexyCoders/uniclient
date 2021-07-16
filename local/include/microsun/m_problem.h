@@ -26,6 +26,21 @@ class Problem : public Php::Base
 			Problem()
 				{
 				}
+			Problem operator=(Problem src)
+				{
+					this->reg_id=src.reg_id;
+					this->plant=src.plant;
+					this->Type=src.Type;
+					this->Pos=src.Pos;
+					this->ErrorCode=src.ErrorCode;
+					this->ReportedDate=src.ReportedDate;
+					this->ReportedUser=src.ReportedUser;
+					this->ErrorNotes=src.ErrorNotes;
+					this->AssignedMech=src.AssignedMech;
+					this->ResolvedDate=src.ResolvedDate;
+					this->MechNotes=src.MechNotes;
+				return *this;
+				}
 	};
 };
 
