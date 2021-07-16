@@ -9,6 +9,7 @@
 #include <m_problem.h>
 #include <any>
 #include <m_group.h>
+#include <iostream>
 
 #ifndef DATABASE_H
 #define DATABASE_H
@@ -16,6 +17,20 @@
 namespace Microsun{
 class Database : public Php::Base
 {
+
+
+//typedef struct id_table
+    //{
+        //std::string* id;
+        //int size;
+    //}id_table;
+
+typedef struct customer_table
+    {
+        Microsun::Customer* data;
+        int size;
+    }customer_table;
+
 public:
     std::string DataPath="/var/lib/uniclient";
     std::string Path=this->DataPath+"/MICROSUN_DATABASE";
@@ -23,50 +38,58 @@ public:
 
 public:
     //runtime data
-    std::vector<Microsun::Group> groups;
+    Microsun::Group* groups;
+    int g_size;
 
     //store
-    //std::vector<Microsun::Customer> stored_customers;
+    //id_table ID;
+    customer_table stored_customers;
+    //Microsun::Plant plant;
     //std::vector<Microsun::Problem> stored_problems;
-    Microsun::Plant plant;
-    std::vector<std::string> id;
 
 public:
-    Microsun::User get_user(std::string,std::string);
-    void get_groups();
+    int get_user(std::string,std::string,Microsun::User*);
+    int get_groups();
     int get(std::string);
     int get(std::string,std::string);
     Php::Value phpget(Php::Parameters &arg);
-    Php::Value CheckDb();
     Database() 
         {
             this->get_groups();
+            //this->ID.size=0;
+            this->stored_customers.size=0;
         }
-    virtual ~Database() {}
-    Php::Value phpgetID() 
-        { 
-        return this->id; 
+    ~Database() 
+        {
         }
     Php::Value getStoredCustomers()
         {
-            std::vector<Php::Object> tmp;
-            int lim=this->stored_customers.size();
-            for(int j=0;j<lim;j++)
-                tmp.push_back(Php::Object("MicrosunCustomer",&this->stored_customers[j]));
+            Php::Value tmp;
+            for(int j=0;j<this->stored_customers.size;j++)
+                tmp[j]=Php::Object("MicrosunCustomer",&this->stored_customers.data[j]);
+            tmp[0]="MEGALES";
+            tmp[1]="PAPARIES";
             return tmp;
         }
-    Php::Value getStoredProblems()
-        {
-            std::vector<Php::Object> tmp;
-            int lim=this->stored_problems.size();
-            for(int j=0;j<lim;j++)
-                tmp.push_back(Php::Object("MicrosunProblem",&this->stored_problems[j]));
-            return tmp;
-        }
-    Php::Value getStoredPlants()
-        {
-            return Php::Object("MicrosunPlant",&this->plant);
-        }
+    //Php::Value phpgetID() 
+        //{ 
+            //Php::Value tmp;
+            //for(int j=0;j<this->ID.size;j++)
+                //tmp[j]=(this->ID.id[j]);
+        //return tmp; 
+        //}
+    //Php::Value getStoredProblems()
+        //{
+            //std::vector<Php::Object> tmp;
+            //int lim=this->stored_problems.size();
+            //for(int j=0;j<lim;j++)
+                //tmp.push_back(Php::Object("MicrosunProblem",&this->stored_problems[j]));
+            //return tmp;
+        //}
+    //Php::Value getStoredPlants()
+        //{
+            //return Php::Object("MicrosunPlant",&this->plant);
+        //}
         };
 };
 #endif
