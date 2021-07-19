@@ -75,7 +75,7 @@ export default {
           t.ID=value.ID;
           t.Power=value.Power;
           var owner=Object.values(this.$store.customers).filter((customer)=>customer.ID==value.Owner);
-          //console.log(owner);
+         // console.log(owner);
 
           t.Owner=owner[0].Company;
           t.County=value.County.Name;

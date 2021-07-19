@@ -18,45 +18,57 @@ class Plant : public Php::Base
 		public:
 			std::string ID;
 			float Power;
-			Customer Owner;
-			County county;
+			Customer* Owner;
+			County* county;
 			std::string Borough;
 			std::string Location;
 			double Area;
 			long int NPanels;
-			Panel panel;
+			Panel* panel;
 			std::string Strings;
-			Mounter  Mounting;
-			Inverter inverter;
-			CBoard cboard;
-			Constructor constructor;
+			Mounter*  Mounting;
+			Inverter* inverter;
+			CBoard* cboard;
+			Constructor* constructor;
 			unsigned long int ConnectionNumber;
-			Time ConnectionDate;
-			Time TrackerBegin;
+			Time* ConnectionDate;
+			Time* TrackerBegin;
 			float SellPrice;
 		public:
 			Plant()
+					{
+						this->Owner=new Customer();
+						this->county=new County();
+						this->panel=new Panel();
+						this->Mounting=new Mounter();
+						this->inverter=new Inverter();
+						this->cboard=new CBoard();
+						this->constructor=new Constructor();
+						this->ConnectionDate=new Time();
+						this->TrackerBegin=new Time();
+					}
+			~Plant()
 					{
 					}
 			Plant operator=(Plant src)
 				{
 					this->ID=src.ID;
 					this->Power=src.Power;
-					this->Owner=src.Owner;
-					this->county=src.county;
+					*this->Owner=*src.Owner;
+					*this->county=*src.county;
 					this->Borough=src.Borough;
 					this->Location=src.Location;
 					this->Area=src.Area;
 					this->NPanels=src.NPanels;
-					this->panel=src.panel;
+					*this->panel=*src.panel;
 					this->Strings=src.Strings;
-					this->Mounting=src.Mounting;
-					this->inverter=src.inverter;
-					this->cboard=src.cboard;
-					this->constructor=src.constructor;
+					*this->Mounting=*src.Mounting;
+					*this->inverter=*src.inverter;
+					*this->cboard=*src.cboard;
+					*this->constructor=*src.constructor;
 					this->ConnectionNumber=src.ConnectionNumber;
-					this->ConnectionDate=src.ConnectionDate;
-					this->TrackerBegin=src.TrackerBegin;
+					*this->ConnectionDate=*src.ConnectionDate;
+					*this->TrackerBegin=*src.TrackerBegin;
 					this->SellPrice=src.SellPrice;
 				return *this;
 				}
@@ -70,11 +82,11 @@ class Plant : public Php::Base
 				}
 			Php::Value getOwner(void)
 				{
-				return Php::Object("MicrosunCustomer",&this->Owner);
+				return Php::Object("MicrosunCustomer",this->Owner);
 				}
 			Php::Value getCounty(void)
 				{
-				return Php::Object("MicrosunCounty",&this->county);
+				return Php::Object("MicrosunCounty",this->county);
 				}
 			Php::Value getBorough(void)
 				{
@@ -94,7 +106,7 @@ class Plant : public Php::Base
 				}
 			Php::Value getPanel(void)
 				{
-				return Php::Object("MicrosunPanel",&this->panel);
+				return Php::Object("MicrosunPanel",this->panel);
 				}
 			Php::Value getStrings(void)
 				{
@@ -102,19 +114,19 @@ class Plant : public Php::Base
 				}
 			Php::Value getMounting(void)
 				{
-				return Php::Object("MicrosunMounter",&this->Mounting);
+				return Php::Object("MicrosunMounter",this->Mounting);
 				}
 			Php::Value getInverter(void)
 				{
-				return Php::Object("MicrosunInverter",&this->inverter);
+				return Php::Object("MicrosunInverter",this->inverter);
 				}
 			Php::Value getCBoard(void)
 				{
-				return Php::Object("MicrosunCBoard",&this->cboard);
+				return Php::Object("MicrosunCBoard",this->cboard);
 				}
 			Php::Value getConstructor(void)
 				{
-				return Php::Object("MicrosunConstructor",&this->constructor);
+				return Php::Object("MicrosunConstructor",this->constructor);
 				}
 			Php::Value getConnectionNumber(void)
 				{
@@ -122,15 +134,15 @@ class Plant : public Php::Base
 				}
 			Php::Value getConnectionDate(void)
 				{
-				return this->ConnectionDate.toString();
+				return this->ConnectionDate->toString();
 				}
 			Php::Value getTrackerBegin(void)
 				{
-				return this->TrackerBegin.toString();
+				return this->TrackerBegin->toString();
 				}
 			Php::Value getSellPrice(void)
 				{
-				return (double) this->SellPrice;
+				return (float) this->SellPrice;
 				}
 	};
 };
