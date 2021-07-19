@@ -53,7 +53,7 @@ class Customer : public Php::Base
                 }
             Php::Value phpgetID()
                 {
-                return (double) this->ID;
+                return (int) this->ID;
                 }
 
             Php::Value phpgetCompany()
