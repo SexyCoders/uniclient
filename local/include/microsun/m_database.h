@@ -18,19 +18,6 @@ namespace Microsun{
 class Database : public Php::Base
 {
 
-
-//typedef struct id_table
-    //{
-        //std::string* id;
-        //int size;
-    //}id_table;
-
-typedef struct customer_table
-    {
-        Microsun::Customer* data;
-        int size;
-    }customer_table;
-
 public:
     std::string DataPath="/var/lib/uniclient";
     std::string Path=this->DataPath+"/MICROSUN_DATABASE";
@@ -41,36 +28,27 @@ public:
     Microsun::Group* groups;
     int g_size;
 
-    //store
-    //id_table ID;
-    customer_table stored_customers;
-    //Microsun::Plant plant;
-    //std::vector<Microsun::Problem> stored_problems;
-
 public:
     int get_user(std::string,std::string,Microsun::User*);
     int get_groups();
-    int get(std::string);
-    int get(std::string,std::string);
-    Php::Value phpget(Php::Parameters &arg);
+    Php::Value getCustomers();
+    Php::Value getPlants();
     Database() 
         {
             this->get_groups();
-            //this->ID.size=0;
-            this->stored_customers.size=0;
         }
-    ~Database() 
+    virtual ~Database() 
         {
         }
-    Php::Value getStoredCustomers()
-        {
-            Php::Value tmp;
-            for(int j=0;j<this->stored_customers.size;j++)
-                tmp[j]=Php::Object("MicrosunCustomer",&this->stored_customers.data[j]);
-            tmp[0]="MEGALES";
-            tmp[1]="PAPARIES";
-            return tmp;
-        }
+    //Php::Value getStoredCustomers()
+        //{
+            //Php::Value tmp;
+            //for(int j=0;j<this->stored_customers.size;j++)
+                //tmp[j]=Php::Object("MicrosunCustomer",&this->stored_customers.data[j]);
+            //tmp[0]="MEGALES";
+            //tmp[1]="PAPARIES";
+            //return tmp;
+        //}
     //Php::Value phpgetID() 
         //{ 
             //Php::Value tmp;

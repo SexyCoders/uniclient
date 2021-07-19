@@ -60,7 +60,7 @@ PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
 
 default:all
 
-all:uniclient microsun php
+all:microsun php
 
 install:lib-install php-install
 	service apache2 restart;
