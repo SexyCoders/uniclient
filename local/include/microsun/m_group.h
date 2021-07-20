@@ -9,8 +9,9 @@ namespace Microsun{
 class Group{
 	public:
 		std::string name;
-		Microsun::User* users;
-		int size;
+		std::vector<Microsun::User> users;
+		//Microsun::User* users;
+		//int size;
 		Group()
 			{}
 		~Group()
@@ -18,19 +19,17 @@ class Group{
 		Group operator=(Group src)
 			{
 				this->name=src.name;
-				this->users=new Microsun::User[src.size];
-				std::copy(src.users,&src.users[src.size-1],this->users);
-				this->size=src.size;
+				this->users=src.users;
 			}
-		int add(Microsun::User T)
-			{
-                Microsun::User* temp=this->users;
-                this->users=new Microsun::User[++this->size];
-                std::copy(temp,&temp[this->size-1],this->users);
-                this->users[this->size-1]=T;
-                (this->size>1)?delete[] temp:(void)0;
-			return this->size;
-			}
+		//int add(Microsun::User T)
+			//{
+                //Microsun::User* temp=this->users;
+                //this->users=new Microsun::User[++this->size];
+                //std::copy(temp,&temp[this->size-1],this->users);
+                //this->users[this->size-1]=T;
+                //(this->size>1)?delete[] temp:(void)0;
+			//return this->size;
+			//}
 };
 };
 

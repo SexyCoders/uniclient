@@ -25,14 +25,17 @@ public:
 
 public:
     //runtime data
-    Microsun::Group* groups;
-    int g_size;
+    std::vector<Microsun::Group> groups;
+    //int g_size;
 
 public:
     int get_user(std::string,std::string,Microsun::User*);
-    int get_groups();
+    void get_groups();
     Php::Value getCustomers();
+    Microsun::Plant* getPlant(std::string ID);
     Php::Value getPlants();
+    int getPendingCount();
+    Php::Value getPending();
     Database() 
         {
             this->get_groups();
@@ -40,34 +43,6 @@ public:
     virtual ~Database() 
         {
         }
-    //Php::Value getStoredCustomers()
-        //{
-            //Php::Value tmp;
-            //for(int j=0;j<this->stored_customers.size;j++)
-                //tmp[j]=Php::Object("MicrosunCustomer",&this->stored_customers.data[j]);
-            //tmp[0]="MEGALES";
-            //tmp[1]="PAPARIES";
-            //return tmp;
-        //}
-    //Php::Value phpgetID() 
-        //{ 
-            //Php::Value tmp;
-            //for(int j=0;j<this->ID.size;j++)
-                //tmp[j]=(this->ID.id[j]);
-        //return tmp; 
-        //}
-    //Php::Value getStoredProblems()
-        //{
-            //std::vector<Php::Object> tmp;
-            //int lim=this->stored_problems.size();
-            //for(int j=0;j<lim;j++)
-                //tmp.push_back(Php::Object("MicrosunProblem",&this->stored_problems[j]));
-            //return tmp;
-        //}
-    //Php::Value getStoredPlants()
-        //{
-            //return Php::Object("MicrosunPlant",&this->plant);
-        //}
         };
 };
 #endif

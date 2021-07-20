@@ -46,6 +46,27 @@ Php::Value Microsun::Database::getCustomers()
 static int callback_plant(void*,int,char**,char**);
 static int callback_plant_id(void*,int,char**,char**);
 
+Microsun::Plant* Microsun::Database::getPlant(std::string ID)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        sql="SELECT ID FROM PLANTS;";
+        Microsun::Plant* temp=new Microsun::Plant();
+        sql="select PLANTS.ID,POWER,CUSTOMERS.*,COUNTIES.*,BOROUGH,LOCATION, \
+        PLANTS.AREA,NPANELS,PANELS.*,STRINGS,MOUNTERS.*,INVERTERS.*, \
+        CONSTRUCTORS.*,CONNUMBER,CONDATE,TRACKBEGIN,PRICE \
+        FROM PLANTS,CUSTOMERS,COUNTIES,PANELS,MOUNTERS,INVERTERS,CONSTRUCTORS \
+        WHERE OWNER=CUSTOMERS.ID AND COUNTY=COUNTIES.ID AND PANEL=PANELS.ID \
+        AND MOUNTING=MOUNTERS.ID AND INVERTER=INVERTERS.ID AND CONSTRUCTOR=CONSTRUCTORS.ID \
+        AND PLANTS.ID='"+ID+"';";
+        std::cout<<sql<<"\n";
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,sql.c_str(),callback_plant,(void*)temp,&errmsg);
+        sqlite3_close(db);
+    return temp;
+    }
+
 Php::Value Microsun::Database::getPlants()
     {
         char* errmsg;
@@ -60,18 +81,7 @@ Php::Value Microsun::Database::getPlants()
         for(std::vector<std::string>::size_type j=0;j<ID.size();j++)
             {
                 std::cout<<ID[j]<<"\n";
-                Microsun::Plant* temp=new Microsun::Plant();
-                sql="select PLANTS.ID,POWER,CUSTOMERS.*,COUNTIES.*,BOROUGH,LOCATION, \
-                PLANTS.AREA,NPANELS,PANELS.*,STRINGS,MOUNTERS.*,INVERTERS.*, \
-                CONSTRUCTORS.*,CONNUMBER,CONDATE,TRACKBEGIN,PRICE \
-                FROM PLANTS,CUSTOMERS,COUNTIES,PANELS,MOUNTERS,INVERTERS,CONSTRUCTORS \
-                WHERE OWNER=CUSTOMERS.ID AND COUNTY=COUNTIES.ID AND PANEL=PANELS.ID \
-                AND MOUNTING=MOUNTERS.ID AND INVERTER=INVERTERS.ID AND CONSTRUCTOR=CONSTRUCTORS.ID \
-                AND PLANTS.ID='"+ID[j]+"';";
-                std::cout<<sql<<"\n";
-                sqlite3_open(this->Path.c_str(),&db);
-                int check=sqlite3_exec(db,sql.c_str(),callback_plant,(void*)temp,&errmsg);
-                sqlite3_close(db);
+                Microsun::Plant* temp=this->getPlant(ID[j]);
                 tmp.push_back(Php::Object("MicrosunPlant",temp));
             };
     return tmp;
@@ -166,116 +176,3 @@ static int callback_plant(void* passthrough,int argc,char** argv,char** col)
                 std::cout<<argv[j]<<"\n";
         return 0;
         }
-int Microsun::Database::get_user(std::string username,std::string grp,Microsun::User* result)
-    {
-        for(int j=0;j<this->g_size;j++)
-            {
-                if(groups[j].name!=grp && grp!="all")
-                    continue;
-                else
-                    {
-                        int usersize=groups[j].size;
-                        for(int i=0;i<usersize;i++)
-                            {
-                                if(groups[j].users[i].username==username)
-                                    *result=groups[j].users[i];
-                            }
-                    }
-            }
-        return 0;
-    }
-
-static int split(std::string str,std::vector<std::string>* vect)
-    {
-        int len=str.length();
-
-        std::string tmp;
-        for (int j=0;j<len;j++) 
-            {
-                if(str[j]==';')
-                    {
-                        vect->push_back(tmp);
-                        tmp.clear();
-                    }
-                else
-                    tmp.push_back(str[j]);
-            }
-    return 0;
-    }
-
-static int user_callback(void* passthrough,int argc,char** argv,char** col)
-    {
-        Microsun::User* U=(Microsun::User*) passthrough;
-        U->ID=atoi(argv[0]);
-        U->FName=argv[1];
-        U->LName=argv[2];
-        U->DateOfBirth.fromString(argv[3]);
-        U->email=argv[4];
-        U->PhoneNumber=atoi(argv[5]);
-        U->zip=atoi(argv[6]);
-        U->Address=argv[7];
-        U->Notes=argv[8];
-        U->HireDate.fromString(argv[9]);
-        U->username=argv[10];
-        U->group=argv[11];
-    return 0;
-    }
-
-
-static int group_callback(void* passthrough,int argc,char** argv,char** col)
-    {
-        std::vector<std::array<std::string,2>>* result=(std::vector<std::array<std::string,2>>*) passthrough;
-        result->push_back({argv[0],argv[1]});
-    return 0;
-        
-    }
-int Microsun::Database::get_groups()
-    {
-        sqlite3* db;
-        sqlite3_open(this->Path.c_str(),&db);
-        char* errmsg;
-        std::vector<std::array<std::string,2>> tmp;
-        sqlite3_exec(db,"SELECT * FROM GROUPS;",group_callback,(void*)&tmp,&errmsg);
-        sqlite3_close(db);
-        int s=tmp.size();
-        for(int j=0;j<s;j++)
-            {
-                Microsun::Group t;
-                t.name=tmp[j][0];
-            }
-    return this->g_size;
-    }
-
-//static int callback_pending(void* passthrough,int argc,char** argv,char** col)
-    //{
-        //Microsun::Database* THIS=(Microsun::Database*)passthrough;
-        //Microsun::Problem T;
-        //T.reg_id=atoi(*argv);
-        //THIS->get("plant",argv[1]);
-        //T.plant=THIS->plant;
-        //T.Type=argv[2];
-        //T.Pos=atoi(argv[3]);
-        //T.ErrorCode=argv[4];
-        //T.ReportedDate.fromString(argv[5]);
-        //T.ReportedUser=THIS->get_user(argv[6],"all");
-        //T.ErrorNotes=argv[7];
-        //T.AssignedMech=THIS->get_user(argv[8],"all");
-        //THIS->stored_problems.push_back(std::move(T));
-    //return 0;
-    //}
-
-            //else if(!command.compare("pending"))
-                //{
-                    //sql="SELECT * FROM PENDING_ERRORS;";
-                    //check=sqlite3_exec(db, sql.c_str(),callback_pending,(void*)this,&errmsg);
-                    ////sqlite3_close(db);
-                    //if(!check)
-                        //return 0;
-                    //else
-                        //return check;
-                //}
-        //sqlite3_close(db);
-        //return 123;
-    //}
-
-
