@@ -3,6 +3,7 @@
           <router-link to="/">Home</router-link>
           <router-link to="/customers">Customers</router-link>
           <router-link to="/plants">Plants</router-link>
+          <router-link to="/errors">Errors ({{$store.pending_errors_count}})</router-link>
         </slide>
         <main id="page-wrap">
             <h1>
@@ -16,6 +17,7 @@
 </template>
 
 <script>
+  import $ from "jquery";
     import slide from './files/slide.vue';
 
     export default {
@@ -34,6 +36,22 @@
         slide
       },
       methods: {
+        setErrorCount(count){
+          this.$store.pending_errors_count=count;
+        },
+        getErrorCount(){
+          $.ajax({
+              type: 'POST',
+              url: window.__SCD.datacenter+"/get_pending_errors_count",
+              data: "",
+              success:
+            (response) =>
+                  {
+                      this.setErrorCount(JSON.parse(response).count);
+                  },
+              async:false
+              });
+        },
         changeMenu(menu) {
           this.currentMenu = menu.replace(/ +/g, '').toLowerCase();
           return this.currentMenu;
@@ -58,6 +76,7 @@
       created() {
         this.setTitle('UniClient');
         this.setCopyright('Developed by SexyCoders');
+        this.getErrorCount();
       }
 
     };
