@@ -4,6 +4,8 @@ import CustomerTable from './components/CustomerTable.vue';
 import PlantTable from './components/PlantTable.vue';
 import PlantProfile from './components/PlantProfile.vue'; 
 import CustomerProfile from './components/CustomerProfile.vue'; 
+import ErrorTable from './components/ErrorTable.vue'; 
+import AddPlant from './components/AddPlant.vue'; 
 import Logo from './components/Logo.vue';
 
 const routes = [
@@ -31,6 +33,16 @@ const routes = [
     path: "/customerprofile",
     name: "CustomerProfile",
     component: CustomerProfile,
+  },
+  {
+    path: "/errors",
+    name: "Errors",
+    component: ErrorTable,
+  },
+  {
+    path: "/newplant",
+    name: "NewPlant",
+    component: AddPlant,
   },
 ];
 

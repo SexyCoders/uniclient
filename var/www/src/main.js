@@ -16,6 +16,8 @@ const store = createStore({
       title:"",
       page_title:"",
       customers:"",
+      pending_errors:"",
+      pending_errors_count:"",
       page:"",
       plants:"",
       selection:null,
