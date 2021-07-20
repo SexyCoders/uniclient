@@ -22,6 +22,7 @@ PHPCPP_EXPORT void *get_module()
             //database.method<&Microsun::Database::phpgetID>("getID", {});
             database.method<&Microsun::Database::getCustomers>("getCustomers", {});
             database.method<&Microsun::Database::getPlants>("getPlants", {});
+            database.method<&Microsun::Database::getPending>("getPending", {});
             //database.method<&Microsun::Database::getStoredCustomers>("getStoredCustomers", {});
             //database.method<&Microsun::Database::getStoredPlants>("getStoredPlants", {});
             //database.method<&Microsun::Database::getStoredProblems>("getStoredProblems", {});
@@ -94,6 +95,19 @@ PHPCPP_EXPORT void *get_module()
             myExtension.add(std::move(plant));
         Php::Class<Microsun::User>user("MicrosunUser");
             myExtension.add(std::move(user));
+        Php::Class<Microsun::Problem>problem("MicrosunProblem");
+            problem.method<&Microsun::Problem::getRegId> ("reg_id",{});
+            problem.method<&Microsun::Problem::getPlantID> ("plant_id",{});
+            problem.method<&Microsun::Problem::getType> ("Type",{});
+            problem.method<&Microsun::Problem::getPos> ("Pos",{});
+            problem.method<&Microsun::Problem::getErrorCode> ("ErrorCode",{});
+            problem.method<&Microsun::Problem::getReportedDate> ("ReportedDate",{});
+            problem.method<&Microsun::Problem::getReportedUser> ("ReportedUser",{});
+            problem.method<&Microsun::Problem::getErrorNotes> ("ErrorNotes",{});
+            problem.method<&Microsun::Problem::getAssignedMech> ("AssignedMech",{});
+            problem.method<&Microsun::Problem::getResolvedDate> ("ResolvedDate",{});
+            problem.method<&Microsun::Problem::getMechNotes> ("MechNotes",{});
+            myExtension.add(std::move(problem));
 
             return myExtension;
             }
