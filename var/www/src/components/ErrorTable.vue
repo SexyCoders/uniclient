@@ -1,7 +1,5 @@
 <template>
   <h3>{{$store.page_title}}</h3>
-  <button type="button" class="btn btn-success" @click="this.$router.push('newplant');">new</button>
-      
   <ag-grid-vue
     style="height: 500px"
     class="ag-theme-alpine"
@@ -24,14 +22,13 @@ import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
 
 const cols = [
   { field: "ID"},
-  { field: "Power"},
-  { field: "Owner" },
-  { field: "Location" },
-  { field: "Panel" },
-  { field: "Inverter" },
-  { field: "ConnectionNumber" },
-  { field: "ConnectionDate" },
-  { field: "TrackerBegin" },
+  { field: "Plant"},
+  { field: "Pos" },
+  { field: "Type" },
+  { field: "ErrorCode" },
+  { field: "Reported" },
+  { field: "ErrorNotes" },
+  { field: "AssignedMech" },
 ];
 export default {
   components: {
@@ -60,66 +57,36 @@ export default {
       {
         this.$store.page_title=title;
       },
-    storeCustomers(customers)
+    storeErrors(errors)
       {
-        this.$store.customers=customers;
-      },
-    storePlants(plants)
-      {
-        this.$store.plants=plants;
+        this.$store.pending_errors=errors;
       },
     onGridReady(params) {
       const updateData = (dummy) => {
         var table=new Array();
-        Object.values(this.$store.plants).forEach((value) => {
-          //console.log(JSON.stringify(value));
+        Object.values(this.$store.pending_errors).forEach((error) => {
           var t=new Object();
-          t.ID=value.ID;
-          t.Power=value.Power;
-          var owner=Object.values(this.$store.customers).filter((customer)=>customer.ID==value.Owner);
-         // console.log(owner);
-
-          t.Owner=owner[0].Company;
-          t.County=value.County.Name;
-          t.Borough=value.Borough;
-          t.Location=value.Location;
-          t.Area=value.Area;
-          t.Panel=value.Panel.Make+"/"+value.Panel.Model;
-          t.Inverter=value.Inverter.Model+"/"+value.Inverter.Type;
-          t.Strings=value.Strings;
-          t.CBoard=value.CBoard.Name;
-          t.Constructor=value.Constructor.Company;
-          t.Mounter=value.Mounter.Name;
-          t.ConnectionNumber=value.ConnectionNumber;
-          t.ConnectionDate=value.ConnectionDate;
-          t.TrackerBegin=value.TrackerBegin;
-          t.SellPrice=value.SellPrice;
+          t.ID=error.reg_id;
+          t.Plant=error.plant_id;
+          t.Type=error.Type;
+          t.Pos=error.Pos;
+          t.ErrorCode=error.ErrorCode;
+          t.Reported=error.ReportedDate;
+          t.ErrorNotes=error.ErrorNotes;
+          t.AssignedMech=error.AssignedMech;
           table.push(t);
-          //console.log(JSON.stringify(t));
         });
         params.api.setRowData(table);
       };
       
       $.ajax({
           type: 'POST',
-          url: window.__SCD.datacenter+"/get_customer_data_full",
-          data: "",
-          success:
-          (response) =>
-              {
-                  this.storeCustomers(JSON.parse(response));
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_plant_data_full",
+          url: window.__SCD.datacenter+"/get_pending_errors_all",
           data: "",
           success:
         (response) =>
               {
-                  this.storePlants(JSON.parse(response));
+                  this.storeErrors(JSON.parse(response));
                   updateData();
               },
           async:false
@@ -132,12 +99,11 @@ export default {
       //console.log(selectedRows);
       var plant=Object.values(this.$store.plants).filter((plant)=>plant.ID==selectedRows[0].ID);
       this.$store.selection=plant[0];
-      console.log(JSON.stringify(this.$store.selection));
       this.$router.push('plantprofile');
     },
     },
   created() {
-      this.setTitle('Plants');
+      this.setTitle('Errors');
   }
 };
 
