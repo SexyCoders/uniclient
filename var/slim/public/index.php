@@ -35,5 +35,19 @@ $app->post('/get_pending_errors_all',function(Request $request,Response $respons
         $response->getBody()->write(json_encode($t));
         return $response;
     });
+$app->post('/get_pending_errors_count',function(Request $request,Response $response)
+    {
+        $t=pending_errors_count();
+        $response->getBody()->write(json_encode($t));
+        return $response;
+    });
+$app->post('/store_plant',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t,true);
+        $t=store_plant($t);
+        $response->getBody()->write(json_encode($t));
+        return $response;
+    });
 $app->run();
 

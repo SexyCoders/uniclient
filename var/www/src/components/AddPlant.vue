@@ -144,7 +144,7 @@
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-btn">
-										<button class="submit-btn">save</button>
+										<button type="button" class="submit-btn" @click='addPlant();'>save</button>
 									</div>
 								</div>
 							</div>
@@ -156,23 +156,58 @@
 	</div>
 </template>
 <script>
+import $ from "jquery";
 import {Time} from "@sexycoders/time.js"
 export default {
     components: {
     },
     data() {
-		return {}
+		return {
+			ID:"",
+			Power:"",
+			Owner:"",
+			County:"",
+			Borough:"",
+			Location:"",
+			Area:"",
+			NPanels:"",
+			Panel:"",
+			Strings:"",
+			Mounting:"",
+			Inverter:"",
+			Constructor:"",
+			ConnectionNumber:"",
+			ConnectionDate:"",
+			TrackerBegin:"",
+			Price:""
+		}
   },
     computed()
         {
         },
     mounted() {
     },
-    methods: {
-        setTitle(title)
-        {
-            this.$store.page_title=title;
-        },
+    methods: 
+		{
+			addPlant()
+				{
+					var senddata = Object.assign({},this.$data);
+					$.ajax({
+						type: 'POST',
+						url: window.__SCD.datacenter+"/store_plant",
+						data: JSON.stringify(Object.entries(senddata)),
+						success:
+						(response) =>
+							{
+								console.log(response);
+							},
+							async:false
+							});
+				},
+			setTitle(title)
+				{
+					this.$store.page_title=title;
+				},
         },
      created()
         {
