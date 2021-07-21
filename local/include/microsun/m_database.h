@@ -34,8 +34,9 @@ public:
     Php::Value getCustomers();
     Microsun::Plant* getPlant(std::string ID);
     Php::Value getPlants();
-    int getPendingCount();
+    Php::Value getPendingCount();
     Php::Value getPending();
+    Php::Value storePlant(Php::Parameters &arg);
     Database() 
         {
             this->get_groups();

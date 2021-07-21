@@ -102,29 +102,38 @@ function pending_errors_all()
     {
         $database=new MicrosunDatabase;
         $to_return=new stdClass;
-        $database->get("pending-problems");
-        $errors=$database->getStoredProblems();
-        for($j=0;$j<count($errors);$j++)
+        $check=$database->getPending();
+        for($j=0;$j<count($check);$j++)
             {
                 $temp=new stdClass;
-                $temp->ID=$errors[$j]->getID();
-                $temp->Plant=$errors[$j]->getPlant()->getID();//only sending plant ID
-                $temp->pos=$errors[$j]->getPos();
-                $temp->type=$errors[$j]->getType();
-                $temp->ErrorCode=$errors[$j]->getErrorCode();
-                $temp->ReportedDate=new stdClass;
-                $t=$errors[$j]->getReportedDate();
-                $temp->ReportedDate->weekday=$t->get_weekday();
-                $temp->ReportedDate->day=$t->get_day();
-                $temp->ReportedDate->month=$t->get_month();
-                $temp->ReportedDate->year=$t->get_year();
-                $temp->ReportedDate->hour=$t->get_hour();
-                $temp->ReportedDate->minute=$t->get_minute();
-                $temp->ReportedDate->second=$t->get_second();
-                $temp->ReportedUser=$errors[$j]->getReportedUser()->getUsername();
-                $temp->ErrorNotes=$errors[$j]->getErrorNotes();
-                $temp->AssignedMech=$errors[$j]->getAssignedMech()->getUsername();
-                $to_return->{$j}=$temp;
+                $temp->reg_id=$check[$j]->reg_id();
+                $temp->plant_id=$check[$j]->plant_id();
+                $temp->Type=$check[$j]->Type();
+                $temp->Pos=$check[$j]->Pos();
+                $temp->ErrorCode=$check[$j]->ErrorCode();
+                $temp->ReportedDate=$check[$j]->ReportedDate();
+                $temp->ReportedUser=$check[$j]->ReportedUser();
+                $temp->ErrorNotes=$check[$j]->ErrorNotes();
+                $temp->AssignedMech=$check[$j]->AssignedMech();
+                //$temp->ResolvedDate=$check[$j]->ResolvedDate();
+                //$temp->MechNotes=$check[$j]->MechNotes();
+            $to_return->{$j}=$temp;
             }
+    return $to_return;
+    }
+
+function pending_errors_count()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->count=$database->getPendingCount();
+    return $to_return;
+    }
+
+function store_plant($data)
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->count=$database->storePlant($data);
     return $to_return;
     }
