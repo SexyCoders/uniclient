@@ -7,7 +7,7 @@ static int callback_pending(void* passthrough,int argc,char** argv,char** col)
         std::vector<Microsun::Problem*>* tmp=(std::vector<Microsun::Problem*>*) passthrough;
         Microsun::Problem* T=new Microsun::Problem();
         T->reg_id=atoi(*argv);
-        T->plant=(*tmp)[0]->database->getPlant(argv[1]);
+        T->plant=(*tmp->begin())->database->getPlant(argv[1]);
         T->Type=argv[2];
         T->Pos=atoi(argv[3]);
         T->ErrorCode=argv[4];
@@ -26,7 +26,7 @@ static int callback_pending_count(void* passthrough,int argc,char** argv,char** 
     return 0;
     } 
 
-int Microsun::Database::getPendingCount()
+Php::Value Microsun::Database::getPendingCount()
     {
         char* errmsg;
         std::string sql;
