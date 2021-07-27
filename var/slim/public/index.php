@@ -44,7 +44,7 @@ $app->post('/get_pending_errors_count',function(Request $request,Response $respo
 $app->post('/store_plant',function(Request $request,Response $response)
     {
         $t=$request->getBody();
-        $t=json_decode($t,true);
+        $t=json_decode($t);
         $t=store_plant($t);
         $response->getBody()->write(json_encode($t));
         return $response;

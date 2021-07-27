@@ -192,10 +192,12 @@ export default {
 			addPlant()
 				{
 					var senddata = Object.assign({},this.$data);
+					senddata=JSON.stringify(Object.values(senddata));
+					console.log(senddata);
 					$.ajax({
 						type: 'POST',
 						url: window.__SCD.datacenter+"/store_plant",
-						data: JSON.stringify(Object.entries(senddata)),
+						data:senddata, 
 						success:
 						(response) =>
 							{
