@@ -12,6 +12,23 @@
 #include <sstream>
 #include <cstring>
 
+static int callback_customer(void* passthrough,int argc,char** argv,char** col)
+        {
+            Microsun::Customer* tmp=(Microsun::Customer*)passthrough;
+            tmp->ID=atol(argv[0]);
+            tmp->Company=argv[1];
+            tmp->FirstName=argv[2];
+            tmp->LastName=argv[3];
+            tmp->PhoneNumber=atol(argv[4]);
+            tmp->email=argv[5];
+            tmp->Address=argv[6];
+            tmp->zip=atol(argv[7]);
+            tmp->TIN=atol(argv[8]);
+            tmp->Notes=argv[9];
+        return 0;
+        }
+
+
 static int callback_customer_all(void* passthrough,int argc,char** argv,char** col)
         {
             std::vector<Php::Object>* STORE=(std::vector<Php::Object>*) passthrough;
@@ -43,6 +60,19 @@ Php::Value Microsun::Database::getCustomers()
     return tmp; 
     }
 
+Microsun::Customer* Microsun::Database::getCustomerByCompanyName(std::string name)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        Microsun::Customer* tmp=new Microsun::Customer();
+        sql="SELECT * FROM CUSTOMERS WHERE COMPANY='"+name+"';";
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db, sql.c_str(),callback_customer,(void*)tmp,&errmsg);
+        sqlite3_close(db);
+    return tmp; 
+    }
+
 static int callback_plant(void*,int,char**,char**);
 static int callback_plant_id(void*,int,char**,char**);
 
@@ -60,7 +90,6 @@ Microsun::Plant* Microsun::Database::getPlant(std::string ID)
         WHERE OWNER=CUSTOMERS.ID AND COUNTY=COUNTIES.ID AND PANEL=PANELS.ID \
         AND MOUNTING=MOUNTERS.ID AND INVERTER=INVERTERS.ID AND CONSTRUCTOR=CONSTRUCTORS.ID \
         AND PLANTS.ID='"+ID+"';";
-        std::cout<<sql<<"\n";
         sqlite3_open(this->Path.c_str(),&db);
         int check=sqlite3_exec(db,sql.c_str(),callback_plant,(void*)temp,&errmsg);
         sqlite3_close(db);
@@ -80,7 +109,6 @@ Php::Value Microsun::Database::getPlants()
         std::vector<Php::Object> tmp;
         for(std::vector<std::string>::size_type j=0;j<ID.size();j++)
             {
-                std::cout<<ID[j]<<"\n";
                 Microsun::Plant* temp=this->getPlant(ID[j]);
                 tmp.push_back(Php::Object("MicrosunPlant",temp));
             };
@@ -99,34 +127,18 @@ static int callback_plant(void* passthrough,int argc,char** argv,char** col)
         {
                 Microsun::Plant* PLANT=(Microsun::Plant*) passthrough;
                 int j=0;
-                //ID
                 PLANT->ID=argv[j];
-                std::cout<<argv[j]<<"\n";
-                //Power
                 PLANT->Power=atof(argv[++j]);
-                std::cout<<argv[j]<<"\n";
-                //Customer
                 PLANT->Owner->ID=atoi(argv[++j]);
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->Company=argv[++j];
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->FirstName=argv[++j];
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->LastName=argv[++j];
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->PhoneNumber=atoi(argv[++j]);
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->email=argv[++j];
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->Address=argv[++j];
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->zip=atoi(argv[++j]);
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->TIN=atoi(argv[++j]);
-                std::cout<<argv[j]<<"\n";
                 PLANT->Owner->Notes=argv[++j];
-                std::cout<<argv[j]<<"\n";
-                //County
                 PLANT->county->ID=atoi(argv[++j]);
                 PLANT->county->Name=argv[++j];
                 PLANT->county->Capital=argv[++j];
@@ -134,45 +146,137 @@ static int callback_plant(void* passthrough,int argc,char** argv,char** col)
                 PLANT->county->Population=atof(argv[++j]);
                 PLANT->county->Density=atof(argv[++j]);
                 PLANT->county->Region=argv[++j];
-                //Borough
                 PLANT->Borough=argv[++j];
-                std::cout<<argv[j]<<"\n";
-                //Location
                 PLANT->Location=argv[++j];
-                std::cout<<argv[j]<<"\n";
-                //Area
                 PLANT->Area=atof(argv[++j]);
-                std::cout<<argv[j]<<"\n";
-                //Number of Panels
                 PLANT->NPanels=atoi(argv[++j]);
-                std::cout<<argv[j]<<"\n";
-                //Panel
                 PLANT->panel->ID=atoi(argv[++j]);
-                std::cout<<argv[j]<<"\n";
                 PLANT->panel->Make=argv[++j];
-                std::cout<<argv[j]<<"\n";
                 PLANT->panel->Model=argv[++j];
-                std::cout<<argv[j]<<"\n";
-                //Strings
                 PLANT->Strings=argv[++j];
-                //Mounting
                 PLANT->Mounting->ID=atoi(argv[++j]);
                 PLANT->Mounting->Name=argv[++j];
-                //Inverter
                 PLANT->inverter->ID=atoi(argv[++j]);
                 PLANT->inverter->Model=argv[++j];
                 PLANT->inverter->Type=argv[++j];
-                //Constructor
                 PLANT->constructor->ID=atoi(argv[++j]);
                 PLANT->constructor->Company=argv[++j];
-                //Connection Number
                 PLANT->ConnectionNumber=atoi(argv[++j]);
-                //Connection Date
                 PLANT->ConnectionDate->fromString(argv[++j]);
-                //Tracker begin date
                 PLANT->TrackerBegin->fromString(argv[++j]);
-                //Sell price
                 PLANT->SellPrice=atof(argv[++j]);
-                std::cout<<argv[j]<<"\n";
         return 0;
         }
+
+static int callback_county(void* passthrough,int argc,char** argv,char** col)
+        {
+            Microsun::County* tmp=(Microsun::County*)passthrough;
+            tmp->ID=atoi(argv[0]);
+            tmp->Name=argv[1];
+            tmp->Capital=argv[2];
+            tmp->Area=atof(argv[3]);
+            tmp->Population=atof(argv[4]);
+            tmp->Density=atof(argv[5]);
+            tmp->Region=argv[6];
+        return 0;
+        }
+
+Microsun::County* Microsun::Database::getCountyByName(std::string name)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        sql="SELECT * FROM COUNTIES WHERE NAME='"+name+"';";
+        Microsun::County* tmp=new Microsun::County();
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,sql.c_str(),callback_county,(void*)&tmp,&errmsg);
+        sqlite3_close(db);
+    return tmp;
+    }
+
+static int callback_panel(void* passthrough,int argc,char** argv,char** col)
+        {
+            Microsun::Panel* tmp=(Microsun::Panel*)passthrough;
+            tmp->ID=atol(argv[0]);
+            tmp->Make=argv[1];
+            tmp->Model=argv[2];
+        return 0;
+        }
+
+Microsun::Panel* Microsun::Database::getPanelByName(std::string Name)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        sql="SELECT * FROM PANELS WHERE NAME='"+Name+"';";
+        Microsun::Panel* tmp=new Microsun::Panel();
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,sql.c_str(),callback_panel,(void*)&tmp,&errmsg);
+        sqlite3_close(db);
+    return tmp;
+    }
+
+static int callback_mounter(void* passthrough,int argc,char** argv,char** col)
+        {
+            Microsun::Mounter* tmp=(Microsun::Mounter*)passthrough;
+            tmp->ID=atol(argv[0]);
+            tmp->Name=argv[1];
+        return 0;
+        }
+
+Microsun::Mounter* Microsun::Database::getMounterByName(std::string Name)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        sql="SELECT * FROM MOUNTERS WHERE NAME='"+Name+"';";
+        Microsun::Mounter* tmp=new Microsun::Mounter();
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,sql.c_str(),callback_mounter,(void*)&tmp,&errmsg);
+        sqlite3_close(db);
+    return tmp;
+    }
+
+static int callback_inverter(void* passthrough,int argc,char** argv,char** col)
+        {
+            Microsun::Inverter* tmp=(Microsun::Inverter*)passthrough;
+            tmp->ID=atol(argv[0]);
+            tmp->Model=argv[1];
+            tmp->Type=argv[2];
+        return 0;
+        }
+
+Microsun::Inverter* Microsun::Database::getInverterByModel(std::string Name)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        sql="SELECT * FROM INVERTERS WHERE MODEL='"+Name+"';";
+        Microsun::Inverter* tmp=new Microsun::Inverter();
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,sql.c_str(),callback_inverter,(void*)&tmp,&errmsg);
+        sqlite3_close(db);
+    return tmp;
+    }
+
+static int callback_constructor(void* passthrough,int argc,char** argv,char** col)
+        {
+            Microsun::Constructor* tmp=(Microsun::Constructor*)passthrough;
+            tmp->ID=atol(argv[0]);
+            tmp->Company=argv[1];
+        return 0;
+        }
+
+Microsun::Constructor* Microsun::Database::getConstructorByCompany(std::string Name)
+    {
+        char* errmsg;
+        std::string sql;
+        sqlite3* db;
+        sql="SELECT * FROM CONSTRUCTORS WHERE COMPANY='"+Name+"';";
+        Microsun::Constructor* tmp=new Microsun::Constructor();
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,sql.c_str(),callback_constructor,(void*)&tmp,&errmsg);
+        sqlite3_close(db);
+    return tmp;
+    }
+
