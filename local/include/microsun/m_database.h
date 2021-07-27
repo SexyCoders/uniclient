@@ -32,11 +32,17 @@ public:
     int get_user(std::string,std::string,Microsun::User*);
     void get_groups();
     Php::Value getCustomers();
+    Microsun::Customer* getCustomerByCompanyName(std::string name);
     Microsun::Plant* getPlant(std::string ID);
     Php::Value getPlants();
     Php::Value getPendingCount();
     Php::Value getPending();
     Php::Value storePlant(Php::Parameters &arg);
+    Microsun::County* getCountyByName(std::string name);
+    Microsun::Panel* getPanelByName(std::string Name);
+    Microsun::Mounter* getMounterByName(std::string Name);
+    Microsun::Inverter* getInverterByModel(std::string Name);
+    Microsun::Constructor* getConstructorByCompany(std::string Name);
     Database() 
         {
             this->get_groups();
