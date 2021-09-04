@@ -9,13 +9,13 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<span class="form-label"><b>Registry ID</b></span>
-										<span class='form-label'> test </span>
+										<span class='form-label'> {{this.$store.selection.reg_id}} </span>
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										<span class="form-label"><b>Plant / Owner</b></span>
-										<span class="form-label">Drymonas ||  Sotirios Anagnostopoulos</span>
+										<span class="form-label"><b>Plant</b></span>
+										<span class="form-label">{{this.$store.selection.plant_id}}</span>
 									</div>
 								</div>
 								<div class="col-md-2">
