@@ -52,7 +52,7 @@ export default {
   mounted() {
     this.gridApi = this.gridOptions.api;
     this.gridColumnApi = this.gridOptions.columnApi;
-    //this.check();
+    this.check();
   },
   methods: {
     check()

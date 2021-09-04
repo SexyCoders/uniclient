@@ -49,5 +49,13 @@ $app->post('/store_plant',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($t));
         return $response;
     });
+$app->post('/temp_error',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        $k=temp_error($t);
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
 $app->run();
 
