@@ -21,6 +21,7 @@ import { AgGridVue } from "@ag-grid-community/vue3";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import "@ag-grid-community/core/dist/styles/ag-grid.css";
 import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
+import {Time} from "@sexycoders/time.js"
 
 const cols = [
   { field: "ID"},
@@ -91,8 +92,11 @@ export default {
           t.Constructor=value.Constructor.Company;
           t.Mounter=value.Mounter.Name;
           t.ConnectionNumber=value.ConnectionNumber;
-          t.ConnectionDate=value.ConnectionDate;
-          t.TrackerBegin=value.TrackerBegin;
+          var temp=new Time();
+          temp.fromString(value.ConnectionDate);
+          t.ConnectionDate=temp.toStringf("dmys-","c",1);
+          temp.fromString(value.TrackerBegin);
+          t.TrackerBegin=temp.toStringf("dmys-","c",1);
           t.SellPrice=value.SellPrice;
           table.push(t);
           //console.log(JSON.stringify(t));

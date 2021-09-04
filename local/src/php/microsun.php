@@ -137,3 +137,10 @@ function store_plant($data)
         $to_return->count=$database->storePlant($data);
     return $to_return;
     }
+function temp_error($data)
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->return_test=$database->tempError($data[0],$data[1]);
+    return $to_return;
+    }

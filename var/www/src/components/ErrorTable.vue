@@ -19,6 +19,7 @@ import { AgGridVue } from "@ag-grid-community/vue3";
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import "@ag-grid-community/core/dist/styles/ag-grid.css";
 import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
+import {Time} from "@sexycoders/time.js"
 
 const cols = [
   { field: "ID"},
@@ -29,6 +30,13 @@ const cols = [
   { field: "Reported" },
   { field: "ErrorNotes" },
   { field: "AssignedMech" },
+  { field: "stored" , cellStyle: params => {
+                      if (params.value === 'false') {
+                          //mark police cells as red
+                          return {color: 'red'};
+                      }
+                      return {color: 'green'};
+                  }},
 ];
 export default {
   components: {
@@ -71,9 +79,12 @@ export default {
           t.Type=error.Type;
           t.Pos=error.Pos;
           t.ErrorCode=error.ErrorCode;
-          t.Reported=error.ReportedDate;
+          var temp=new Time();
+          temp.fromString(error.ReportedDate);
+          t.Reported=temp.toStringf("dmys-","c",1);
           t.ErrorNotes=error.ErrorNotes;
           t.AssignedMech=error.AssignedMech;
+          t.stored='true';
           table.push(t);
         });
         params.api.setRowData(table);
@@ -97,9 +108,10 @@ export default {
       var selectedRows = this.gridApi.getSelectedRows();
       //this.$store.selection=selectedRows[0].ID;
       //console.log(selectedRows);
-      var plant=Object.values(this.$store.plants).filter((plant)=>plant.ID==selectedRows[0].ID);
-      this.$store.selection=plant[0];
-      this.$router.push('plantprofile');
+      console.log(this.$store.pending_errors);
+      var error=Object.values(this.$store.pending_errors).filter((error)=>error.reg_id==selectedRows[0].ID);
+      this.$store.selection=error[0];
+      this.$router.push('resolveerror');
     },
     },
   created() {
