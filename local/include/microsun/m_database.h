@@ -38,6 +38,8 @@ public:
     Php::Value getPendingCount();
     Php::Value getPending();
     Php::Value storePlant(Php::Parameters &arg);
+    Php::Value tempError(Php::Parameters &arg);
+    std::string store_error(Microsun::Problem* error,std::string table);
     Microsun::County* getCountyByName(std::string name);
     Microsun::Panel* getPanelByName(std::string Name);
     Microsun::Mounter* getMounterByName(std::string Name);

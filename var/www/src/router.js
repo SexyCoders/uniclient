@@ -7,43 +7,20 @@ import CustomerProfile from './components/CustomerProfile.vue';
 import ErrorTable from './components/ErrorTable.vue'; 
 import AddPlant from './components/AddPlant.vue'; 
 import Logo from './components/Logo.vue';
+import ResolveError from './components/ResolveError.vue';
 
 const routes = [
-  {
-    path: "/",
-    name: "Home",
-    component: Logo,
-  },
-  {
-    path: "/customers",
-    name: "Customers",
-    component: CustomerTable,
-  },
-  {
-    path: "/plants",
-    name: "Plants",
-    component: PlantTable,
-  },
-  {
-    path: "/plantprofile",
-    name: "PlantProfile",
-    component: PlantProfile,
-  },
-  {
-    path: "/customerprofile",
-    name: "CustomerProfile",
-    component: CustomerProfile,
-  },
-  {
-    path: "/errors",
-    name: "Errors",
-    component: ErrorTable,
-  },
-  {
-    path: "/newplant",
-    name: "NewPlant",
-    component: AddPlant,
-  },
+  { path: "/", name: "Home", component: Logo },
+
+  { path: "/customers", name: "Customers", component: CustomerTable },
+  { path: "/customerprofile", name: "CustomerProfile", component: CustomerProfile },
+
+  { path: "/plants", name: "Plants", component: PlantTable },
+  { path: "/plantprofile", name: "PlantProfile", component: PlantProfile },
+  { path: "/newplant", name: "NewPlant", component: AddPlant },
+
+  { path: "/errors", name: "Errors", component: ErrorTable },
+  { path: "/resolveerror", name: "ResolveError", component: ResolveError },
 ];
 
 const router = createRouter({

@@ -40,17 +40,17 @@
           this.$store.pending_errors_count=count;
         },
         getErrorCount(){
-       //   $.ajax({
-       //       type: 'POST',
-       //       url: window.__SCD.datacenter+"/get_pending_errors_count",
-       //       data: "",
-       //       success:
-       //     (response) =>
-       //           {
-       //               this.setErrorCount(JSON.parse(response).count);
-       //           },
-       //       async:false
-       //       });
+          $.ajax({
+              type: 'POST',
+              url: window.__SCD.datacenter+"/get_pending_errors_count",
+              data: "",
+              success:
+            (response) =>
+                  {
+                      this.setErrorCount(JSON.parse(response).count);
+                  },
+              async:false
+              });
         },
         changeMenu(menu) {
           this.currentMenu = menu.replace(/ +/g, '').toLowerCase();
