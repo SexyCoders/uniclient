@@ -32,7 +32,7 @@ const cols = [
   { field: "AssignedMech" },
   { field: "stored" , cellStyle: params => {
                       if (params.value === 'false') {
-                          //mark police cells as red
+                          //check if its been saved and mark green
                           return {color: 'red'};
                       }
                       return {color: 'green'};
@@ -84,7 +84,7 @@ export default {
           t.Reported=temp.toStringf("dmys-","c",1);
           t.ErrorNotes=error.ErrorNotes;
           t.AssignedMech=error.AssignedMech;
-          t.stored='true';
+          t.stored=error.stored;
           table.push(t);
         });
         params.api.setRowData(table);

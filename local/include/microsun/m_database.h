@@ -37,6 +37,7 @@ public:
     Php::Value getPlants();
     Php::Value getPendingCount();
     Php::Value getPending();
+    Php::Value getStored();
     Php::Value storePlant(Php::Parameters &arg);
     Php::Value tempError(Php::Parameters &arg);
     std::string store_error(Microsun::Problem* error,std::string table);
