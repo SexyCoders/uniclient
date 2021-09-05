@@ -27,18 +27,20 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<span class="form-label"><b>Assigned Mech</b></span>
-										<span class="form-label">Γιώργος</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<span class="form-label"><b>Notes</b></span>
-										<span class="form-label">Μπράτσα και αντλία. Θα τα φτιάξουμε εμείς ο γιώργος δεν μπορεί.</span>
+										<span class="form-label">{{this.$store.selection.AssignedMech}}</span>
 									</div>
 								</div>
 							</div>
 								<br>
 								<br>
+							<div class="row">
+								<div class="col-md-12">
+									<div class="form-group">
+										<span class="form-label"><b>Notes</b></span>
+										<span class="form-label">{{this.$store.selection.ErrorNotes}}</span>
+									</div>
+								</div>
+							</div>
 								<br>
 								<br>
 							<div class="row">
@@ -50,7 +52,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-1">
+								<div class="col-md-1" v-if="this.$store.selection.stored==='false'">
 									<div class="form-btn">
 										<button type="button" class="btn btn-success" @click='tempError();'>store</button>
 									</div>
