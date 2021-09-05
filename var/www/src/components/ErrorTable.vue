@@ -108,9 +108,10 @@ export default {
       var selectedRows = this.gridApi.getSelectedRows();
       //this.$store.selection=selectedRows[0].ID;
       //console.log(selectedRows);
-      console.log(this.$store.pending_errors);
       var error=Object.values(this.$store.pending_errors).filter((error)=>error.reg_id==selectedRows[0].ID);
       this.$store.selection=error[0];
+      console.log(this.$store.selection);
+      console.log(error);
       this.$router.push('resolveerror');
     },
     },
