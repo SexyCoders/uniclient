@@ -29,7 +29,8 @@ public:
     //int g_size;
 
 public:
-    int get_user(std::string,std::string,Microsun::User*);
+    unsigned long int getLastInsertId();
+    int get_user(std::string username,std::string grp,Microsun::User* result);
     void get_groups();
     Php::Value getCustomers();
     Microsun::Customer* getCustomerByCompanyName(std::string name);
@@ -40,7 +41,11 @@ public:
     Php::Value getStored();
     Php::Value storePlant(Php::Parameters &arg);
     Php::Value tempError(Php::Parameters &arg);
+    Php::Value getMechNames();
+    Php::Value newError(Php::Parameters &arg);
+    unsigned long int store_new_error(Microsun::Problem* error);
     std::string store_error(Microsun::Problem* error,std::string table);
+    int delete_error(int ID_TO_DELETE,std::string table);
     Microsun::County* getCountyByName(std::string name);
     Microsun::Panel* getPanelByName(std::string Name);
     Microsun::Mounter* getMounterByName(std::string Name);

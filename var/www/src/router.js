@@ -7,6 +7,7 @@ import CustomerProfile from './components/CustomerProfile.vue';
 import ErrorTable from './components/ErrorTable.vue'; 
 import AddPlant from './components/AddPlant.vue'; 
 import Logo from './components/Logo.vue';
+import NewError from './components/NewError.vue';
 import ResolveError from './components/ResolveError.vue';
 
 const routes = [
@@ -20,6 +21,7 @@ const routes = [
   { path: "/newplant", name: "NewPlant", component: AddPlant },
 
   { path: "/errors", name: "Errors", component: ErrorTable },
+  { path: "/newerror", name: "NewError", component: NewError },
   { path: "/resolveerror", name: "ResolveError", component: ResolveError },
 ];
 

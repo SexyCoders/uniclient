@@ -61,14 +61,6 @@ export default {
       {
         this.$store.page_title=title;
       },
-    storeCustomers(customers)
-      {
-        this.$store.customers=customers;
-      },
-    storePlants(plants)
-      {
-        this.$store.plants=plants;
-      },
     onGridReady(params) {
       const updateData = (dummy) => {
         var table=new Array();
@@ -103,32 +95,8 @@ export default {
         });
         params.api.setRowData(table);
       };
+      updateData();
       
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_customer_data_full",
-          data: "",
-          success:
-          (response) =>
-              {
-                  this.storeCustomers(JSON.parse(response));
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_plant_data_full",
-          data: "",
-          success:
-        (response) =>
-              {
-                  this.storePlants(JSON.parse(response));
-                  updateData();
-              },
-          async:false
-          });
-
       },
     onSelectionChanged() {
       var selectedRows = this.gridApi.getSelectedRows();
