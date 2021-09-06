@@ -3,71 +3,76 @@
 	<h3>{{$store.page_title}}</h3>
 		<div class="section-center">
 			<div class="container">
-				<div class="row">
+				<!--<div class="row">-->
 					<div class="booking-form">
 						<form>
 							<div class="row">
 								<div class="col-md-2">
 									<div class="form-group">
-										<span class="form-label"><b>Registry ID</b></span>
-										<span class='form-label'> {{this.$store.selection.reg_id}} </span>
+										<span class="form-label">REG ID</span>
+										<span class="form-label"><b>AUTO</b></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Plant</span>
+										<select class="form-control" v-model="Plant">
+											<option v-for="plant in PlantTable" :value=plant> {{plant}}</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<span class="form-label">Position</span>
+										<input class="form-control" type="text" placeholder="number" v-model="Pos">
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<span class="form-label">Type</span>
+										<select class="form-control" v-model="Type">
+											<option>Tracker</option>
+											<option>Inverter</option>
+											<option>Other (Please Comment!)</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<span class="form-label">Error Code</span>
+										<input class="form-control" type="text" placeholder="text(optional)" v-model="ErrorCode">
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-md-9">
+									<div class="form-group">
+										<span class="form-label">Error Notes</span>
+										<input class="form-control" type="text" placeholder="text" v-model="ErrorNotes" required="">
 									</div>
 								</div>
 								<div class="col-md-3">
 									<div class="form-group">
-										<span class="form-label"><b>Plant</b></span>
-										<span class="form-label">{{this.$store.selection.plant_id}}</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<span class="form-label"><b>Reported Date</b></span>
-										<span class="form-label">15/7/21</span>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<span class="form-label"><b>Assigned Mech</b></span>
-										<span class="form-label">{{this.$store.selection.AssignedMech}}</span>
-									</div>
-								</div>
-							</div>
-								<br>
-								<br>
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<span class="form-label"><b>Notes</b></span>
-										<span class="form-label">{{this.$store.selection.ErrorNotes}}</span>
-									</div>
-								</div>
-							</div>
-								<br>
-								<br>
-							<div class="row">
-								<div class="col-md-12">
-									<div class="form-group">
-										<span class="form-label"><b>Mech Notes</b></span>
-										<input class="form-control" type="text" placeholder="plaintext" v-model="Notes">
+										<span class="form-label">AssignedMech</span>
+										<select class="form-control" v-model="AssignedMech">
+											<option v-for="mech in this.$store.MechNames" :value=mech> {{mech}}</option>
+										</select>
+										<span class="select-arrow"></span>
 									</div>
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-1" v-if="this.$store.selection.stored==='false'">
+								<div class="col-md-3">
 									<div class="form-btn">
-										<button type="button" class="btn btn-success" @click='tempError();'>store</button>
+										<button type="button" class="submit-btn" @click='NewError();'>save</button>
 									</div>
 								</div>
-								<div class="col-md-1">
-									<div class="form-btn">
-										<button type="button" class="btn btn-danger" @click='resolveError();'>FINAL</button>
-									</div>
-								</div>
-								<span class="form-label"><b> Aprox.Time 23:33</b></span>
 							</div>
 						</form>
 					</div>
-				</div>
+				<!--</div>-->
 			</div>
 		</div>
 	</div>
@@ -80,26 +85,42 @@ export default {
     },
     data() {
 		return {
-			ID:"",
-			Notes:""
+			Plant:"",
+			Pos:"",
+			Type:"",
+			ErrorCode:"",
+			ErrorNotes:"",
+			AssignedMech:"",
+			PlantTable:[]
 		}
   },
     computed()
         {
         },
     mounted() {
+		this.getPlantIdTable();
     },
     methods: 
 		{
-			tempError()
+			getPlantIdTable()
 				{
-					this.$data.ID=this.$store.selection.reg_id;
+					console.log(this.$store.plants);
+					Object.values(this.$store.plants).forEach((value) => {
+						this.$data.PlantTable.push(value.ID);
+					});
+					console.log(this.$data.PlantTable);
+				},
+			NewError()
+				{
 					var senddata = Object.assign({},this.$data);
+					if(senddata.Plant=="" || senddata.Pos=="" || senddata.ErrorNotes=="" || senddata.AssignedMech=="")
+						alert("Please fill in all the required fields!!!");
+					delete senddata.PlantTable;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
 					$.ajax({
 						type: 'POST',
-						url: window.__SCD.datacenter+"/temp_error",
+						url: window.__SCD.datacenter+"/new_error",
 						data:senddata, 
 						success:
 						(response) =>
@@ -109,23 +130,6 @@ export default {
 							async:false
 							});
 				},
-			resolveError()
-				{
-					var senddata = Object.assign({},this.$data);
-					senddata=JSON.stringify(Object.values(senddata));
-					console.log(senddata);
-				//	$.ajax({
-				//		type: 'POST',
-				//		url: window.__SCD.datacenter+"/store_plant",
-				//		data:senddata, 
-				//		success:
-				//		(response) =>
-				//			{
-				//				console.log(response);
-				//			},
-				//			async:false
-				//			});
-				},
 			setTitle(title)
 				{
 					this.$store.page_title=title;
@@ -133,11 +137,11 @@ export default {
         },
      created()
         {
-			this.setTitle('Store or Resolve Error');
+			this.setTitle("new Error");
         }
 };
 </script>
-<style scoped>
+<style>
 .section {
 	position: relative;
 	height: 100vh;

@@ -73,28 +73,11 @@ export default {
       {
         this.$store.page_title=title;
       },
-    storeCustomers(customers)
-      {
-        this.$store.customers=customers;
-      },
     onGridReady(params) {
       const updateData = (dummy) => {
         params.api.setRowData(Object.values(this.$store.customers));
       };
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_customer_data_full",
-          data: "",
-          success:
-          (response) =>
-              {
-                  this.storeCustomers(JSON.parse(response));
-                  updateData();
-              },
-            async:false
-            });
-
+      updateData();
       },
     onSelectionChanged() {
       var selectedRows = this.gridApi.getSelectedRows();

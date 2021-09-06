@@ -57,5 +57,19 @@ $app->post('/temp_error',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
+$app->post('/get_mech_names',function(Request $request,Response $response)
+    {
+        $k=get_mech_names();
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
+$app->post('/new_error',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        $k=new_error($t);
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
 $app->run();
 
