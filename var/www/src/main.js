@@ -21,6 +21,7 @@ const store = createStore({
       page:"",
       plants:"",
       selection:null,
+      MechNames:""
     }
   }
 

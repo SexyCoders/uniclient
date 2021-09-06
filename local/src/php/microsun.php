@@ -156,10 +156,27 @@ function store_plant($data)
         $to_return->count=$database->storePlant($data);
     return $to_return;
     }
+
 function temp_error($data)
     {
         $database=new MicrosunDatabase;
         $to_return=new stdClass;
         $to_return->return_test=$database->tempError($data[0],$data[1]);
+    return $to_return;
+    }
+
+function new_error($data)
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->reg_id=$database->newError($data[0],$data[1],$data[2],$data[3],$data[4],$data[5]);
+    return $to_return;
+    }
+
+function get_mech_names()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->MechNames=$database->getMechNames();
     return $to_return;
     }

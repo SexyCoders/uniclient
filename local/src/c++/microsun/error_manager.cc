@@ -112,6 +112,56 @@ static int callback_pending_single(void* passthrough,int argc,char** argv,char**
     return 0;
     }
 
+static int get_last_id_callback(void* passthrough,int argc,char** argv,char** col)
+    {
+        int* value=(int*) passthrough;
+        *value=atoi(*argv);
+    return 0;
+    }
+
+unsigned long int Microsun::Database::getLastInsertId()
+    {
+        char* errmsg;
+        sqlite3* db;
+        int temp;
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db,"select last_insert_rowid();",get_last_id_callback,(void*)&temp,&errmsg);
+        sqlite3_close(db);
+    return temp;
+    }
+
+unsigned long int Microsun::Database::store_new_error(Microsun::Problem* error)
+    {
+        char* errmsg;
+        sqlite3* db;
+        std::string sql="INSERT INTO PENDING_ERRORS VALUES(NULL,'"+error->plant->ID+"',"+std::to_string(error->Pos)+",'"+error->Type+"','"+error->ErrorCode+"','"+error->ReportedDate->toString()+"','"+error->ReportedUser->username+"','"+error->ErrorNotes+"','"+error->AssignedMech->username+"');";
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db, sql.c_str(),NULL,NULL,&errmsg);
+        sqlite3_close(db);
+    return this->getLastInsertId();
+    }
+
+Php::Value Microsun::Database::newError(Php::Parameters &arg)
+    {
+        Microsun::Problem* tmp=new Microsun::Problem(this);
+        tmp->plant=this->getPlant(arg[0]);
+        tmp->Pos=atoi(arg[1]);
+        std::string l=arg[2];
+        tmp->Type=l;
+        std::string t=arg[3];
+        tmp->ErrorCode=t;
+        std::string t1=arg[4];
+        tmp->ErrorNotes=t1;
+        std::string tt=arg[5];
+        this->get_user(tt,"all",tmp->AssignedMech);
+
+        //automatic data
+        tmp->ReportedDate->getTime();
+        this->get_user("root","all",tmp->ReportedUser);
+        int id=this->store_new_error(tmp);
+    return id;
+    }
+
 std::string Microsun::Database::store_error(Microsun::Problem* error,std::string table)
     {
         char* errmsg;
@@ -122,6 +172,19 @@ std::string Microsun::Database::store_error(Microsun::Problem* error,std::string
         sqlite3_close(db);
         return sql;
     }
+
+int Microsun::Database::delete_error(int ID_TO_DELETE,std::string table)
+    {
+        if(table=="PENDING_ERRORS" || table=="TEMP_STORED_ERRORS")
+            {
+                char* errmsg;
+                sqlite3* db;
+                std::string sql="DELETE FROM "+table+" WHERE ID="+std::to_string(ID_TO_DELETE)+";";
+                sqlite3_open(this->Path.c_str(),&db);
+                int check=sqlite3_exec(db, sql.c_str(),NULL,NULL,&errmsg);
+                sqlite3_close(db);
+            }
+    };
 
 Php::Value Microsun::Database::tempError(Php::Parameters &arg)
     {
@@ -138,5 +201,6 @@ Php::Value Microsun::Database::tempError(Php::Parameters &arg)
         std::string temp=arg[1].stringValue();
         tmp->MechNotes=temp;
         std::string test=this->store_error(tmp,"TEMP_STORED_ERRORS");
-    return sql;
+        this->delete_error(atoi(arg[0]),"PENDING_ERRORS");
+    return arg[0];
     }

@@ -1,5 +1,6 @@
 <template>
   <h3>{{$store.page_title}}</h3>
+  <button type="button" class="btn btn-warning" @click="this.$router.push('newerror');">new</button>
   <ag-grid-vue
     style="height: 500px"
     class="ag-theme-alpine"

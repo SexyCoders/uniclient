@@ -25,17 +25,35 @@
       data() {
         return {
           menus: {
-            //slide: { buttonText: 'Slide' }
+            slide: { buttonText: 'Slide' }
           },
           side: 'left',
           currentMenu: 'slide',
           title: 'main'
         };
       },
+      watch:{
+      $route (to, from){
+        this.getErrorCount();
+          }
+      },
+
       components: {
         slide
       },
       methods: {
+        storeCustomers(customers)
+          {
+            this.$store.customers=customers;
+          },
+        storePlants(plants)
+          {
+            this.$store.plants=plants;
+          },
+        storeMechNames(names)
+          {
+            this.$store.MechNames=names;
+          },
         setErrorCount(count){
           this.$store.pending_errors_count=count;
         },
@@ -77,6 +95,42 @@
         this.setTitle('UniClient');
         this.setCopyright('Developed by SexyCoders');
         this.getErrorCount();
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_customer_data_full",
+          data: "",
+          success:
+          (response) =>
+              {
+                  this.storeCustomers(JSON.parse(response));
+              },
+            async:false
+            });
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_plant_data_full",
+          data: "",
+          success:
+        (response) =>
+              {
+                  this.storePlants(JSON.parse(response));
+              },
+          async:false
+          });
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_mech_names",
+          data: "",
+          success:
+        (response) =>
+              {
+                  this.storeMechNames((JSON.parse(response)).MechNames);
+              },
+          async:false
+          });
       }
 
     };
