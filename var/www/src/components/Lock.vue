@@ -63,7 +63,6 @@ export default {
   methods : {
     UNLOCK()
       {
-        console.log("check");
         unlock_oauth2();
       }
   }
