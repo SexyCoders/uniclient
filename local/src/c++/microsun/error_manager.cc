@@ -184,6 +184,7 @@ int Microsun::Database::delete_error(int ID_TO_DELETE,std::string table)
                 int check=sqlite3_exec(db, sql.c_str(),NULL,NULL,&errmsg);
                 sqlite3_close(db);
             }
+        return ID_TO_DELETE;
     };
 
 Php::Value Microsun::Database::tempError(Php::Parameters &arg)
@@ -203,4 +204,49 @@ Php::Value Microsun::Database::tempError(Php::Parameters &arg)
         std::string test=this->store_error(tmp,"TEMP_STORED_ERRORS");
         this->delete_error(atoi(arg[0]),"PENDING_ERRORS");
     return arg[0];
+    }
+
+static int callback_stored_single(void* passthrough,int argc,char** argv,char** col)
+    {
+        Microsun::Problem* T=(Microsun::Problem*) passthrough;
+        T->reg_id=atoi(*argv);
+        T->plant=T->database->getPlant(argv[1]);
+        T->Pos=atoi(argv[2]);
+        T->Type=argv[3];
+        T->ErrorCode=argv[4];
+        T->ReportedDate->fromString(argv[5]);
+        T->database->get_user(argv[6],"all",T->ReportedUser);
+        T->ErrorNotes=argv[7];
+        T->database->get_user(argv[8],"all",T->AssignedMech);
+        T->ResolvedDate->fromString(argv[9]);
+    return 0;
+    }
+
+std::string Microsun::Database::log_error(Microsun::Problem* error,std::string table)
+    {
+        char* errmsg;
+        sqlite3* db;
+        std::string sql="INSERT INTO "+table+" VALUES("+std::to_string(error->reg_id)+",'"+error->plant->ID+"',"+std::to_string(error->Pos)+",'"+error->Type+"','"+error->ErrorCode+"','"+error->ReportedDate->toString()+"','"+error->ReportedUser->username+"','"+error->ErrorNotes+"','"+error->AssignedMech->username+"','"+error->ResolvedDate->toString()+"','"+error->MechNotes+"');";
+        sqlite3_open(this->ErrorPath.c_str(),&db);
+        int check=sqlite3_exec(db, sql.c_str(),NULL,NULL,&errmsg);
+        sqlite3_close(db);
+        return sql;
+    }
+
+
+Php::Value Microsun::Database::resolve_error(Php::Parameters &arg) 
+    {
+        unsigned long int id=atoi(arg[0]);
+        std::string notes=arg[1]; 
+        char* errmsg;
+        sqlite3* db;
+        Microsun::Problem* tmp=new Microsun::Problem(this);
+        std::string sql="SELECT * FROM TEMP_STORED_ERRORS WHERE ID="+std::to_string(id)+";";
+        sqlite3_open(this->Path.c_str(),&db);
+        int check=sqlite3_exec(db, sql.c_str(),callback_stored_single,(void*)tmp,&errmsg);
+        sqlite3_close(db);
+        tmp->MechNotes=notes;
+        std::string test=this->log_error(tmp,tmp->plant->ID);
+        this->delete_error(id,"TEMP_STORED_ERRORS");
+    return test;
     }
