@@ -180,3 +180,43 @@ function get_mech_names()
         $to_return->MechNames=$database->getMechNames();
     return $to_return;
     }
+
+function resolve_error($data)
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        if($data[2]=="true")
+            $to_return->return_test=$database->ResolveError($data[0],$data[1]);
+        else
+            {
+                $database->tempError($data[0],$data[1]);
+                $to_return->return_test=$database->ResolveError($data[0],$data[1]);
+            }
+            
+    return $to_return;
+    }
+
+function get_plant_log($data)
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $check=$database->getPlantLog($data[0]); 
+        $to_return=new stdClass;
+        for($i=0;$i<count($check);$i++)
+            {
+                $temp=new stdClass;
+                $temp->reg_id=$check[$i]->reg_id();
+                $temp->plant_id=$check[$i]->plant_id();
+                $temp->Type=$check[$i]->Type();
+                $temp->Pos=$check[$i]->Pos();
+                $temp->ErrorCode=$check[$i]->ErrorCode();
+                $temp->ReportedDate=$check[$i]->ReportedDate();
+                $temp->ReportedUser=$check[$i]->ReportedUser();
+                $temp->ErrorNotes=$check[$i]->ErrorNotes();
+                $temp->AssignedMech=$check[$i]->AssignedMech();
+                $temp->ResolvedDate=$check[$i]->ResolvedDate();
+                $temp->MechNotes=$check[$i]->MechNotes();
+            $to_return->{$i}=$temp;
+            }
+    return $to_return;
+    }

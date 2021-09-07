@@ -21,7 +21,7 @@ class Database : public Php::Base
 public:
     std::string DataPath="/var/lib/uniclient";
     std::string Path=this->DataPath+"/MICROSUN_DATABASE";
-    std::string ErrorPath=this->DataPath+"/ERROR_DATABASE";
+    std::string ErrorPath=this->DataPath+"/LOGGING_DATABASE";
 
 public:
     //runtime data
@@ -39,13 +39,18 @@ public:
     Php::Value getPendingCount();
     Php::Value getPending();
     Php::Value getStored();
-    Php::Value storePlant(Php::Parameters &arg);
     Php::Value tempError(Php::Parameters &arg);
     Php::Value getMechNames();
     Php::Value newError(Php::Parameters &arg);
     unsigned long int store_new_error(Microsun::Problem* error);
     std::string store_error(Microsun::Problem* error,std::string table);
     int delete_error(int ID_TO_DELETE,std::string table);
+    Php::Value resolve_error(Php::Parameters &arg); 
+    Php::Value getPlantLog(Php::Parameters &arg);
+    //!!!!!!!!!!!!!!!!!!!!!!
+    //LOG ERROR NEEDS TO BE REPLACED BY SWITCH INSIDE STORE ERROR TO USE BOTH DATABASES
+    //!!!!!!!!!!!!!!!!!!!!!!
+    std::string log_error(Microsun::Problem* error,std::string table);
     Microsun::County* getCountyByName(std::string name);
     Microsun::Panel* getPanelByName(std::string Name);
     Microsun::Mounter* getMounterByName(std::string Name);

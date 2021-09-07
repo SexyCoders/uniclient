@@ -71,5 +71,21 @@ $app->post('/new_error',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
+$app->post('/resolve_error',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        $k=resolve_error($t);
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
+$app->post('/get_plant_log',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        $k=get_plant_log($t);
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
 $app->run();
 

@@ -7,11 +7,11 @@
 
             <h4 class="mb-0">{{$store.selection.ID}}</h4>
 
-            <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Edit</button>
-            <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Delete</button>
+            <!--<button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Edit</button>-->
+            <!--<button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Delete</button>-->
 
             <div class="text-left mt-3">
-                <h5 class="font-13 text-uppercase">Details:</h5>
+                <!--<h5 class="font-13 text-uppercase">Details:</h5>-->
                 <p class="text-muted mb-2 font-13"><strong>Power :</strong> 
                     <span class="ml-2">{{$store.selection.Power}} MW</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Owner :</strong> 
@@ -103,113 +103,33 @@
 
     <div class="col-lg-8 col-xl-8">
         <div class="card-box">
-            <ul class="nav nav-pills navtab-bg">
-                <li class="nav-item">
-                    <a href="#about-me" data-toggle="tab" aria-expanded="true" class="nav-link ml-0 active">
-                        <i class="mdi mdi-face-profile mr-1"></i>About Me
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a href="#settings" data-toggle="tab" aria-expanded="false" class="nav-link">
-                        <i class="mdi mdi-settings-outline mr-1"></i>Settings
-                    </a>
-                </li>
-            </ul>
-
             <div class="tab-content">
-
                 <div class="tab-pane show active" id="about-me">
-
-                    <h5 class="mb-4 text-uppercase"><i class="mdi mdi-briefcase mr-1"></i>
-                        Experience</h5>
-
-                    <ul class="list-unstyled timeline-sm">
-                        <li class="timeline-sm-item">
-                            <span class="timeline-sm-date">2015 - 19</span>
-                            <h5 class="mt-0 mb-1">Lead designer / Developer</h5>
-                            <p>websitename.com</p>
-                            <p class="text-muted mt-2">Everyone realizes why a new common language
-                                would be desirable: one could refuse to pay expensive translators.
-                                To achieve this, it would be necessary to have uniform grammar,
-                                pronunciation and more common words.</p>
-
-                        </li>
-                        <li class="timeline-sm-item">
-                            <span class="timeline-sm-date">2012 - 15</span>
-                            <h5 class="mt-0 mb-1">Senior Graphic Designer</h5>
-                            <p>Software Inc.</p>
-                            <p class="text-muted mt-2">If several languages coalesce, the grammar
-                                of the resulting language is more simple and regular than that of
-                                the individual languages. The new common language will be more
-                                simple and regular than the existing European languages.</p>
-                        </li>
-                        <li class="timeline-sm-item">
-                            <span class="timeline-sm-date">2010 - 12</span>
-                            <h5 class="mt-0 mb-1">Graphic Designer</h5>
-                            <p>Coderthemes LLP</p>
-                            <p class="text-muted mt-2 mb-0">The European languages are members of
-                                the same family. Their separate existence is a myth. For science
-                                music sport etc, Europe uses the same vocabulary. The languages
-                                only differ in their grammar their pronunciation.</p>
-                        </li>
-                    </ul>
-
                     <h5 class="mb-3 mt-4 text-uppercase"><i class="mdi mdi-cards-variant mr-1"></i>
-                        Projects</h5>
+                        Error Log</h5>
                     <div class="table-responsive">
                         <table class="table table-borderless mb-0">
                             <thead class="thead-light">
                                 <tr>
                                     <th>#</th>
-                                    <th>Project Name</th>
-                                    <th>Start Date</th>
-                                    <th>Due Date</th>
-                                    <th>Status</th>
-                                    <th>Clients</th>
+                                    <th>Date</th>
+                                    <th>Type/Position</th>
+                                    <th>Notes</th>
+                                    <th>Mech</th>
+                                    <th>Mech Notes</th>
+                                    <th>Resolved</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>1</td>
-                                    <td>App design and development</td>
-                                    <td>01/01/2015</td>
-                                    <td>10/15/2018</td>
-                                    <td><span class="badge badge-info">Work in Progress</span></td>
-                                    <td>Halette Boivin</td>
+                                <tr v-for="error in ErrorLog" :value=error>
+                                    <td>{{error.reg_id}}</td>
+                                    <td>DATE</td>
+                                    <td>{{error.Type}} | {{error.Pos}}</td>
+                                    <td>{{error.ErrorNotes}}</td>
+                                    <td>{{error.AssignedMech}}</td>
+                                    <td>{{error.MechNotes}}</td>
+                                    <td>RESOLVED</td>
                                 </tr>
-                                <tr>
-                                    <td>2</td>
-                                    <td>Coffee detail page - Main Page</td>
-                                    <td>21/07/2016</td>
-                                    <td>12/05/2018</td>
-                                    <td><span class="badge badge-success">Pending</span></td>
-                                    <td>Durandana Jolicoeur</td>
-                                </tr>
-                                <tr>
-                                    <td>3</td>
-                                    <td>Poster illustation design</td>
-                                    <td>18/03/2018</td>
-                                    <td>28/09/2018</td>
-                                    <td><span class="badge badge-pink">Done</span></td>
-                                    <td>Lucas Sabourin</td>
-                                </tr>
-                                <tr>
-                                    <td>4</td>
-                                    <td>Drinking bottle graphics</td>
-                                    <td>02/10/2017</td>
-                                    <td>07/05/2018</td>
-                                    <td><span class="badge badge-purple">Work in Progress</span></td>
-                                    <td>Donatien Brunelle</td>
-                                </tr>
-                                <tr>
-                                    <td>5</td>
-                                    <td>Landing page design - Home</td>
-                                    <td>17/01/2017</td>
-                                    <td>25/05/2021</td>
-                                    <td><span class="badge badge-warning">Coming soon</span></td>
-                                    <td>Karel Auberjo</td>
-                                </tr>
-
                             </tbody>
                         </table>
                     </div>
@@ -369,6 +289,7 @@
 </div>
 </template>
 <script>
+import $ from "jquery";
 import {Time} from "@sexycoders/time.js"
 export default {
     components: {
@@ -376,30 +297,48 @@ export default {
     data() {
         return {
             connection_time:"",
-            tracker_time:""
+            tracker_time:"",
+            ErrorLog:"",
         };
   },
     computed()
         {
         },
     mounted() {
+        this.getPlantLog();
     },
     methods: {
         setTitle(title)
         {
             this.$store.page_title=title;
         },
+        getPlantLog()
+            {
+                    var senddata=JSON.stringify([this.$store.selection.ID]);
+					$.ajax({
+						type: 'POST',
+						url: window.__SCD.datacenter+"/get_plant_log",
+						data:senddata, 
+						success:
+						(response) =>
+							{
+                                this.$data.ErrorLog=JSON.parse(response);
+                                console.log(this.$data.ErrorLog);
+							},
+							async:false
+							});
+            }
         },
      created()
         {
-        if(this.$store.selection=='nothing')
-            this.$router.push('plants');
-        this.setTitle('Plant Profile');
-        var t=new Time();
-        t.fromString(this.$store.selection.ConnectionDate);
-        this.connection_time=t.toStringf("dmyl-","c",1);
-        t.fromString(this.$store.selection.TrackerBegin);
-        this.tracker_time=t.toStringf("dmyl-","c",1);
+            if(this.$store.selection=='nothing')
+                this.$router.push('plants');
+            this.setTitle('Plant Profile');
+            var t=new Time();
+            t.fromString(this.$store.selection.ConnectionDate);
+            this.connection_time=t.toStringf("dmyl-","c",1);
+            t.fromString(this.$store.selection.TrackerBegin);
+            this.tracker_time=t.toStringf("dmyl-","c",1);
         }
 };
 </script>

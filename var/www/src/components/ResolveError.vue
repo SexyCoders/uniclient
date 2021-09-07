@@ -88,6 +88,8 @@ export default {
         {
         },
     mounted() {
+		if(this.$store.selection.stored=="true")
+			this.getNotes();
     },
     methods: 
 		{
@@ -111,25 +113,31 @@ export default {
 				},
 			resolveError()
 				{
+					this.$data.ID=this.$store.selection.reg_id;
 					var senddata = Object.assign({},this.$data);
+					senddata.stored=this.$store.selection.stored;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
-				//	$.ajax({
-				//		type: 'POST',
-				//		url: window.__SCD.datacenter+"/store_plant",
-				//		data:senddata, 
-				//		success:
-				//		(response) =>
-				//			{
-				//				console.log(response);
-				//			},
-				//			async:false
-				//			});
+					$.ajax({
+						type: 'POST',
+						url: window.__SCD.datacenter+"/resolve_error",
+						data:senddata, 
+						success:
+						(response) =>
+							{
+								console.log(response);
+							},
+							async:false
+							});
 				},
 			setTitle(title)
 				{
 					this.$store.page_title=title;
 				},
+			getNotes()
+				{
+					this.$data.Notes=this.$store.selection.MechNotes;
+				}
         },
      created()
         {
