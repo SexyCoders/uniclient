@@ -97,6 +97,7 @@ export default {
 				{
 					this.$data.ID=this.$store.selection.reg_id;
 					var senddata = Object.assign({},this.$data);
+					senddata.token=window.__auth_system.oauth2.token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
 					$.ajax({
@@ -106,6 +107,12 @@ export default {
 						success:
 						(response) =>
 							{
+                                var t=JSON.parse(response);
+                                if(response=="NOAUTH")
+                                    {
+                                        this.$store.state.NOAUTH=true;
+                                        return;
+                                    }
 								console.log(response);
 							},
 							async:false
@@ -116,6 +123,7 @@ export default {
 					this.$data.ID=this.$store.selection.reg_id;
 					var senddata = Object.assign({},this.$data);
 					senddata.stored=this.$store.selection.stored;
+					senddata.token=window.__auth_system.oauth2.token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
 					$.ajax({
@@ -125,6 +133,12 @@ export default {
 						success:
 						(response) =>
 							{
+                                var t=JSON.parse(response);
+                                if(response=="NOAUTH")
+                                    {
+                                        this.$store.state.NOAUTH=true;
+                                        return;
+                                    }
 								console.log(response);
 							},
 							async:false

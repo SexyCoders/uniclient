@@ -25,6 +25,10 @@ export default {
   computed () {
   },
   mounted() {
+  },
+  beforeUnmount() {
+  },
+  created()  {
       if(window.__auth_system==undefined)
         window.__auth_system=new AuthSystem();
       var token=localStorage.getItem("oauth2_token");
@@ -35,10 +39,6 @@ export default {
           window.__auth_system.oauth2.token=token;
           this.verifyToken();
         }
-  },
-  beforeUnmount() {
-  },
-  created()  {
     setInterval(this.AuthWatcher,50);
   },
   methods : {
