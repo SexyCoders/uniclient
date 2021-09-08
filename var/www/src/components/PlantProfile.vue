@@ -314,14 +314,23 @@ export default {
         },
         getPlantLog()
             {
-                    var senddata=JSON.stringify([this.$store.selection.ID]);
+                    var tmp=new Array();
+                    tmp.push(this.$store.selection.ID);
+                    tmp.push(window.__auth_system.oauth2.token);
+                    tmp=JSON.stringify(tmp);
 					$.ajax({
 						type: 'POST',
 						url: window.__SCD.datacenter+"/get_plant_log",
-						data:senddata, 
+						data:tmp, 
 						success:
 						(response) =>
 							{
+                                var t=JSON.parse(response);
+                                if(response=="NOAUTH")
+                                    {
+                                        this.$store.state.NOAUTH=true;
+                                        return;
+                                    }
                                 this.$data.ErrorLog=JSON.parse(response);
                                 console.log(this.$data.ErrorLog);
 							},
@@ -331,14 +340,17 @@ export default {
         },
      created()
         {
-            if(this.$store.selection=='nothing')
-                this.$router.push('plants');
-            this.setTitle('Plant Profile');
-            var t=new Time();
-            t.fromString(this.$store.selection.ConnectionDate);
-            this.connection_time=t.toStringf("dmyl-","c",1);
-            t.fromString(this.$store.selection.TrackerBegin);
-            this.tracker_time=t.toStringf("dmyl-","c",1);
+            if(typeof this.$store.selection == 'undefined')
+                this.$router.replace('plants');
+            else
+                {
+                    this.setTitle('Plant Profile');
+                    var t=new Time();
+                    t.fromString(this.$store.selection.ConnectionDate);
+                    this.connection_time=t.toStringf("dmyl-","c",1);
+                    t.fromString(this.$store.selection.TrackerBegin);
+                    this.tracker_time=t.toStringf("dmyl-","c",1);
+                }
         }
 };
 </script>
