@@ -94,11 +94,17 @@ export default {
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_pending_errors_all",
-          data: "",
+          data: JSON.stringify([window.__auth_system.oauth2.token]),
           success:
         (response) =>
               {
-                  this.storeErrors(JSON.parse(response));
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+                  this.storeErrors(t);
                   updateData();
               },
           async:false

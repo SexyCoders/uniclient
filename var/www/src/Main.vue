@@ -61,11 +61,17 @@
           $.ajax({
               type: 'POST',
               url: window.__SCD.datacenter+"/get_pending_errors_count",
-              data: "",
+              data: JSON.stringify([window.__auth_system.oauth2.token]),
               success:
             (response) =>
                   {
-                      this.setErrorCount(JSON.parse(response).count);
+                    var t=JSON.parse(response);
+                    if(response=="NOAUTH")
+                        {
+                            this.$store.state.NOAUTH=true;
+                            return;
+                        }
+                      this.setErrorCount(t.count);
                   },
               async:false
               });
@@ -99,10 +105,16 @@
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_customer_data_full",
-          data: "",
+          data: JSON.stringify([window.__auth_system.oauth2.token]),
           success:
           (response) =>
               {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
                   this.storeCustomers(JSON.parse(response));
               },
             async:false
@@ -111,10 +123,16 @@
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_plant_data_full",
-          data: "",
+          data: JSON.stringify([window.__auth_system.oauth2.token]),
           success:
         (response) =>
               {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
                   this.storePlants(JSON.parse(response));
               },
           async:false
@@ -123,10 +141,16 @@
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_mech_names",
-          data: "",
+          data: JSON.stringify([window.__auth_system.oauth2.token]),
           success:
         (response) =>
               {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
                   this.storeMechNames((JSON.parse(response)).MechNames);
               },
           async:false
