@@ -2,13 +2,8 @@
   <h3>{{$store.page_title}}</h3>
   <div class="row">
       <div class="col-md-1">
-        <div class="row">
-      <div class="col-md-1">
         <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
         </div>
-        <i class="fas fa-search"/>
-        </div>
-      </div>
       <div class="col-md-2">
           <button type="button" class="btn btn-warning" @click="this.$router.push('newerror');">new</button>
       </div>

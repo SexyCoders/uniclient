@@ -126,13 +126,17 @@ export default {
 						success:
 						(response) =>
 							{
-                                var t=JSON.parse(response);
+								var t=JSON.parse(response);
                                 if(response=="NOAUTH")
                                     {
-                                        this.$store.state.NOAUTH=true;
+                                        this.$store.NOAUTH=1;
                                         return;
                                     }
-								console.log(response);
+								else
+									{
+										alert("Error "+t.reg_id+" succcesfully registered.");
+										this.$router.push("errors");
+									}
 							},
 							async:false
 							});

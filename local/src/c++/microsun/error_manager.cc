@@ -119,13 +119,14 @@ static int get_last_id_callback(void* passthrough,int argc,char** argv,char** co
     return 0;
     }
 
-unsigned long int Microsun::Database::getLastInsertId()
+unsigned long int Microsun::Database::getLastInsertId(std::string table)
     {
         char* errmsg;
         sqlite3* db;
         int temp;
         sqlite3_open(this->Path.c_str(),&db);
-        int check=sqlite3_exec(db,"select last_insert_rowid();",get_last_id_callback,(void*)&temp,&errmsg);
+        std::string sql="select seq from sqlite_sequence where name='"+table+"';";
+        int check=sqlite3_exec(db,sql.c_str(),get_last_id_callback,(void*)&temp,&errmsg);
         sqlite3_close(db);
     return temp;
     }
@@ -138,7 +139,7 @@ unsigned long int Microsun::Database::store_new_error(Microsun::Problem* error)
         sqlite3_open(this->Path.c_str(),&db);
         int check=sqlite3_exec(db, sql.c_str(),NULL,NULL,&errmsg);
         sqlite3_close(db);
-    return this->getLastInsertId();
+    return this->getLastInsertId("PENDING_ERRORS");
     }
 
 Php::Value Microsun::Database::newError(Php::Parameters &arg)
