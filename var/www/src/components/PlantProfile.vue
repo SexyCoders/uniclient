@@ -48,56 +48,56 @@
 
         </div> <!-- end card-box -->
 
-        <div class="card-box">
-            <h4 class="header-title">Skills</h4>
-            <p class="mb-3">Everyone realizes why a new common language would be desirable</p>
+        <!--<div class="card-box">-->
+            <!--<h4 class="header-title">Skills</h4>-->
+            <!--<p class="mb-3">Everyone realizes why a new common language would be desirable</p>-->
 
-            <div class="pt-1">
-                <h6 class="text-uppercase mt-0">HTML5 <span class="float-right">90%</span></h6>
-                <div class="progress progress-sm m-0">
-                    <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">
-                        <span class="sr-only">90% Complete</span>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="pt-1">-->
+                <!--<h6 class="text-uppercase mt-0">HTML5 <span class="float-right">90%</span></h6>-->
+                <!--<div class="progress progress-sm m-0">-->
+                    <!--<div class="progress-bar bg-purple" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" style="width: 90%">-->
+                        <!--<span class="sr-only">90% Complete</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div class="mt-2 pt-1">
-                <h6 class="text-uppercase">PHP <span class="float-right">67%</span></h6>
-                <div class="progress progress-sm m-0">
-                    <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width: 67%">
-                        <span class="sr-only">67% Complete</span>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="mt-2 pt-1">-->
+                <!--<h6 class="text-uppercase">PHP <span class="float-right">67%</span></h6>-->
+                <!--<div class="progress progress-sm m-0">-->
+                    <!--<div class="progress-bar bg-purple" role="progressbar" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100" style="width: 67%">-->
+                        <!--<span class="sr-only">67% Complete</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div class="mt-2 pt-1">
-                <h6 class="text-uppercase">WordPress <span class="float-right">48%</span></h6>
-                <div class="progress progress-sm m-0">
-                    <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%">
-                        <span class="sr-only">48% Complete</span>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="mt-2 pt-1">-->
+                <!--<h6 class="text-uppercase">WordPress <span class="float-right">48%</span></h6>-->
+                <!--<div class="progress progress-sm m-0">-->
+                    <!--<div class="progress-bar bg-purple" role="progressbar" aria-valuenow="48" aria-valuemin="0" aria-valuemax="100" style="width: 48%">-->
+                        <!--<span class="sr-only">48% Complete</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div class="mt-2 pt-1">
-                <h6 class="text-uppercase">Laravel <span class="float-right">95%</span></h6>
-                <div class="progress progress-sm m-0">
-                    <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%">
-                        <span class="sr-only">95% Complete</span>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="mt-2 pt-1">-->
+                <!--<h6 class="text-uppercase">Laravel <span class="float-right">95%</span></h6>-->
+                <!--<div class="progress progress-sm m-0">-->
+                    <!--<div class="progress-bar bg-purple" role="progressbar" aria-valuenow="95" aria-valuemin="0" aria-valuemax="100" style="width: 95%">-->
+                        <!--<span class="sr-only">95% Complete</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-            <div class="mt-2 pt-1">
-                <h6 class="text-uppercase">ReactJs <span class="float-right">72%</span></h6>
-                <div class="progress progress-sm m-0">
-                    <div class="progress-bar bg-purple" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%">
-                        <span class="sr-only">72% Complete</span>
-                    </div>
-                </div>
-            </div>
+            <!--<div class="mt-2 pt-1">-->
+                <!--<h6 class="text-uppercase">ReactJs <span class="float-right">72%</span></h6>-->
+                <!--<div class="progress progress-sm m-0">-->
+                    <!--<div class="progress-bar bg-purple" role="progressbar" aria-valuenow="72" aria-valuemin="0" aria-valuemax="100" style="width: 72%">-->
+                        <!--<span class="sr-only">72% Complete</span>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
 
-        </div> <!-- end card-box-->
+        <!--</div> [> end card-box<]-->
 
     </div> <!-- end col-->
 

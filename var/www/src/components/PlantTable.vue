@@ -1,6 +1,7 @@
 <template>
   <h3>{{$store.page_title}}</h3>
-  <button type="button" class="btn btn-success" @click="this.$router.push('newplant');">new</button>
+  <!--<button type="button" class="btn btn-success" @click="this.$router.push('newplant');">new</button>-->
+  <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter"/>
       
   <ag-grid-vue
     style="height: 500px"
@@ -45,6 +46,7 @@ export default {
       columnDefs: null,
       modules: [ClientSideRowModelModule],
       rowSelection:null,
+      filter:"",
     };
   },
   beforeMount(){
@@ -57,6 +59,9 @@ export default {
     this.gridColumnApi = this.gridOptions.columnApi;
   },
   methods: {
+    onFilterChanged() {
+    this.gridOptions.api.setQuickFilter(this.$data.filter);
+},
     setTitle(title)
       {
         this.$store.page_title=title;
