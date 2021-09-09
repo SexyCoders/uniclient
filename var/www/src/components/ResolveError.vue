@@ -113,6 +113,11 @@ export default {
                                         this.$store.state.NOAUTH=true;
                                         return;
                                     }
+								else
+									{
+										alert("Error "+t.reg_id+" succcesfully stored.");
+										this.$router.push("errors");
+									}
 								console.log(response);
 							},
 							async:false
@@ -139,6 +144,11 @@ export default {
                                         this.$store.state.NOAUTH=true;
                                         return;
                                     }
+								else
+									{
+										alert("Error "+t.reg_id+" succcesfully resolved.");
+										this.$router.push("errors");
+									}
 								console.log(response);
 							},
 							async:false

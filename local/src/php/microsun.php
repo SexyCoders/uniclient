@@ -161,7 +161,7 @@ function temp_error($data)
     {
         $database=new MicrosunDatabase;
         $to_return=new stdClass;
-        $to_return->return_test=$database->tempError($data[0],$data[1]);
+        $to_return->reg_id=$database->tempError($data[0],$data[1]);
     return $to_return;
     }
 

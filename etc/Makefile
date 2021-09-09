@@ -21,6 +21,9 @@ HEADDIR=$(LOCAL)/include
 OBJDIR=$(TMP)/objects
 LIB=$(LOCAL)/lib
 TESTDIR=$(TMP)/test
+COMMANDDIR=$(LOCAL)/sources/commands
+SHARE=$(LOCAL)/share
+
 
 #microsun extension variables
 MIC_SRC=$(SOURCEDIR)/microsun
@@ -163,6 +166,15 @@ microsun:
 	@echo "DONE!";
 	@echo "##########################################################"
 
+commands:
+	for i in $(COMMANDDIR)/*/; \
+	do \
+		echo "making $$i"; \
+		$(CC) "$$i" $(CC_FLAGS); \
+	@mv ./$(OBJ) $(OBJDIR); \
+	$(LD) $(OBJDIR)/$(OBJ) $(LD_MICROSUN) -o $(SHARE)/"$$i"; \
+	@rm -f $(OBJDIR)/*;
+	done
 
 clean:
 	#rm -fv $(OBJDIR)$(OBJ);
