@@ -1,6 +1,19 @@
 <template>
   <h3>{{$store.page_title}}</h3>
-  <button type="button" class="btn btn-warning" @click="this.$router.push('newerror');">new</button>
+  <div class="row">
+      <div class="col-md-1">
+        <div class="row">
+      <div class="col-md-1">
+        <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
+        </div>
+        <i class="fas fa-search"/>
+        </div>
+      </div>
+      <div class="col-md-2">
+          <button type="button" class="btn btn-warning" @click="this.$router.push('newerror');">new</button>
+      </div>
+  </div>
+  <br>
   <ag-grid-vue
     style="height: 500px"
     class="ag-theme-alpine"
@@ -50,6 +63,7 @@ export default {
       columnDefs: null,
       modules: [ClientSideRowModelModule],
       rowSelection:null,
+      filter:"",
     };
   },
   beforeMount(){
@@ -62,6 +76,9 @@ export default {
     this.gridColumnApi = this.gridOptions.columnApi;
   },
   methods: {
+    onFilterChanged() {
+    this.gridOptions.api.setQuickFilter(this.$data.filter);
+},
     setTitle(title)
       {
         this.$store.page_title=title;
