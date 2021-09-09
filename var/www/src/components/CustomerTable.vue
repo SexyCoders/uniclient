@@ -1,5 +1,6 @@
 <template>
   <h3>{{$store.page_title}}</h3>
+  <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter"/>
   <ag-grid-vue
     style="height: 500px"
     class="ag-theme-alpine"
@@ -42,6 +43,7 @@ export default {
       columnDefs: null,
       modules: [ClientSideRowModelModule],
       rowSelection:null,
+      filter:"",
     };
   },
   beforeMount(){
@@ -55,19 +57,22 @@ export default {
     this.check();
   },
   methods: {
+    onFilterChanged() {
+    this.gridOptions.api.setQuickFilter(this.$data.filter);
+},
     check()
       {
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_pending_errors_all",
-          data: "",
-          success:
-          (response) =>
-              {
-                console.log(response);
-              },
-            async:false
-            });
+//      $.ajax({
+//          type: 'POST',
+//          url: window.__SCD.datacenter+"/get_pending_errors_all",
+//          data: "",
+//          success:
+//          (response) =>
+//              {
+//                console.log(response);
+//              },
+//            async:false
+//            });
       },
     setTitle(title)
       {
