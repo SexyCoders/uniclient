@@ -29,7 +29,7 @@ public:
     //int g_size;
 
 public:
-    unsigned long int getLastInsertId();
+    unsigned long int getLastInsertId(std::string table);
     int get_user(std::string username,std::string grp,Microsun::User* result);
     void get_groups();
     Php::Value getCustomers();
