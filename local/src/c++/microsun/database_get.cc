@@ -53,7 +53,7 @@ Php::Value Microsun::Database::getCustomers()
         std::string sql;
         sqlite3* db;
         std::vector<Php::Object> tmp;
-        sql="SELECT * FROM CUSTOMERS;";
+        sql="SELECT ID,COMPANY,IFNULL(NAME,'NAN'),IFNULL(LNAME,'NAN'),IFNULL(PHONE,0),IFNULL(EMAIL,'NAN'),IFNULL(ADDRESS,'NAN'),IFNULL(ZIP,0),IFNULL(TIN,0),IFNULL(NOTES,'NAN') FROM CUSTOMERS;";
         sqlite3_open(this->Path.c_str(),&db);
         int check=sqlite3_exec(db, sql.c_str(),callback_customer_all,(void*)&tmp,&errmsg);
         sqlite3_close(db);
@@ -83,7 +83,7 @@ Microsun::Plant* Microsun::Database::getPlant(std::string ID)
         sqlite3* db;
         sql="SELECT ID FROM PLANTS;";
         Microsun::Plant* temp=new Microsun::Plant();
-        sql="select PLANTS.ID,POWER,CUSTOMERS.*,COUNTIES.*,BOROUGH,LOCATION, \
+        sql="select PLANTS.ID,POWER,CUSTOMERS.ID,CUSTOMERS.COMPANY,CUSTOMERS.NAME,CUSTOMERS.LNAME,CUSTOMERS.PHONE,CUSTOMERS.EMAIL,CUSTOMERS.ADDRESS,CUSTOMERS.ZIP,CUSTOMERS.TIN,CUSTOMERS.NOTES,COUNTIES.*,BOROUGH,LOCATION, \
         PLANTS.AREA,NPANELS,PANELS.*,STRINGS,MOUNTERS.*,INVERTERS.*, \
         CONSTRUCTORS.*,CONNUMBER,CONDATE,TRACKBEGIN,PRICE \
         FROM PLANTS,CUSTOMERS,COUNTIES,PANELS,MOUNTERS,INVERTERS,CONSTRUCTORS \

@@ -8,6 +8,7 @@
     @grid-ready="onGridReady"
     :gridOptions="gridOptions"
     :columnDefs="columnDefs"
+    :defaultColDef="defaultColDef"
     :modules="modules"
     :rowSelection="rowSelection"
     @selection-changed="onSelectionChanged"
@@ -50,6 +51,9 @@ export default {
     this.gridOptions={};
     this.columnDefs=cols;
     this.rowSelection = 'single';
+    this.defaultColDef = {
+      sortable: true
+    };
   },
   mounted() {
     this.gridApi = this.gridOptions.api;
