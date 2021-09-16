@@ -12,9 +12,13 @@ class Customer : public Php::Base
 			std::string Company;
 			std::string FirstName;
 			std::string LastName;
+            std::string Occupation;
 			unsigned long int PhoneNumber;
+            unsigned long int AltPhoneNumber;
 			std::string email;
 			std::string Address;
+            std::string Region;
+            std::string City;
 			unsigned long int zip;
 			std::string Notes;
 			long unsigned int TIN;
@@ -25,9 +29,13 @@ class Customer : public Php::Base
 					this->Company=src.Company;
 					this->FirstName=src.FirstName;
 					this->LastName=src.LastName;
+                    this->Occupation=src.Occupation;
 					this->PhoneNumber=src.PhoneNumber;
+					this->AltPhoneNumber=src.AltPhoneNumber;
 					this->email=src.email;
 					this->Address=src.Address;
+                    this->Region=src.Region;
+                    this->City=src.City;
 					this->zip=src.zip;
 					this->TIN=src.TIN;
 					this->Notes=src.Notes;
