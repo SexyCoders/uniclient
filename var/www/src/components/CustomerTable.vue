@@ -1,8 +1,13 @@
 <template>
   <h3>{{$store.page_title}}</h3>
-  <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter"/>
+  <div class="row">
+      <div class="col-md-1">
+        <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
+        </div>
+  </div>
+  <br>
   <ag-grid-vue
-    style="height: 500px"
+    style="height: 630px"
     class="ag-theme-alpine"
     id="myGrid"
     @grid-ready="onGridReady"
