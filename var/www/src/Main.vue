@@ -1,10 +1,8 @@
 <template>
-        <slide :is="currentMenu" :right="side === 'right' ? true: false">
           <router-link to="/">Home</router-link>
           <router-link to="/customers">Customers</router-link>
           <router-link to="/plants">Plants</router-link>
           <router-link to="/errors">Errors ({{$store.pending_errors_count}})</router-link>
-        </slide>
         <main id="page-wrap">
             <h1>
               {{$store.title}}<br/>
@@ -17,19 +15,12 @@
 </template>
 
 <script>
-  import $ from "jquery";
-    import slide from './files/slide.vue';
+    import $ from "jquery";
 
     export default {
       name:"Main",
       data() {
         return {
-          menus: {
-            slide: { buttonText: 'Slide' }
-          },
-          side: 'left',
-          currentMenu: 'slide',
-          title: 'main'
         };
       },
       watch:{
@@ -39,7 +30,6 @@
       },
 
       components: {
-        slide
       },
       methods: {
         storeCustomers(customers)
