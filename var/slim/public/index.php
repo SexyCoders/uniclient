@@ -46,9 +46,9 @@ function auth($token)
 
 $app = new \Slim\App;
 $app->add(new \Eko3alpha\Slim\Middleware\CorsMiddleware([
-    'http://auth.localhost' => ['POST'],
-    'http://data.localhost' => ['POST'],
-    'http://test.uniclient.localhost:8088' => ['POST'],
+    'https://auth.sexycoders.org' => ['POST'],
+    'https://data.sexycoders.org' => ['POST'],
+    'https://uniclient.sexycoders.org' => ['POST'],
   ]));
 $app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
