@@ -10,7 +10,8 @@
 import $ from "jquery";
 import Lock from "../src/components/Lock.vue";
 import Main from "../src/Main.vue";
-import {AuthSystem} from '../../../lib/js/libauth-runtime-modules.js';
+import {SexyCodersObject} from '@sexycoders/runtime';
+import {AuthObject} from '@sexycoders/auth';
 
 export default {
   name: 'App',
@@ -29,14 +30,15 @@ export default {
   beforeUnmount() {
   },
   created()  {
-      if(window.__auth_system==undefined)
-        window.__auth_system=new AuthSystem();
+      window.__SCD=new SexyCodersObject();
+      if(window.__auth__==undefined)
+        window.__auth__=new AuthObject('oauth2');
       var token=localStorage.getItem("oauth2_token");
       if(token==null)
         this.$store.state.NOAUTH=true;
       else
         {
-          window.__auth_system.oauth2.token=token;
+          window.__auth__.oauth2.token=token;
           this.verifyToken();
         }
     setInterval(this.AuthWatcher,50);
@@ -53,8 +55,8 @@ export default {
       {
       $.ajax({
           type: 'POST',
-          url: window.__auth_system.site.oauth2.validate,
-          data: "access_token="+window.__auth_system.oauth2.token,
+          url: window.__auth__.oauth2.validate,
+          data: "access_token="+window.__auth__.oauth2.token,
           success:
           (response) =>
               {
