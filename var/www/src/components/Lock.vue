@@ -60,7 +60,8 @@
 </template>
 
 <script>
-import { unlock_oauth2 } from "../../../../local/lib/js/libauth-runtime-modules.js";
+import { oauth2 } from "@sexycoders/oauth2";
+import { unlock_oauth2 } from "@sexycoders/runtime";
 
 export default {
   name: 'Lock',

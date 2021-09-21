@@ -16,5 +16,5 @@ HASH=$(git rev-parse HEAD);
 cp -rv ./dist /home/sotiris/Projects/LIVE-REPOS/uniclient-live;
 cd /home/sotiris/Projects/LIVE-REPOS/uniclient-live;
 git add .;
-git commit -m"$HASH";
+git commit -m"from uniclient service update - $HASH";
 git push;
