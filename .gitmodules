@@ -4,3 +4,6 @@
 [submodule "local/lib/PHP-CPP"]
 	path = local/lib/PHP-CPP
 	url = https://github.com/CopernicaMarketingSoftware/PHP-CPP.git
+[submodule "local/lib/sexycoders.js"]
+	path = local/lib/sexycoders.js
+	url = git@gitlab.com:sexycoders/sexycoders.js.git

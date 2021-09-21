@@ -16,5 +16,5 @@ HASH=$(git rev-parse HEAD);
 cp -rv $ROOT/lib/js /home/sotiris/Projects/LIVE-REPOS/lib;
 cd /home/sotiris/Projects/LIVE-REPOS/lib;
 git add .;
-git commit -m"$HASH";
+git commit -m"from uniclient lib update - $HASH";
 git push;
