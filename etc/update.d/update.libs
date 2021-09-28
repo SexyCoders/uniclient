@@ -10,10 +10,18 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 ROOT=$DIR/../..
 
-cd /home/sotiris/Projects/auth/libauth.js;
+cd $ROOT;
+make;
+
+cd /home/sotiris/Projects/UniClient;
 ./install.sh;
 HASH=$(git rev-parse HEAD);
+
+
 cp -rv $ROOT/lib/js /home/sotiris/Projects/LIVE-REPOS/lib;
+cp -rv $ROOT/lib/*.so /home/sotiris/Projects/LIVE-REPOS/lib;
+cp -rv $ROOT/lib/*.a /home/sotiris/Projects/LIVE-REPOS/lib;
+
 cd /home/sotiris/Projects/LIVE-REPOS/lib;
 git add .;
 git commit -m"from uniclient lib update - $HASH";
