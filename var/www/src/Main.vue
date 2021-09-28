@@ -51,7 +51,7 @@
           $.ajax({
               type: 'POST',
               url: window.__SCD.datacenter+"/get_pending_errors_count",
-              data: JSON.stringify([window.__auth_system.oauth2.token]),
+              data: JSON.stringify([window.__auth__.oauth2.token]),
               success:
             (response) =>
                   {
@@ -95,7 +95,7 @@
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_customer_data_full",
-          data: JSON.stringify([window.__auth_system.oauth2.token]),
+          data: JSON.stringify([window.__auth__.oauth2.token]),
           success:
           (response) =>
               {
@@ -113,7 +113,7 @@
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_plant_data_full",
-          data: JSON.stringify([window.__auth_system.oauth2.token]),
+          data: JSON.stringify([window.__auth__.oauth2.token]),
           success:
         (response) =>
               {
@@ -131,7 +131,7 @@
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_mech_names",
-          data: JSON.stringify([window.__auth_system.oauth2.token]),
+          data: JSON.stringify([window.__auth__.oauth2.token]),
           success:
         (response) =>
               {

@@ -9,12 +9,18 @@ done
 DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 ROOT=$DIR/../..
+WORKDIR=$ROOT/var/slim
+LIVEDIR=/home/sotiris/Projects/LIVE-REPOS/datacenter-live
 
-cd $ROOT/var/www;
-npm run build;
 HASH=$(git rev-parse HEAD);
-cp -rv ./dist /home/sotiris/Projects/LIVE-REPOS/uniclient-live;
-cd /home/sotiris/Projects/LIVE-REPOS/uniclient-live;
+
+cp -v $WORKDIR/composer.json $LIVEDIR; 
+cp -v $WORKDIR/public/.htaccess $LIVEDIR/public; 
+cat $WORKDIR/public/index.php | awk '{sub("../../local/src/php/microsun.php","microsun.php")}1' > $LIVEDIR/public/index.php;
+cp -v $ROOT/local/src/php/microsun.php $LIVEDIR;
+cp $ROOT/etc/apache2/datacenter.conf $LIVEDIR;
+
+cd $LIVEDIR;
 git add .;
-git commit -m"from uniclient service update - $HASH";
+git commit -m"from datacenter service update - $HASH";
 git push;
