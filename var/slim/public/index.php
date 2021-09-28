@@ -8,7 +8,7 @@ require '../../../local/src/php/microsun.php';
 function auth($token)
     {
         //The url you wish to send the POST request to
-        $url = "oauth2.localhost/validate.php";
+        $url = "https://oauth2.sexycoders.org/validate.php";
 
         //The data you want to send via POST
         $fields = [
@@ -22,7 +22,7 @@ function auth($token)
         $ch = curl_init();
 
         $headers = array(
-        "Origin: data.localhost",
+        "Origin: https://data.sexycoders.org",
         );
 
         //set the url, number of POST vars, POST data
@@ -46,7 +46,7 @@ function auth($token)
 
 $app = new \Slim\App;
 $app->add(new \Eko3alpha\Slim\Middleware\CorsMiddleware([
-    'https://auth.sexycoders.org' => ['POST'],
+    'https://oauth2.sexycoders.org' => ['POST'],
     'https://data.sexycoders.org' => ['POST'],
     'https://uniclient.sexycoders.org' => ['POST'],
   ]));

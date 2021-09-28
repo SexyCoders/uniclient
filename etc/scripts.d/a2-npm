@@ -11,14 +11,16 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 ROOT=$DIR/../..
 
 
-if [ ! -d $ROOT/local/lib/node_modules ]; then
-	mkdir $ROOT/lib/node_modules;
-	ln -s ../local/lib/node_modules ./node_modules;
+if [ ! -d $ROOT/var/www/node_modules ]; then
+	mkdir $ROOT/var/www/node_modules;
+    cd $ROOT/etc;
+	ln -s ../var/www/node_modules ./node_modules;
 fi
 
 
-cd $ROOT/etc;
+cd $ROOT/var/www;
 
 npm install --legacy-peer-deps;
 
+chown -R $(logname) $ROOT/var/www/node_modules;
 chown -R $(logname) $ROOT/lib/node_modules;
