@@ -2,7 +2,13 @@
   <Lock v-if="this.$store.state.NOAUTH">
   </Lock>
   <div id="main" v-else>
-    <Main />
+    <Header/>
+    <div class="container-fluid">
+      <div class="row">
+        <Menu />
+        <Main />
+      </div>
+    </div>
   </div>
 </template>
 
@@ -12,12 +18,16 @@ import Lock from "../src/components/Lock.vue";
 import Main from "../src/Main.vue";
 import {SexyCodersObject} from '@sexycoders/runtime';
 import {AuthObject} from '@sexycoders/auth';
+import Header from "../src/components/Header.vue";
+import Menu from "../src/components/Menu.vue";
 
 export default {
   name: 'App',
   components: {
     Lock,
     Main,
+    Header,
+    Menu
   },
   data() {
   return{
@@ -79,3 +89,6 @@ export default {
 
 }
 </script>
+<style scoped>
+@import "./assets/dashboard.css";
+</style>

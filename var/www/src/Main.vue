@@ -1,8 +1,4 @@
 <template>
-          <router-link to="/">Home</router-link>
-          <router-link to="/customers">Customers</router-link>
-          <router-link to="/plants">Plants</router-link>
-          <router-link to="/errors">Errors ({{$store.pending_errors_count}})</router-link>
         <main id="page-wrap">
             <h1>
               {{$store.title}}<br/>
@@ -151,6 +147,8 @@
 </script>
 
  <style scoped>
+@import "./assets/dashboard.css";
+
    *, *:after, *:before {
 	 -webkit-box-sizing: border-box;
 	 box-sizing: border-box;
