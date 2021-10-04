@@ -1,13 +1,14 @@
 <template>
-  <h3>{{$store.page_title}}</h3>
-  <div class="row">
-      <div class="col-md-1">
-        <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
-        </div>
+  <div style="height=15vh">
+    <h3>{{$store.page_title}}</h3>
+    <div class="row">
+        <div class="col-md-1">
+          <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
+          </div>
+    </div>
   </div>
-  <br>
   <ag-grid-vue
-    style="height: 630px"
+    style="height: 85vh"
     class="ag-theme-alpine"
     id="myGrid"
     @grid-ready="onGridReady"
@@ -28,7 +29,7 @@ import "@ag-grid-community/core/dist/styles/ag-grid.css";
 import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
 
 const cols = [
-  { field: "ID"},
+  //{ field: "ID"},
   { field: "Company"},
   { field: "FirstName" },
   { field: "LastName" },
@@ -97,7 +98,7 @@ export default {
       var selectedRows = this.gridApi.getSelectedRows();
       //this.$store.selection=selectedRows[0].ID;
       //console.log(selectedRows);
-      var customer=Object.values(this.$store.customers).filter((customer)=>customer.ID==selectedRows[0].ID);
+      var customer=this.$store.customers.filter((customer)=>customer.ID==selectedRows[0].ID);
       this.$store.selection=customer[0];
       console.log(JSON.stringify(this.$store.selection));
       this.$router.push('customerprofile');
