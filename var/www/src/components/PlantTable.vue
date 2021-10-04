@@ -1,10 +1,12 @@
 <template>
-  <h3>{{$store.page_title}}</h3>
-  <!--<button type="button" class="btn btn-success" @click="this.$router.push('newplant');">new</button>-->
-  <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter"/>
+  <div style="height=15vh">
+    <h3>{{$store.page_title}}</h3>
+    <!--<button type="button" class="btn btn-success" @click="this.$router.push('newplant');">new</button>-->
+    <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter"/>
+  </div>
       
   <ag-grid-vue
-    style="height: 500px"
+    style="height: 85vh;"
     class="ag-theme-alpine"
     id="myGrid"
     @grid-ready="onGridReady"
@@ -33,7 +35,7 @@ const cols = [
   { field: "Inverter" },
   { field: "ConnectionNumber" },
   { field: "ConnectionDate" },
-  { field: "TrackerBegin" },
+  //{ field: "TrackerBegin" },
 ];
 export default {
   components: {
@@ -70,14 +72,14 @@ export default {
       const updateData = (dummy) => {
         var table=new Array();
         Object.values(this.$store.plants).forEach((value) => {
-          //console.log(JSON.stringify(value));
+          console.log(JSON.stringify(value));
           var t=new Object();
           t.ID=value.ID;
           t.Power=value.Power;
-          var owner=Object.values(this.$store.customers).filter((customer)=>customer.ID==value.Owner);
-         // console.log(owner);
+          var owner=this.$store.customers.filter((customer)=>customer.ID==value.Owner);
+         console.log(owner);
 
-          t.Owner=owner[0].Company;
+          t.Owner=owner.Company;
           t.County=value.County.Name;
           t.Borough=value.Borough;
           t.Location=value.Location;
