@@ -5,8 +5,8 @@
     <Header/>
     <div class="container-fluid">
       <div class="row">
-        <Menu />
-        <Main />
+        <Menu class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse"></Menu>
+        <Main class="col-md-9 ms-sm-auto col-lg-10 px-md-4"></Main>
       </div>
     </div>
   </div>
