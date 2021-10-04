@@ -13,3 +13,6 @@ ROOT=$DIR/../..
 cd $ROOT/lib/PHP-CPP;
 make && make install;
 
+cd $ROOT/lib/libtime.cc;
+make && make install;
+
