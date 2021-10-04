@@ -7,3 +7,6 @@
 [submodule "local/lib/sexycoders.js"]
 	path = local/lib/sexycoders.js
 	url = git@gitlab.com:sexycoders/sexycoders.js.git
+[submodule "local/lib/libtime.cc"]
+	path = local/lib/libtime.cc
+	url = git@gitlab.com:sexycoders/libtime.cc.git
