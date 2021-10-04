@@ -105,7 +105,7 @@ php:
 	fi
 	$(CC) $(PHPFILE) $(PHP_C_FLAGS);
 	@mv ./*.o $(OBJDIR);
-	$(LD) $(OBJDIR)/$(OBJ) -l:libauth.js.a -l:libmicrosun.a  $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
+	$(LD) $(OBJDIR)/$(OBJ) -l:libmicrosun.a  $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
 	@touch $(OBJDIR).lock;
 	@echo "##########################################################";
 	@echo "Done building LibAuth.js php extension!";
