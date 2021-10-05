@@ -116,7 +116,7 @@ export default {
 					if(senddata.Plant=="" || senddata.Pos=="" || senddata.ErrorNotes=="" || senddata.AssignedMech=="")
 						alert("Please fill in all the required fields!!!");
 					delete senddata.PlantTable;
-					senddata.token=window.__auth_system.oauth2.token;
+					senddata.token=window.__auth__.oauth2.token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
 					$.ajax({
