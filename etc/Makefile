@@ -54,7 +54,7 @@ PHP_SOURCEDIR=$
 PHP_OBJDIR=$(TMP)/php_obj/
 PHP_INI=uniclient.ini
 PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I$(MIC_HEAD)
-PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -L$(LIB) -l:libuniclient.a -l:libtime.cc.a -l:libmicrosun.a 
+PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -lmariadb -L$(LIB) -l:libuniclient.a -l:libtime.cc.a -l:libmicrosun.a 
 PHP_CLI_INI_DIR=/etc/php/7.4/cli/conf.d
 PHP_APACHE2_INI_DIR=/etc/php/7.4/apache2/conf.d
 PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
