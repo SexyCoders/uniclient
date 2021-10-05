@@ -38,7 +38,7 @@ OBJ=*.o
 #declare flags
 CC_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I$(MIC_HEAD)
 LD_GENERAL=-shared -lstdc++ -shared-libgcc
-LD_MICROSUN=$(LD_GENERAL) -lsqlite3 -L/usr/local/lib -l:libtime.cc.a
+LD_MICROSUN=$(LD_GENERAL) -lmariadb -lsqlite3 -L/usr/local/lib -l:libtime.cc.a
 LD_UNICLIENT=$(LD_GENERAL) -lmariadb -ltime.cc 
 AR_FLAGS=rvs
 
