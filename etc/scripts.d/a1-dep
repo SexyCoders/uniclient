@@ -11,8 +11,8 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 ROOT=$DIR/../..
 
 cd $ROOT/lib/PHP-CPP;
-make && make install;
+make -j$(nproc)&& make install;
 
 cd $ROOT/lib/libtime.cc;
-make && make install;
+make -B -j$(nproc)&& make install;
 
