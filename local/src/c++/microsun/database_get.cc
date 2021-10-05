@@ -1,3 +1,4 @@
+#include <mariadb/mysql.h>
 #include <m_database.h>
 #include <sqlite3.h>
 #include <stdlib.h>
@@ -11,6 +12,8 @@
 #include <m_user.h>
 #include <sstream>
 #include <cstring>
+
+MYSQL* mysql;
 
 static int callback_customer(void* passthrough,int argc,char** argv,char** col)
         {
@@ -54,9 +57,13 @@ Php::Value Microsun::Database::getCustomers()
         sqlite3* db;
         std::vector<Php::Object> tmp;
         sql="SELECT ID,COMPANY,IFNULL(NAME,'NAN'),IFNULL(LNAME,'NAN'),IFNULL(PHONE,0),IFNULL(EMAIL,'NAN'),IFNULL(ADDRESS,'NAN'),IFNULL(ZIP,0),IFNULL(TIN,0),IFNULL(NOTES,'NAN') FROM CUSTOMERS;";
+        char* buffer=(char*) malloc(sql.length()*2+1);
+        mysql_real_escape_string(mysql, buffer, sql.c_str(), sql.length());
         sqlite3_open(this->Path.c_str(),&db);
-        int check=sqlite3_exec(db, sql.c_str(),callback_customer_all,(void*)&tmp,&errmsg);
+        //int check=sqlite3_exec(db, sql.c_str(),callback_customer_all,(void*)&tmp,&errmsg);
+        int check=sqlite3_exec(db, buffer,callback_customer_all,(void*)&tmp,&errmsg);
         sqlite3_close(db);
+        free(buffer);
     return tmp; 
     }
 
