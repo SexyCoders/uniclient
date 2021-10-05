@@ -10,6 +10,8 @@ DIR="$( cd -P "$( dirname "$SOURCE" )" >/dev/null 2>&1 && pwd )"
 
 ROOT=$DIR/../..
 DATADIR=/var/lib/uniclient
+LOGDIR=/var/log/uniclient
+LOCKDIR=/var/lock/uniclient
 GRP=uniclient
 USR=uniclient
 
@@ -18,8 +20,30 @@ if [ ! -d "$DATADIR" ];then
 mkdir $DATADIR;
 chgrp $GRP $DATADIR;
 chmod 770 $DATADIR; 
-echo "created var/lib/uniclient";
+echo "created $DATADIR";
 
+else
+echo "not initializing $DATADIR: DIR EXISTS!";
 fi
 
-echo "not initializing var/lib/uniclient: DIR EXISTS!";
+if [ ! -d "$LOGDIR" ];then
+
+mkdir $LOGDIR;
+chgrp $GRP $LOGDIR;
+chmod 770 $LOGDIR; 
+echo "created $LOGDIR";
+
+else
+echo "not initializing $LOGDIR: DIR EXISTS!";
+fi
+
+if [ ! -d "$LOCKDIR" ];then
+
+mkdir $LOCKDIR;
+chgrp $GRP $LOCKDIR;
+chmod 770 $LOCKDIR; 
+echo "created $LOCKDIR";
+
+else
+echo "not initializing $LOCKDIR: DIR EXISTS!";
+fi
