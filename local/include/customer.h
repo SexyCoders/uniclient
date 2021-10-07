@@ -1,148 +1,119 @@
+#include <phpcpp.h>
 #include <string>
-#include <uniclient.h>
 #include <my_time.h>
 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-namespace UniClient
-{
-
-class Customer
+namespace UniClient{
+class Customer : public Php::Base
 	{
-		private:
+		public:
 			unsigned int ID;
 			std::string Company;
 			std::string FirstName;
 			std::string LastName;
+            std::string Occupation;
 			unsigned long int PhoneNumber;
+            unsigned long int AltPhoneNumber;
 			std::string email;
 			std::string Address;
-			int zip;
+            std::string Region;
+            std::string City;
+            Time* Joined; 
+            Time* LastSeen;
+			unsigned long int zip;
 			std::string Notes;
-			int TIN;
-			Time added;
-			Time last_interaction;
+			long unsigned int TIN;
 		public:
+            Customer()
+                {
+                    this->Joined=new Time();
+                    this->LastSeen=new Time();
+                }
 			Customer operator=(Customer src)
 				{
 					this->ID=src.ID;
 					this->Company=src.Company;
 					this->FirstName=src.FirstName;
 					this->LastName=src.LastName;
+                    this->Occupation=src.Occupation;
 					this->PhoneNumber=src.PhoneNumber;
+					this->AltPhoneNumber=src.AltPhoneNumber;
 					this->email=src.email;
 					this->Address=src.Address;
+                    this->Region=src.Region;
+                    this->City=src.City;
 					this->zip=src.zip;
 					this->TIN=src.TIN;
 					this->Notes=src.Notes;
-					this->added=src.added;
-					this->last_interaction=src.last_interaction;
 				return *this;
 				}
+            Customer(unsigned int ID,std::string Company,std::string FirstName,std::string LastName,
+                    unsigned long int PhoneNumber,std::string email,std::string Address,
+                    unsigned long int zip,std::string Notes,long unsigned int TIN)
+                {
+                    this->ID=ID;
+                    this->Company=Company;
+                    this->FirstName=FirstName;
+                    this->LastName=LastName;
+                    this->PhoneNumber=PhoneNumber;
+                    this->email=email;
+                    this->Address=Address;
+                    this->zip=zip;
+                    this->Notes=Notes;
+                    this->TIN=TIN;
+                }
+            Php::Value phpgetID()
+                {
+                return (int) this->ID;
+                }
 
-			void setID(unsigned int id)
-				{
-					this->ID=id;
-				}
-			void setCompany(std::string company)
-				{
-					this->Company=company;
-				}
-			void setFirstName(std::string name)
-				{
-					this->FirstName=name;
-				}
-			void setLastName(std::string lname)
-				{
-					this->LastName=lname;
-				}
-			void setPhoneNumber(unsigned long int phone)
-				{
-					this->PhoneNumber=phone;
-				}
-			void setemail(std::string email)
-				{
-					this->email=email;
-				}
-			void setAddress(std::string address)
-				{
-					this->Address=address;
-				}
-			void setzip(int zip)
-				{
-					this->zip=zip;
-				}
-			void setNotes(std::string notes)
-				{
-					this->Notes=notes;
-				}
-			void setTIN(int tin)
-				{
-					this->TIN=tin;
-				}
-			void setAdded(Time time)
-				{
-					this->added=time;
-				}
-			void setLastInteraction(Time time)
-				{
-					this->last_interaction=time;
-				}
+            Php::Value phpgetCompany()
+                {
+                    return this->Company;
+                }
 
+            Php::Value phpgetFirstName()
+                {
+                    return this->FirstName;
+                }
 
+            Php::Value phpgetLastName()
+                {
+                    return this->LastName;
+                }
 
-			unsigned int getID()
-				{
-					return this->ID;
-				}
-			std::string getCompany()
-				{
-					return this->Company;
-				}
-			std::string getFirstName()
-				{
-					return this->FirstName;
-				}
-			std::string getLastName()
-				{
-					return this->LastName;
-				}
-			unsigned long int getPhoneNumber()
-				{
-					return this->PhoneNumber;
-				}
-			std::string getemail()
-				{
-					return this->email;
-				}
-			std::string getAddress()
-				{
-					return this->Address;
-				}
-			int getzip()
-				{
-					return this->zip;
-				}
-			std::string getNotes()
-				{
-					return this->Notes;
-				}
-			int getTIN()
-				{
-					return this->TIN;
-				}
-			Time getAdded(void)
-				{
-					return this->added;
-				}
-			Time getLastInteraction(void)
-				{
-					return this->last_interaction;
-				}
+            Php::Value phpgetPhoneNumber()
+                {
+                    return (double) this->PhoneNumber;
+                }
 
-	};
+            Php::Value phpgetemail()
+                {
+                    return this->email;
+                }
 
-}
+            Php::Value phpgetAddress()
+                {
+                    return this->Address;
+                }
 
+            Php::Value phpgetzip()
+                {
+                    return (double) this->zip;
+                }
+
+            Php::Value phpgetTIN()
+                {
+                    return (double) this->TIN;
+                }
+
+            Php::Value phpgetNotes()
+                {
+                    return this->Notes;
+                }
+
+                };
+};
 #endif
