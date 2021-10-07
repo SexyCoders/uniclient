@@ -40,15 +40,17 @@ class Database
                     free(this->passwd);
                     free(this->database);
                 }
-            int get(std::string param,unsigned int id,UniClient::Customer* out);
+            //int get(std::string param,unsigned int id,UniClient::Customer* out);
             int put(std::string param,UniClient::Customer* in);
-        //private:
-            int exec(const char* SQL);
-            int exec(const char* SQL,std::vector<std::vector<std::string>>* out); 
-            int exec(std::string SQL)
-                {
-                    return this->exec(SQL.c_str());
-                };
+        private:
+            int insert(MYSQL_BIND* params,int param_n,std::string table);
+            //int exec(const char* SQL);
+            //int exec(const char* SQL,std::vector<std::vector<std::string>>* in); 
+            //int exec(std::string SQL)
+                //{
+                    //return this->exec(SQL.c_str());
+                //};
+
     };
 
 }
