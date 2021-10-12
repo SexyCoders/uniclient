@@ -2,7 +2,7 @@
   <body class="text-center">
     <main class="form-signin">
       <form>
-        <img class="mb-4" alt="" width="72" height="57">
+        <img class="mb-4" alt="libauth.js logo" src="https://lib.sexycoders.org/libauth_logo.png" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Please verify its you...</h1>
 
         <div class="form-floating">
