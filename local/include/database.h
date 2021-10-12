@@ -21,17 +21,25 @@ class Database
             char* user;
             char* passwd;
             char* database;
+            unsigned int port;
         public:
             Database()
                 {
-                    this->host=(char*) malloc((strlen("localhost")+1)*sizeof(char));
-                    strcpy(this->host,"localhost");
+                    printf("config info:\n");
+                    this->host=(char*) malloc((strlen("127.0.0.1")+1)*sizeof(char));
+                    strcpy(this->host,"127.0.0.1");
+                    printf("host=%s\n",this->host);
                     this->user=(char*) malloc((strlen("uniclient")+1)*sizeof(char));
                     strcpy(this->user,"uniclient");
-                    this->passwd=(char*) malloc((strlen("testkey")+1)*sizeof(char));
-                    strcpy(this->passwd,"testkey");
-                    this->database=(char*) malloc((strlen("uniclient")+1)*sizeof(char));
-                    strcpy(this->database,"uniclient");
+                    printf("user=%s\n",this->user);
+                    this->passwd=(char*) malloc((strlen("uniclient")+1)*sizeof(char));
+                    strcpy(this->passwd,"uniclient");
+                    printf("passwd=%s\n",this->passwd);
+                    this->database=(char*) malloc((strlen("MAIN")+1)*sizeof(char));
+                    strcpy(this->database,"MAIN");
+                    printf("database=%s\n",this->database);
+                    this->port=3306;
+                    printf("port=%u\n",this->port);
                 }
             ~Database()
                 {
