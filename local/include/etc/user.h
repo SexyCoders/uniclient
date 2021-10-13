@@ -1,4 +1,4 @@
-#include <microsun.h>
+#include <etc.h>
 #include <string>
 #include <phpcpp.h>
 #include <vector>
@@ -7,7 +7,7 @@
 #ifndef USER_H
 #define USER_H
 
-namespace Microsun{
+namespace UniClient::etc{
 class User : public Php::Base
 	{
 		public:

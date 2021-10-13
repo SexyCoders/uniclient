@@ -4,7 +4,7 @@
 #ifndef MOUNTER_H
 #define MOUNTER_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Mounter : public Php::Base
 	{
 		public:

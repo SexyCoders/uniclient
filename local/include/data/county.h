@@ -1,11 +1,10 @@
-#include <microsun.h>
 #include <string>
 #include <phpcpp.h>
 
 #ifndef COUNTY_H
 #define COUNTY_H
 
-namespace Microsun{
+namespace UniClient::data{
 class County : public Php::Base
 	{
 		public:

@@ -6,7 +6,7 @@
 #ifndef SUPPLIER_H
 #define SUPPLIER_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Supplier : public Php::Base
 	{
 		public:

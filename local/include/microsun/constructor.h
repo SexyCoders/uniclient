@@ -4,7 +4,7 @@
 #ifndef CONSTRUCTOR_H
 #define CONSTRUCTOR_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Constructor : public Php::Base
 	{
 		public:

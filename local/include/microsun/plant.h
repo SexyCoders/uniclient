@@ -1,35 +1,28 @@
+#include <data.h>
 #include <phpcpp.h>
 #include <string>
 #include <my_time.h>
-#include <m_customer.h>
-#include <m_county.h>
-#include <m_constructor.h>
-#include <m_panel.h>
-#include <m_mounter.h>
-#include <m_cboard.h>
-#include <m_inverter.h>
-
 
 #ifndef PLANT_H
 #define PLANT_H
-namespace Microsun{
+namespace UniClient::Microsun{
 class Plant : public Php::Base
 	{
 		public:
 			std::string ID;
 			float Power;
-			Customer* Owner;
-			County* county;
+			UniClient::data::Customer* Owner;
+			UniClient::data::County* county;
 			std::string Borough;
 			std::string Location;
 			double Area;
 			long int NPanels;
-			Panel* panel;
+			UniClient::Microsun::Panel* panel;
 			std::string Strings;
-			Mounter*  Mounting;
-			Inverter* inverter;
-			CBoard* cboard;
-			Constructor* constructor;
+			UniClient::Microsun::Mounter*  Mounting;
+			UniClient::Microsun::Inverter* inverter;
+			UniClient::Microsun::CBoard* cboard;
+			UniClient::Microsun::Constructor* constructor;
 			unsigned long int ConnectionNumber;
 			Time* ConnectionDate;
 			Time* TrackerBegin;
@@ -37,13 +30,13 @@ class Plant : public Php::Base
 		public:
 			Plant()
 					{
-						this->Owner=new Customer();
-						this->county=new County();
-						this->panel=new Panel();
-						this->Mounting=new Mounter();
-						this->inverter=new Inverter();
-						this->cboard=new CBoard();
-						this->constructor=new Constructor();
+						this->Owner=new UniClient::data::Customer();
+						this->county=new UniClient::data::County();
+						this->panel=new UniClient::Microsun::Panel();
+						this->Mounting=new UniClient::Microsun::Mounter();
+						this->inverter=new UniClient::Microsun::Inverter();
+						this->cboard=new UniClient::Microsun::CBoard();
+						this->constructor=new UniClient::Microsun::Constructor();
 						this->ConnectionDate=new Time();
 						this->TrackerBegin=new Time();
 					}

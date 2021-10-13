@@ -1,29 +1,25 @@
-#include <microsun.h>
 #include <string>
 #include <phpcpp.h>
 
-#ifndef CBOARD_H
-#define CBOARD_H
+#ifndef INVERTER_H
+#define INVERTER_H
 
-namespace Microsun{
-class CBoard : public Php::Base
+namespace UniClient::Microsun{
+class Inverter : public Php::Base
 	{
 		public:
 			unsigned int ID;
 			std::string Model;
+			std::string Type;
 		public:
-			CBoard(unsigned int,std::string);
-			CBoard()
-				{
-				}
-
-			CBoard operator=(CBoard src)
+			Inverter(){};
+			Inverter operator=(Inverter src)
 				{
 					this->ID=src.ID;
 					this->Model=src.Model;
+					this->Type=src.Type;
 				return *this;
 				}
-
 			unsigned int getID(void)
 				{
 				return this->ID;
@@ -32,8 +28,10 @@ class CBoard : public Php::Base
 				{
 				return this->Model;
 				}
-				
-			//php access functions
+			std::string getType(void)
+				{
+				return this->Type;
+				}
 			Php::Value phpgetID(void)
 				{
 				return (double) this->ID;
@@ -42,7 +40,10 @@ class CBoard : public Php::Base
 				{
 				return this->Model;
 				}
+			Php::Value phpgetType(void)
+				{
+				return this->Type;
+				}
 	};
 };
-
 #endif
