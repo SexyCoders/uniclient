@@ -8,7 +8,7 @@
 #ifndef ORDER_H
 #define ORDER_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Order : public Php::Base
 	{
 		public:

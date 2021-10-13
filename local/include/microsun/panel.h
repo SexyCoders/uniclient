@@ -4,7 +4,7 @@
 #ifndef PANEL_H
 #define PANEL_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Panel : public Php::Base 
 	{
 		public:

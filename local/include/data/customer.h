@@ -1,10 +1,11 @@
 #include <phpcpp.h>
+#include <my_time.h>
 #include <string>
 
 #ifndef CUSTOMER_H
 #define CUSTOMER_H
 
-namespace Microsun{
+namespace UniClient::data{
 class Customer : public Php::Base
 	{
 		public:
@@ -19,10 +20,17 @@ class Customer : public Php::Base
 			std::string Address;
             std::string Region;
             std::string City;
+            Time* Joined; 
+            Time* LastSeen;
 			unsigned long int zip;
 			std::string Notes;
 			long unsigned int TIN;
 		public:
+            Customer()
+                {
+                    this->Joined=new Time();
+                    this->LastSeen=new Time();
+                }
 			Customer operator=(Customer src)
 				{
 					this->ID=src.ID;
@@ -41,9 +49,6 @@ class Customer : public Php::Base
 					this->Notes=src.Notes;
 				return *this;
 				}
-            Customer()
-                {
-                }
             Customer(unsigned int ID,std::string Company,std::string FirstName,std::string LastName,
                     unsigned long int PhoneNumber,std::string email,std::string Address,
                     unsigned long int zip,std::string Notes,long unsigned int TIN)

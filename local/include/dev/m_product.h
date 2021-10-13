@@ -6,7 +6,7 @@
 #ifndef PRODUCT_H
 #define PRODUCT_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Product : public Php::Base
 	{
 		public:
