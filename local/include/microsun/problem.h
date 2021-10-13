@@ -1,47 +1,49 @@
+#include <etc.h>
 #include <string>
 #include <phpcpp.h>
 #include <my_time.h>
-#include <m_plant.h>
-#include <m_user.h>
+
+
+namespace UniClient{
+		class Database;
+	};
 
 #ifndef PROBLEM_H
 #define PROBLEM_H
 
-
-namespace Microsun{
-class Database;
+namespace UniClient::Microsun{
 class Problem : public Php::Base
 	{
 		public:
 			unsigned long int reg_id;
-			Microsun::Plant* plant;
+			UniClient::Microsun::Plant* plant;
 			std::string Type;
 			int Pos;
 			std::string ErrorCode;
 			Time* ReportedDate;
-			Microsun::User* ReportedUser;
+			UniClient::etc::User* ReportedUser;
 			std::string ErrorNotes;
-			Microsun::User* AssignedMech;
+			UniClient::etc::User* AssignedMech;
 			Time* ResolvedDate;
 			std::string MechNotes;
 
 			//system
-			Microsun::Database* database;
+			UniClient::Database* database;
 
 			Problem()
 				{
 					this->plant=new Plant();
 					this->ReportedDate=new Time();
-					this->ReportedUser=new User();
-					this->AssignedMech=new User();
+					this->ReportedUser=new UniClient::etc::User();
+					this->AssignedMech=new UniClient::etc::User();
 					this->ResolvedDate=new Time();
 				}
-			Problem(Microsun::Database* db)
+			Problem(UniClient::Database* db)
 				{
-					this->plant=new Plant();
+					this->plant=new UniClient::Microsun::Plant();
 					this->ReportedDate=new Time();
-					this->ReportedUser=new User();
-					this->AssignedMech=new User();
+					this->ReportedUser=new UniClient::etc::User();
+					this->AssignedMech=new UniClient::etc::User();
 					this->ResolvedDate=new Time();
 					this->database=db;
 				}

@@ -1,15 +1,13 @@
-#include <microsun.h>
-#include <m_user.h>
 #include <phpcpp.h>
 
 #ifndef MICROSUN_GROUP
 #define MICROSUN_GROUP
 
-namespace Microsun{
+namespace UniClient::etc{
 class Group{
 	public:
 		std::string name;
-		std::vector<Microsun::User> users;
+		std::vector<UniClient::etc::User> users;
 		//Microsun::User* users;
 		//int size;
 		Group()
@@ -20,6 +18,7 @@ class Group{
 			{
 				this->name=src.name;
 				this->users=src.users;
+			return *this;
 			}
 		//int add(Microsun::User T)
 			//{

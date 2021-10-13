@@ -8,7 +8,7 @@
 #ifndef PAYMENT_H
 #define PAYMENT_H
 
-namespace Microsun{
+namespace UniClient::Microsun{
 class Payment : public Php::Base
 	{
 		public:
