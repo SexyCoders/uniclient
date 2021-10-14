@@ -140,7 +140,10 @@ class Database : public Php::Base
 //                    //return this->exec(SQL.c_str());
 //                //};
 
-            int bind();
+            //sql field binding overloads for all classes
+            //int bind();
+            //int bind(UniClient::Microsun::Problem* problem);
+            int storeError(UniClient::Microsun::Problem* error,std::string table);
 // 
     };
 

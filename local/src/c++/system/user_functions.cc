@@ -39,7 +39,6 @@ void UniClient::Database::get_groups()
                 int size=T.size();
                 for(int i=0;i<size;i++)
                     {
-                        printf("%s\n",T[i].c_str());
                         MYSQL *mysql= mysql_init(NULL);
                         std::string sql1="SELECT \
                         ID,FNAME,LNAME,DATEOFBIRTH,EMAIL,PHONE,ZIP,ADDRESS,NOTES,HIREDATE,USERNAME,USERGROUP \
@@ -54,11 +53,9 @@ void UniClient::Database::get_groups()
                         if(n_rows_temp)
                             {
                                 MYSQL_ROW argv=mysql_fetch_row(res_temp);
-                                printf("just looking to see %s:%s\n",argv[0],argv[2]);
                                 UniClient::etc::User temp;
                                 temp.ID=atoi(argv[0]);
                                 temp.FName=argv[1];
-                                printf("%s\n",temp.FName.c_str());
                                 temp.LName=argv[2];
                                 temp.DateOfBirth.fromString(argv[3]);
                                 temp.email=argv[4];
@@ -70,9 +67,10 @@ void UniClient::Database::get_groups()
                                 temp.username=argv[10];
                                 temp.group=argv[11];
                                 t.users.push_back(temp);
+                                printf("loading user %s...\n",temp.username.c_str());
                             }
                     }
-
+            this->groups.push_back(t);
             }
         mysql_free_result(res);
     }
