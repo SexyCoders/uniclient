@@ -39,7 +39,12 @@ int UniClient::Database::storeError(UniClient::Microsun::Problem* problem,std::s
 
 
     stmt= mysql_stmt_init(mysql);
-    std::string sql="INSERT INTO "+table+" VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+    std::string sql;
+    if(table=="PENDING_ERRORS")
+      sql="INSERT INTO "+table+" VALUES (?,?,?,?,?,?,?,?,?)";
+    else
+      sql="INSERT INTO "+table+" VALUES (?,?,?,?,?,?,?,?,?,?,?)";
+
     if (mysql_stmt_prepare(stmt, sql.c_str(), -1))
       show_stmt_error(stmt);
 
@@ -85,13 +90,16 @@ int UniClient::Database::storeError(UniClient::Microsun::Problem* problem,std::s
     bind[8].buffer= (void*)problem->AssignedMech->username.data();
     bind[8].u.indicator= &NTS_INDICATOR;
 
-    bind[9].buffer_type= MYSQL_TYPE_TINY_BLOB;
-    bind[9].buffer= (void*)problem->ResolvedDate->toString().data();
-    bind[9].u.indicator= &NTS_INDICATOR;
+    if(table!="PENDING_ERRORS")
+      {
+        bind[9].buffer_type= MYSQL_TYPE_TINY_BLOB;
+        bind[9].buffer= (void*)problem->ResolvedDate->toString().data();
+        bind[9].u.indicator= &NTS_INDICATOR;
 
-    bind[10].buffer_type= MYSQL_TYPE_TINY_BLOB;
-    bind[10].buffer= (void*)problem->MechNotes.data();
-    bind[10].u.indicator= &NTS_INDICATOR;
+        bind[10].buffer_type= MYSQL_TYPE_TINY_BLOB;
+        bind[10].buffer= (void*)problem->MechNotes.data();
+        bind[10].u.indicator= &NTS_INDICATOR;
+      }
     /* set array size */
     mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
@@ -122,3 +130,18 @@ int UniClient::Database::storeError(UniClient::Microsun::Problem* problem,std::s
     mysql_close(mysql);
   return 0;
   }
+
+Php::Value UniClient::Database::getPendingCount()
+    {
+        MYSQL *mysql= mysql_init(NULL);
+        std::string sql="SELECT COUNT(*) FROM PENDING_ERRORS;";
+        mysql_set_character_set(mysql,"utf8mb4");
+        mysql_real_connect(mysql,this->host,this->user,this->passwd, 
+                          this->microsun, 0, "/var/run/mysqld/mysqld.sock", 0);
+        mysql_real_query(mysql,sql.c_str(),sql.length());
+        MYSQL_RES *res=mysql_store_result(mysql);
+        mysql_close(mysql);
+        MYSQL_ROW row=mysql_fetch_row(res);
+        printf("pending errors are %i\n",atoi(row[0]));
+    return atoi(row[0]);
+    }
