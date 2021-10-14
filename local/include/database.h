@@ -111,7 +111,7 @@ class Database : public Php::Base
 //            UniClient::data::Customer* getCustomerByCompanyName(std::string name);
 //            UniClient::Microsun::Plant* getPlant(std::string ID);
 //            Php::Value getPlants();
-//            Php::Value getPendingCount();
+            Php::Value getPendingCount();
 //            Php::Value getPending();
 //            Php::Value getStored();
 //            Php::Value tempError(Php::Parameters &arg);

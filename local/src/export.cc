@@ -2,6 +2,7 @@
 #include <uniclient.h>
 #include <php_uniclient.h>
 
+#include <database.h>
 #include <data.h>
 #include <etc.h>
 #include <microsun.h>
@@ -18,14 +19,14 @@ PHPCPP_EXPORT void *get_module()
         //myExtension.add(std::move(PhpUniClient));
         //Php::Class<Microsun::Problem> problem("MicrosunProblem");
             //myExtension.add(std::move(problem));
-//        Php::Class<Microsun::Database> database("MicrosunDatabase");
+        Php::Class<UniClient::Database> database("MicrosunDatabase");
 //            //database.method<&Microsun::Database::phpgetID>("getID", {});
 //            database.method<&Microsun::Database::getCustomers>("getCustomers", {});
 //            database.method<&Microsun::Database::getPlants>("getPlants", {});
 //            database.method<&Microsun::Database::getPending>("getPending", {});
 //            database.method<&Microsun::Database::getStored>("getStored", {});
 //            database.method<&Microsun::Database::getMechNames>("getMechNames", {});
-//            database.method<&Microsun::Database::getPendingCount>("getPendingCount", {});
+            database.method<&UniClient::Database::getPendingCount>("getPendingCount", {});
 //            database.method<&Microsun::Database::newError>("newError",{Php::ByVal("parameter",Php::Type::String,true)});
 //            database.method<&Microsun::Database::tempError>("tempError",{Php::ByVal("parameter",Php::Type::String,true)});
 //            database.method<&Microsun::Database::resolve_error>("ResolveError",{Php::ByVal("parameter",Php::Type::String,true)});
@@ -34,7 +35,7 @@ PHPCPP_EXPORT void *get_module()
 //            //database.method<&Microsun::Database::getStoredPlants>("getStoredPlants", {});
 //            //database.method<&Microsun::Database::getStoredProblems>("getStoredProblems", {});
 //            //database.method<&Microsun::Database::phpget>("get",{Php::ByVal("parameter",Php::Type::String,true)});
-//            myExtension.add(std::move(database));
+            myExtension.add(std::move(database));
 // 
 //        Php::Class<Microsun::Customer> customer("MicrosunCustomer");
 //            customer.method<&Microsun::Customer::phpgetID>("getID",{});
