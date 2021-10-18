@@ -54,7 +54,7 @@ PHP_SOURCEDIR=$
 PHP_OBJDIR=$(TMP)/php_obj/
 PHP_INI=uniclient.ini
 PHP_C_FLAGS=-c -Wall -fpic -O2 -std=c++17 -I $(HEADDIR) -I$(MIC_HEAD)
-PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -lmariadb -L$(LIB) -l:libuniclient.a -l:libtime.cc.a -l:libmicrosun.a 
+PHP_LD_FLAGS=-shared -lstdc++ -shared-libgcc -lphpcpp -lmariadb -L$(LIB) -l:libuniclient.a -l:libtime.cc.a
 PHP_CLI_INI_DIR=/etc/php/7.4/cli/conf.d
 PHP_APACHE2_INI_DIR=/etc/php/7.4/apache2/conf.d
 PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
@@ -63,7 +63,7 @@ PHP_SYS_EXTENSION_DIR=$(shell php-config --extension-dir)
 
 default:all
 
-all:uniclient microsun php
+all:uniclient php
 
 install:lib-install php-install
 	service apache2 restart;
@@ -105,7 +105,7 @@ php:
 	fi
 	$(CC) $(PHPFILE) $(PHP_C_FLAGS);
 	@mv ./*.o $(OBJDIR);
-	$(LD) $(OBJDIR)/$(OBJ) -l:libmicrosun.a  $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
+	$(LD) $(OBJDIR)/$(OBJ) $(PHP_LD_FLAGS) -o $(LIB)/$(PHP_NAME).so;
 	@touch $(OBJDIR).lock;
 	@echo "##########################################################";
 	@echo "Done building LibAuth.js php extension!";
@@ -144,37 +144,6 @@ php-install:
 	@echo "##########################################################";
 	@echo "DONE!";
 	@echo "##########################################################";
-
-microsun:
-	@echo "##########################################################";
-	@echo "copmiling microsun extension for uniclient";
-	@echo "##########################################################"
-	@rm -f $(OBJDIR)/*;
-	$(CC) $(MIC_SRC)/$(SOURCES) $(CC_FLAGS);
-	@if [ ! -d $(OBJDIR) ]; then \
-		mkdir $(OBJDIR); \
-	fi
-	@if [ -f $(OBJDIR)/.lock ]; then \
-		echo "Removing objects from previous build"; \
-		rm -f $(OBJDIR)/*; \
-		rm -f $(OBJDIR)/.lock; \
-	fi
-	@mv ./$(OBJ) $(OBJDIR);
-	$(LD) $(OBJDIR)/$(OBJ) $(LD_MICROSUN) -o $(LIB)/libmicrosun.so;
-	$(AR) $(AR_FLAGS) $(LIB)/libmicrosun.a $(OBJDIR)/$(OBJ);
-	@echo "##########################################################";
-	@echo "DONE!";
-	@echo "##########################################################"
-
-commands:
-	for i in $(COMMANDDIR)/*/; \
-	do \
-		echo "making $$i"; \
-		$(CC) "$$i" $(CC_FLAGS); \
-	@mv ./$(OBJ) $(OBJDIR); \
-	$(LD) $(OBJDIR)/$(OBJ) $(LD_MICROSUN) -o $(SHARE)/"$$i"; \
-	@rm -f $(OBJDIR)/*;
-	done
 
 clean:
 	#rm -fv $(OBJDIR)$(OBJ);
