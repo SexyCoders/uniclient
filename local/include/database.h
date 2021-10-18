@@ -75,12 +75,12 @@ class Database : public Php::Base
 
                     printf("Database Names:\n");
 
-                    this->system=(char*) malloc((strlen("MAIN")+1)*sizeof(char));
-                    strcpy(this->system,"MAIN");
+                    this->system=(char*) malloc((strlen("main")+1)*sizeof(char));
+                    strcpy(this->system,"main");
                     printf("system=%s\n",this->system);
 
-                    this->microsun=(char*) malloc((strlen("MICROSUN")+1)*sizeof(char));
-                    strcpy(this->microsun,"MICROSUN");
+                    this->microsun=(char*) malloc((strlen("microsun")+1)*sizeof(char));
+                    strcpy(this->microsun,"microsun");
                     printf("microsun=%s\n",this->microsun);
 
                     this->testing=(char*) malloc((strlen("TESTING")+1)*sizeof(char));
@@ -112,15 +112,17 @@ class Database : public Php::Base
 //            UniClient::Microsun::Plant* getPlant(std::string ID);
 //            Php::Value getPlants();
             Php::Value getPendingCount();
-//            Php::Value getPending();
-//            Php::Value getStored();
-//            Php::Value tempError(Php::Parameters &arg);
+            Php::Value getPending();
+            unsigned long long int getSingle(UniClient::Microsun::Problem* problem,unsigned long long int id,std::string table);
+            Php::Value getStored();
+            Php::Value tempError(Php::Parameters &arg);
 //            Php::Value getMechNames();
-//            Php::Value newError(Php::Parameters &arg);
+            Php::Value newError(Php::Parameters &arg);
 //            unsigned long int store_new_error(UniClient::Microsun::Problem* error);
 //            std::string store_error(UniClient::Microsun::Problem* error,std::string table);
 //            int delete_error(int ID_TO_DELETE,std::string table);
-//            Php::Value resolve_error(Php::Parameters &arg);
+            Php::Value resolve_error(Php::Parameters &arg);
+            unsigned long long int deleteError(std::string table,unsigned long long int id);
 //            Php::Value getPlantLog(Php::Parameters &arg);
 //            //!!!!!!!!!!!!!!!!!!!!!!
 //            //LOG ERROR NEEDS TO BE REPLACED BY SWITCH INSIDE STORE ERROR TO USE BOTH DATABASES
@@ -143,7 +145,7 @@ class Database : public Php::Base
             //sql field binding overloads for all classes
             //int bind();
             //int bind(UniClient::Microsun::Problem* problem);
-            int storeError(UniClient::Microsun::Problem* error,std::string table);
+            unsigned long long int storeError(UniClient::Microsun::Problem* error,std::string table);
 // 
     };
 

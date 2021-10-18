@@ -17,6 +17,6 @@ int main()
         t.ReportedDate->fromString("6;4;5;6;4;5;6;");
         t.ResolvedDate->fromString("6;4;5;6;4;5;6;");
         t.plant=temp;
-        db.storeError(&t,"TEMP_STORED_ERRORS");
-        db.getPendingCount();
+        db.storeError(&t,"PENDING_ERRORS");
+        //db.getPendingCount();
     }

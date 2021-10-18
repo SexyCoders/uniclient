@@ -21,7 +21,7 @@ static int split(std::string str,std::vector<std::string>* vect)
 void UniClient::Database::get_groups()
     {
         MYSQL *mysql= mysql_init(NULL);
-        std::string sql="SELECT * FROM GROUPS;";
+        std::string sql="SELECT * FROM groups;";
         mysql_set_character_set(mysql,"utf8mb4");
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                           this->system, 0, "/var/run/mysqld/mysqld.sock", 0);
@@ -29,7 +29,7 @@ void UniClient::Database::get_groups()
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
         my_ulonglong n_rows=mysql_num_rows(res);
-        for(int j=0;j<n_rows;j++)
+        for(unsigned long long int j=0;j<n_rows;j++)
             {
                 UniClient::etc::Group t;
                 MYSQL_ROW row=mysql_fetch_row(res);
@@ -42,7 +42,7 @@ void UniClient::Database::get_groups()
                         MYSQL *mysql= mysql_init(NULL);
                         std::string sql1="SELECT \
                         ID,FNAME,LNAME,DATEOFBIRTH,EMAIL,PHONE,ZIP,ADDRESS,NOTES,HIREDATE,USERNAME,USERGROUP \
-                        FROM USERS WHERE USERNAME='"+T[i]+"';";
+                        FROM users WHERE USERNAME='"+T[i]+"';";
                         mysql_set_character_set(mysql,"utf8mb4");
                         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                                         this->system, 0, "/var/run/mysqld/mysqld.sock", 0);
@@ -77,13 +77,13 @@ void UniClient::Database::get_groups()
  
 int UniClient::Database::get_user(std::string username,std::string grp,UniClient::etc::User* result)
     {
-        for(int j=0;j<this->groups.size();j++)
+        for(unsigned long int j=0;j<this->groups.size();j++)
             {
                 if(groups[j].name!=grp && grp!="all")
                     continue;
                 else
                     {
-                        for(int i=0;i<groups[j].users.size();i++)
+                        for(unsigned long int i=0;i<groups[j].users.size();i++)
                             {
                                 if(groups[j].users[i].username==username)
                                     *result=groups[j].users[i];
