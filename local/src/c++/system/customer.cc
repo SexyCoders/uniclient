@@ -1,31 +1,39 @@
-#include <data.h>
 #include <database.h>
-#include <mariadb/mariadb_com.h>
-#include <string>
-#include <my_time.h>
 
-//int UniClient::Database::get(std::string param,unsigned int id,UniClient::Customer *in)
-	//{
-		//std::vector<std::vector<std::string>> t;
-		//std::string sql="SELECT * FROM CUSTOMERS WHERE ID="+std::to_string(id)+";";
-		//printf("%s\n",sql.c_str());
-		//this->exec(sql.c_str(),&t);
-		//in->ID=atoi(t[0][0].c_str());
-		//in->Company=t[0][1];
-		//in->FirstName=t[0][2];
-		//in->LastName=t[0][3];
-		//in->PhoneNumber=atol(t[0][4].c_str());
-		//in->email=t[0][5];
-		//in->Address=t[0][6];
-		//in->zip=atoi(t[0][7].c_str());
-		//in->TIN=atoi(t[0][8].c_str());
-		//in->Notes=t[0][9];
-		//in->Joined->fromString(t[0][10]);
-		//in->LastSeen->fromString(t[0][11]);
-	//return 0;
-	//}
+Php::Value UniClient::Database::getCustomers()
+    {
+		std::string sql="SELECT ID,COMPANY,IFNULL(NAME,'NAN'),IFNULL(LNAME,'NAN'),IFNULL(PHONE,0),IFNULL(EMAIL,'NAN'),IFNULL(ADDRESS,'NAN'),IFNULL(ZIP,0),IFNULL(TIN,0),IFNULL(NOTES,'NAN') FROM customers;";
+        MYSQL *mysql= mysql_init(NULL);
+        mysql_set_character_set(mysql,"utf8mb4");
+        mysql_real_connect(mysql,this->host,this->user,this->passwd, 
+                          this->system, 0, "/var/run/mysqld/mysqld.sock", 0);
+        mysql_real_query(mysql,sql.c_str(),sql.length());
+        MYSQL_RES *res=mysql_store_result(mysql);
+        mysql_close(mysql);
+        MYSQL_ROW t=mysql_fetch_row(res);
+        my_ulonglong n_rows=mysql_num_rows(res);
+		std::vector<Php::Object> temp;
+        temp.reserve(n_rows);
+        for(unsigned int j=0;j<n_rows;j++)
+            {
+              UniClient::data::Customer* tmp=new UniClient::data::Customer();
+              tmp->ID=atoi(t[0]);
+              tmp->Company=t[1];
+              tmp->FirstName=t[2];
+              tmp->LastName=t[3];
+              tmp->PhoneNumber=atol(t[4]);
+              tmp->email=t[5];
+              tmp->Address=t[6];
+              tmp->zip=atoi(t[7]);
+              tmp->TIN=atoi(t[8]);
+              tmp->Notes=t[9];
+              tmp->Joined->fromString(t[10]);
+              tmp->LastSeen->fromString(t[11]);
+            }
+    return temp;
+    }
 
-//int UniClient::Database::put(std::string param,UniClient::data::Customer* out)
+//int UniClient::Database::putCustomer(std::string param,UniClient::data::Customer* out)
 //	{
 //		int size=15;
 //		MYSQL_BIND bind[size];
