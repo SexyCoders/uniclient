@@ -10,13 +10,6 @@
 #ifndef UNICLIENT_DATABASE_H
 #define UNICLIENT_DATABASE_H
 
-class test{
-    public:
-    int id;
-    std::string surname;
-    std::string forename;
-};
-
 namespace UniClient {
 class Database : public Php::Base
     {
@@ -105,34 +98,44 @@ class Database : public Php::Base
 //            int put(std::string param,UniClient::data::Customer* in);
 // 
 //            unsigned long int getLastInsertId(std::string table);
+//
+            //system functions
+            
+            //users -  groups
             int get_user(std::string username,std::string grp,UniClient::etc::User* result);
             void get_groups();
-//            Php::Value getCustomers();
+            Php::Value getGroupMembers(std::string group);
+            
+            //system data
+            Php::Value getCustomers();//bulk
+            Php::Value getPlants();//bulk
+            UniClient::data::County* getCountyByName(std::string name);
 //            UniClient::data::Customer* getCustomerByCompanyName(std::string name);
+
+            //microsun dataclasses
 //            UniClient::Microsun::Plant* getPlant(std::string ID);
-//            Php::Value getPlants();
+            UniClient::Microsun::Panel* getPanelById(unsigned long int id);
+            UniClient::Microsun::Mounter* getMounterByName(std::string Name);
+            UniClient::Microsun::Inverter* getInverterByModel(std::string model);
+            UniClient::Microsun::Constructor* getConstructorByCompany(std::string company);
+
+            //microsun error functions
+            Php::Value getPending();//bulk
             Php::Value getPendingCount();
-            Php::Value getPending();
+            Php::Value getStored();//bulk
+            Php::Value newError(Php::Parameters &arg);//stores in pending_errors
+            Php::Value tempError(Php::Parameters &arg);//moves pending_errors->temp_stored_errors
+            Php::Value resolve_error(Php::Parameters &arg);//moves temp_stored_errors->error_log
             unsigned long long int getSingle(UniClient::Microsun::Problem* problem,unsigned long long int id,std::string table);
-            Php::Value getStored();
-            Php::Value tempError(Php::Parameters &arg);
-//            Php::Value getMechNames();
-            Php::Value newError(Php::Parameters &arg);
+            unsigned long long int deleteError(std::string table,unsigned long long int id);
 //            unsigned long int store_new_error(UniClient::Microsun::Problem* error);
 //            std::string store_error(UniClient::Microsun::Problem* error,std::string table);
 //            int delete_error(int ID_TO_DELETE,std::string table);
-            Php::Value resolve_error(Php::Parameters &arg);
-            unsigned long long int deleteError(std::string table,unsigned long long int id);
 //            Php::Value getPlantLog(Php::Parameters &arg);
 //            //!!!!!!!!!!!!!!!!!!!!!!
 //            //LOG ERROR NEEDS TO BE REPLACED BY SWITCH INSIDE STORE ERROR TO USE BOTH DATABASES
 //            //!!!!!!!!!!!!!!!!!!!!!!
 //            std::string log_error(UniClient::Microsun::Problem* error,std::string table);
-//            UniClient::data::County* getCountyByName(std::string name);
-//            UniClient::Microsun::Panel* getPanelByName(std::string Name);
-//            UniClient::Microsun::Mounter* getMounterByName(std::string Name);
-//            UniClient::Microsun::Inverter* getInverterByModel(std::string Name);
-//            UniClient::Microsun::Constructor* getConstructorByCompany(std::string Name);
 //        private:
 //            int insert(MYSQL_BIND* params,int param_n,std::string table);
 //            //int exec(const char* SQL);
