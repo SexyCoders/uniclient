@@ -6,7 +6,7 @@ Php::Value UniClient::Database::getCustomers()
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
-                          this->system, 0, "/var/run/mysqld/mysqld.sock", 0);
+                          this->system, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
@@ -29,6 +29,7 @@ Php::Value UniClient::Database::getCustomers()
               tmp->Notes=t[9];
               tmp->Joined->fromString(t[10]);
               tmp->LastSeen->fromString(t[11]);
+              temp.push_back(Php::Object("MicrosunCustomer",tmp));
             }
     return temp;
     }

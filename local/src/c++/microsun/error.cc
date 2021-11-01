@@ -171,7 +171,7 @@ Php::Value UniClient::Database::getPending()
         my_ulonglong n_rows=mysql_num_rows(res);
         std::vector<Microsun::Problem*> tmp;
         tmp.reserve(n_rows);
-        for(unsigned int j=0;j<n_rows;j++)
+        for(unsigned long int j=0;j<n_rows;j++)
             {
               UniClient::Microsun::Problem* T=new UniClient::Microsun::Problem();
               T->reg_id=atoi(*argv);
@@ -186,7 +186,7 @@ Php::Value UniClient::Database::getPending()
               tmp.push_back(T);
             }
           std::vector<Php::Object> phptmp;
-          for(int j=0;j<tmp.size();j++)
+          for(unsigned long int j=0;j<tmp.size();j++)
               phptmp.push_back(Php::Object("MicrosunProblem",tmp[j]));
     return phptmp;
     }
@@ -205,7 +205,7 @@ Php::Value UniClient::Database::getStored()
         my_ulonglong n_rows=mysql_num_rows(res);
         std::vector<Microsun::Problem*> tmp;
         tmp.reserve(n_rows);
-        for(unsigned int j=0;j<n_rows;j++)
+        for(unsigned long int j=0;j<n_rows;j++)
             {
               UniClient::Microsun::Problem* T=new UniClient::Microsun::Problem();
               T->reg_id=atoi(*argv);
@@ -222,7 +222,7 @@ Php::Value UniClient::Database::getStored()
               tmp.push_back(T);
             }
           std::vector<Php::Object> phptmp;
-          for(int j=0;j<tmp.size();j++)
+          for(unsigned long int j=0;j<tmp.size();j++)
               phptmp.push_back(Php::Object("MicrosunProblem",tmp[j]));
     return phptmp;
     }
@@ -253,7 +253,6 @@ unsigned long long int UniClient::Database::getSingle(UniClient::Microsun::Probl
     MYSQL *mysql;
     MYSQL_STMT *stmt;
     MYSQL_BIND bind[1];
-    char reg_id=STMT_INDICATOR_NULL;
     unsigned int array_size= 1;
 
 
@@ -276,7 +275,6 @@ unsigned long long int UniClient::Database::getSingle(UniClient::Microsun::Probl
 
     /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
 
-    char NTS_INDICATOR=STMT_INDICATOR_NTS;
     char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
     bind[0].buffer_type= MYSQL_TYPE_LONG;
@@ -330,7 +328,6 @@ unsigned long long int UniClient::Database::deleteError(std::string table,unsign
     MYSQL *mysql;
     MYSQL_STMT *stmt;
     MYSQL_BIND bind[1];
-    char reg_id=STMT_INDICATOR_NULL;
     unsigned int array_size= 1;
 
 
@@ -353,7 +350,6 @@ unsigned long long int UniClient::Database::deleteError(std::string table,unsign
 
     /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
 
-    char NTS_INDICATOR=STMT_INDICATOR_NTS;
     char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
     bind[0].buffer_type= MYSQL_TYPE_LONG;
@@ -375,7 +371,6 @@ unsigned long long int UniClient::Database::deleteError(std::string table,unsign
     if (mysql_stmt_execute(stmt))
       show_stmt_error(stmt);
 
-    MYSQL_RES *res=mysql_store_result(mysql);
 
     mysql_close(mysql);
     mysql_stmt_close(stmt);
@@ -386,7 +381,6 @@ Php::Value UniClient::Database::tempError(Php::Parameters &arg)
     {
         unsigned long int id=atoi(arg[0]);
         std::string notes=arg[1]; 
-        char* errmsg;
         Microsun::Problem* tmp=new Microsun::Problem(this);
         this->getSingle(tmp,id,"pending_errors");
         tmp->MechNotes=notes;
@@ -400,7 +394,6 @@ Php::Value UniClient::Database::resolve_error(Php::Parameters &arg)
     {
         unsigned long int id=atoi(arg[0]);
         std::string notes=arg[1]; 
-        char* errmsg;
         Microsun::Problem* tmp=new Microsun::Problem(this);
         this->getSingle(tmp,id,"temp_stored_errors");
         tmp->MechNotes=notes;
