@@ -21,7 +21,6 @@ UniClient::data::County* UniClient::Database::getCountyByName(std::string name)
     MYSQL *mysql;
     MYSQL_STMT *stmt;
     MYSQL_BIND bind[1];
-    char reg_id=STMT_INDICATOR_NULL;
     unsigned int array_size= 1;
 
 
@@ -45,7 +44,6 @@ UniClient::data::County* UniClient::Database::getCountyByName(std::string name)
     /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
 
     char NTS_INDICATOR=STMT_INDICATOR_NTS;
-    char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
     bind[0].buffer_type= MYSQL_TYPE_TINY_BLOB;
     bind[0].buffer= (void*)name.data();

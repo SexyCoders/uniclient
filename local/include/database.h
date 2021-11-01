@@ -109,6 +109,7 @@ class Database : public Php::Base
             //system data
             Php::Value getCustomers();//bulk
             Php::Value getPlants();//bulk
+            UniClient::Microsun::Plant* getPlant(std::string ID);
             UniClient::data::County* getCountyByName(std::string name);
 //            UniClient::data::Customer* getCustomerByCompanyName(std::string name);
 

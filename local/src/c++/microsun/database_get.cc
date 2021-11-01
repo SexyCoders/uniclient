@@ -30,41 +30,6 @@
 //        }
 // 
 // 
-//static int callback_customer_all(void* passthrough,int argc,char** argv,char** col)
-//        {
-//            std::vector<Php::Object>* STORE=(std::vector<Php::Object>*) passthrough;
-//            Microsun::Customer* tmp=new Microsun::Customer();
-//            tmp->ID=atol(argv[0]);
-//            tmp->Company=argv[1];
-//            tmp->FirstName=argv[2];
-//            tmp->LastName=argv[3];
-//            tmp->PhoneNumber=atol(argv[4]);
-//            tmp->email=argv[5];
-//            tmp->Address=argv[6];
-//            tmp->zip=atol(argv[7]);
-//            tmp->TIN=atol(argv[8]);
-//            tmp->Notes=argv[9];
-//            STORE->push_back(Php::Object("MicrosunCustomer",tmp));
-//        return 0;
-//        }
-// 
-//Php::Value Microsun::Database::getCustomers()
-//    {
-//        char* errmsg;
-//        std::string sql;
-//        sqlite3* db;
-//        std::vector<Php::Object> tmp;
-//        sql="SELECT ID,COMPANY,IFNULL(NAME,'NAN'),IFNULL(LNAME,'NAN'),IFNULL(PHONE,0),IFNULL(EMAIL,'NAN'),IFNULL(ADDRESS,'NAN'),IFNULL(ZIP,0),IFNULL(TIN,0),IFNULL(NOTES,'NAN') FROM CUSTOMERS;";
-//        char* buffer=(char*) malloc(sql.length()*2+1);
-//        mysql_real_escape_string(mysql, buffer, sql.c_str(), sql.length());
-//        sqlite3_open(this->Path.c_str(),&db);
-//        //int check=sqlite3_exec(db, sql.c_str(),callback_customer_all,(void*)&tmp,&errmsg);
-//        int check=sqlite3_exec(db, buffer,callback_customer_all,(void*)&tmp,&errmsg);
-//        sqlite3_close(db);
-//        free(buffer);
-//    return tmp; 
-//    }
-// 
 //Microsun::Customer* Microsun::Database::getCustomerByCompanyName(std::string name)
 //    {
 //        char* errmsg;
