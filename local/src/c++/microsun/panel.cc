@@ -21,7 +21,6 @@ UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int 
     MYSQL *mysql;
     MYSQL_STMT *stmt;
     MYSQL_BIND bind[1];
-    char reg_id=STMT_INDICATOR_NULL;
     unsigned int array_size= 1;
 
 
@@ -44,7 +43,6 @@ UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int 
 
     /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
 
-    char NTS_INDICATOR=STMT_INDICATOR_NTS;
     char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
     bind[0].buffer_type= MYSQL_TYPE_LONG;
