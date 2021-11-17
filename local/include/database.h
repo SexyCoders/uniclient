@@ -6,6 +6,7 @@
 #include <phpcpp.h>
 #include <string>
 #include <stdlib.h>
+#include <stdio.h>
 
 #ifndef UNICLIENT_DATABASE_H
 #define UNICLIENT_DATABASE_H
@@ -14,6 +15,9 @@ namespace UniClient {
 class Database : public Php::Base
     {
         private:
+            //config file
+            char* configd;
+            char* passwd_file;
             //credentials
             char* user;
             char* passwd;
@@ -35,14 +39,28 @@ class Database : public Php::Base
                     printf("configuring...\n");
                     printf("\n");
 
+                    this->configd=(char*) malloc((strlen("/etc/uniclient/")+1)*sizeof(char));
+                    strcpy(this->configd,"/etc/uniclient/");
+                    printf("condig dir=%s\n",this->configd);
+
+                    this->passwd_file=(char*) malloc((strlen("passwd")+1)*sizeof(char));
+                    strcpy(this->passwd_file,"passwd");
+                    printf("passwd file=CONFDIR/%s\n",this->passwd_file);
+
                     printf("credentials:\n");
 
                     this->user=(char*) malloc((strlen("uniclient")+1)*sizeof(char));
                     strcpy(this->user,"uniclient");
                     printf("user=%s\n",this->user);
 
-                    this->passwd=(char*) malloc((strlen("uniclient")+1)*sizeof(char));
-                    strcpy(this->passwd,"uniclient");
+                    FILE* pwdfile=fopen(this->passwd_file,"r");
+                    //password is sha256 hashed
+                    char* buffer=(char*)malloc(65*sizeof(char));
+                    fscanf(pdwfile,"%s",buffer);
+
+                    this->passwd=(char*) malloc((strlen(buffer)+1)*sizeof(char));
+                    strcpy(this->passwd,buffer);
+                    free(buffer);
                     printf("passwd=%s\n",this->passwd);
 
                     printf("\n");
