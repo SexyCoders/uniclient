@@ -148,7 +148,7 @@ Php::Value UniClient::Database::getPendingCount()
         std::string sql="SELECT COUNT(*) FROM pending_errors;";
         mysql_set_character_set(mysql,"utf8mb4");
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
-                          this->microsun, 0, "/var/run/mysqld/mysqld.sock", 0);
+                          this->microsun, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
@@ -163,7 +163,7 @@ Php::Value UniClient::Database::getPending()
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
-                          this->microsun, 0, "/var/run/mysqld/mysqld.sock", 0);
+                          this->microsun, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
@@ -197,7 +197,7 @@ Php::Value UniClient::Database::getStored()
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
-                          this->microsun, 0, "/var/run/mysqld/mysqld.sock", 0);
+                          this->microsun, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
