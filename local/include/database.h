@@ -61,7 +61,6 @@ class Database : public Php::Base
 
                     this->passwd=(char*) malloc((strlen(buffer)+1)*sizeof(char));
                     strcpy(this->passwd,buffer);
-                    free(buffer);
                     printf("passwd=%s\n",this->passwd);
 
                     printf("\n");
@@ -79,7 +78,7 @@ class Database : public Php::Base
 
                     printf("Unix Domain:\n");
 
-                    this->unix_socket=(char*) malloc((strlen("/var/run/mysqld/mysqld.sock")+1)*sizeof(char));
+                    //this->unix_socket=(char*) malloc((strlen("/var/run/mysqld/mysqld.sock")+1)*sizeof(char));
                     //strcpy(this->unix_socket,"/var/run/mysqld/mysqld.sock");
                     //printf("unix socket=%s\n",this->unix_socket);
                     this->unix_socket=NULL;
@@ -96,13 +95,13 @@ class Database : public Php::Base
                     strcpy(this->microsun,"microsun");
                     printf("microsun=%s\n",this->microsun);
 
-                    this->testing=(char*) malloc((strlen("TESTING")+1)*sizeof(char));
-                    strcpy(this->testing,"TESTING");
-                    printf("testing=%s\n",this->testing);
+                    //this->testing=(char*) malloc((strlen("TESTING")+1)*sizeof(char));
+                    //strcpy(this->testing,"TESTING");
+                    //printf("testing=%s\n",this->testing);
 
                     printf("\n");
 
-                    //this->get_groups();
+                    this->get_groups();
                 }
             ~Database()
                 {
@@ -112,7 +111,7 @@ class Database : public Php::Base
                     free(this->system);
                     free(this->microsun);
                     //free(this->unix_socket);
-                    free(this->testing);
+                    //free(this->testing);
                 }
             //int get(std::string param,unsigned int id,UniClient::Customer* out);
 //            int put(std::string param,UniClient::data::Customer* in);
