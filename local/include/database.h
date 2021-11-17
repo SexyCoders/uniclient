@@ -101,7 +101,7 @@ class Database : public Php::Base
 
                     printf("\n");
 
-                    this->get_groups();
+                    //this->get_groups();
                 }
             ~Database()
                 {
@@ -110,7 +110,7 @@ class Database : public Php::Base
                     free(this->passwd);
                     free(this->system);
                     free(this->microsun);
-                    free(this->unix_socket);
+                    //free(this->unix_socket);
                     free(this->testing);
                 }
             //int get(std::string param,unsigned int id,UniClient::Customer* out);
