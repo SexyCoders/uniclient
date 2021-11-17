@@ -56,7 +56,7 @@ class Database : public Php::Base
                     FILE* pwdfile=fopen(this->passwd_file,"r");
                     //password is sha256 hashed
                     char* buffer=(char*)malloc(65*sizeof(char));
-                    fscanf(pdwfile,"%s",buffer);
+                    fscanf(pwdfile,"%s",buffer);
 
                     this->passwd=(char*) malloc((strlen(buffer)+1)*sizeof(char));
                     strcpy(this->passwd,buffer);
