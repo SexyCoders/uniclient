@@ -6,7 +6,7 @@ Php::Value UniClient::Database::getCustomers()
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
-                          this->system, 0, this->unix_socket, 0);
+                          this->system, 0,this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);

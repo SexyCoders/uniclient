@@ -79,8 +79,9 @@ class Database : public Php::Base
                     printf("Unix Domain:\n");
 
                     this->unix_socket=(char*) malloc((strlen("/var/run/mysqld/mysqld.sock")+1)*sizeof(char));
-                    strcpy(this->unix_socket,"/var/run/mysqld/mysqld.sock");
-                    printf("unix socket=%s\n",this->unix_socket);
+                    //strcpy(this->unix_socket,"/var/run/mysqld/mysqld.sock");
+                    //printf("unix socket=%s\n",this->unix_socket);
+                    this->unix_socket=NULL;
 
                     printf("\n");
 
