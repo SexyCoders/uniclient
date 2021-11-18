@@ -47,6 +47,8 @@ class Database : public Php::Base
                     strcpy(this->passwd_file,"passwd");
                     printf("passwd file=CONFDIR/%s\n",this->passwd_file);
 
+                    printf("\n");
+
                     printf("credentials:\n");
 
                     this->user=(char*) malloc((strlen("uniclient")+1)*sizeof(char));
@@ -77,7 +79,7 @@ class Database : public Php::Base
 
                     printf("\n");
 
-                    printf("Unix Domain:\n");
+                    //printf("Unix Domain:\n");
 
                     //this->unix_socket=(char*) malloc((strlen("/var/run/mysqld/mysqld.sock")+1)*sizeof(char));
                     //strcpy(this->unix_socket,"/var/run/mysqld/mysqld.sock");
