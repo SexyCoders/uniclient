@@ -177,7 +177,7 @@ function get_mech_names()
     {
         $database=new MicrosunDatabase;
         $to_return=new stdClass;
-        $to_return->MechNames=$database->getMechNames();
+        $to_return->MechNames=$database->getGroupMembers('microsun_technical_mech');
     return $to_return;
     }
 
