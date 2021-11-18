@@ -31,8 +31,8 @@ Php::Value UniClient::Database::getCustomers()
               tmp->zip=atoi(t[7]);
               tmp->TIN=atoi(t[8]);
               tmp->Notes=t[9];
-              tmp->Joined->fromString(t[10]);
-              tmp->LastSeen->fromString(t[11]);
+              //tmp->Joined->fromString(t[10]);
+              //tmp->LastSeen->fromString(t[11]);
               temp.push_back(Php::Object("MicrosunCustomer",tmp));
             }
     return temp;
