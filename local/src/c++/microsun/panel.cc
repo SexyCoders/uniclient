@@ -27,8 +27,9 @@ UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int 
     mysql= mysql_init(NULL);
     mysql_set_character_set(mysql,"utf8mb4");
 
-    enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+    enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
     mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+    mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
 
     /* connect to MariaDB server */
     if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
