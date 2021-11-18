@@ -126,7 +126,7 @@ class Database : public Php::Base
             //users -  groups
             int get_user(std::string username,std::string grp,UniClient::etc::User* result);
             void get_groups();
-            Php::Value getGroupMembers(std::string group);
+            Php::Value getGroupMembers(Php::Parameters &group);
             
             //system data
             Php::Value getCustomers();//bulk
