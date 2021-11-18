@@ -67,8 +67,8 @@ class Database : public Php::Base
 
                     printf("TCP:\n");
 
-                    this->host=(char*) malloc((strlen("localhost")+1)*sizeof(char));
-                    strcpy(this->host,"localhost");
+                    this->host=(char*) malloc((strlen("10.0.0.33")+1)*sizeof(char));
+                    strcpy(this->host,"10.0.0.33");
                     printf("host=%s\n",this->host);
 
                     this->port=3306;
