@@ -21,7 +21,7 @@ PHPCPP_EXPORT void *get_module()
             //myExtension.add(std::move(problem));
         Php::Class<UniClient::Database> database("MicrosunDatabase");
 //            //database.method<&Microsun::Database::phpgetID>("getID", {});
-//            database.method<&Microsun::Database::getCustomers>("getCustomers", {});
+            database.method<&UniClient::Database::getCustomers>("getCustomers", {});
 //            database.method<&Microsun::Database::getPlants>("getPlants", {});
 //            database.method<&Microsun::Database::getPending>("getPending", {});
 //            database.method<&Microsun::Database::getStored>("getStored", {});
