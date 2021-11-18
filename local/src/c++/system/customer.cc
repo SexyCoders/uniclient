@@ -6,8 +6,10 @@ Php::Value UniClient::Database::getCustomers()
 		std::string sql="SELECT ID,COMPANY,IFNULL(NAME,'NAN'),IFNULL(LNAME,'NAN'),IFNULL(PHONE,0),IFNULL(EMAIL,'NAN'),IFNULL(ADDRESS,'NAN'),IFNULL(ZIP,0),IFNULL(TIN,0),IFNULL(NOTES,'NAN') FROM customers;";
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
-        //enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
-        //mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+        mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
 
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                           this->system, 0,this->unix_socket, 0);
