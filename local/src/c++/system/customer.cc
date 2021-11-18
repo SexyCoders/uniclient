@@ -14,12 +14,12 @@ Php::Value UniClient::Database::getCustomers()
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
-        MYSQL_ROW t=mysql_fetch_row(res);
         my_ulonglong n_rows=mysql_num_rows(res);
 		std::vector<Php::Object> temp;
         temp.reserve(n_rows);
         for(unsigned int j=0;j<n_rows;j++)
             {
+              MYSQL_ROW t=mysql_fetch_row(res);
               UniClient::data::Customer* tmp=new UniClient::data::Customer();
               tmp->ID=atoi(t[0]);
               tmp->Company=t[1];
