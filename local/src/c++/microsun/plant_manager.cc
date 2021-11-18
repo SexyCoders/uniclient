@@ -1,6 +1,6 @@
-#include <microsun.h>
-#include <database.h>
-#include <sqlite3.h>
+//#include <microsun.h>
+//#include <database.h>
+//#include <sqlite3.h>
 
 //static int callback_log(void* passthrough,int argc,char** argv,char** col)
 //    {
