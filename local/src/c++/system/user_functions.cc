@@ -23,6 +23,9 @@ void UniClient::Database::get_groups()
         MYSQL *mysql= mysql_init(NULL);
         std::string sql="SELECT * FROM groups;";
         mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                           this->system, 0,this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
@@ -44,6 +47,9 @@ void UniClient::Database::get_groups()
                         ID,FNAME,LNAME,DATEOFBIRTH,EMAIL,PHONE,ZIP,ADDRESS,NOTES,HIREDATE,USERNAME,USERGROUP \
                         FROM users WHERE USERNAME='"+T[i]+"';";
                         mysql_set_character_set(mysql,"utf8mb4");
+                        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+                        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
                         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                                         this->system, 0,this->unix_socket, 0);
                         mysql_real_query(mysql,sql1.c_str(),sql1.length());

@@ -28,6 +28,9 @@ UniClient::Microsun::Mounter* UniClient::Database::getMounterByName(std::string 
     mysql= mysql_init(NULL);
     mysql_set_character_set(mysql,"utf8mb4");
 
+    enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+    mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
     /* connect to MariaDB server */
     if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                             this->microsun, 0,this->unix_socket, 0))

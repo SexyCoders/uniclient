@@ -53,7 +53,8 @@ class Database : public Php::Base
                     strcpy(this->user,"uniclient");
                     printf("user=%s\n",this->user);
 
-                    std::string temp_string=this->configd+this->passwd_file;
+                    std::string temp_string=this->configd;
+                    temp_string+=this->passwd_file;
                     FILE* pwdfile=fopen(temp_string.c_str(),"r");
                     //password is sha256 hashed
                     char* buffer=(char*)malloc(65*sizeof(char));

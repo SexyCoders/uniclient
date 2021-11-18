@@ -32,6 +32,9 @@ unsigned long long int UniClient::Database::storeError(UniClient::Microsun::Prob
     mysql= mysql_init(NULL);
     mysql_set_character_set(mysql,"utf8mb4");
 
+    enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+    mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
     /* connect to MariaDB server */
     if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                             this->microsun, 0,this->unix_socket, 0))
@@ -147,6 +150,9 @@ Php::Value UniClient::Database::getPendingCount()
         MYSQL *mysql= mysql_init(NULL);
         std::string sql="SELECT COUNT(*) FROM pending_errors;";
         mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                           this->microsun, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
@@ -162,6 +168,9 @@ Php::Value UniClient::Database::getPending()
         std::string sql="SELECT * FROM pending_errors;";
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                           this->microsun, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
@@ -196,6 +205,9 @@ Php::Value UniClient::Database::getStored()
         std::string sql="SELECT * FROM temp_stored_errors;";
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+
         mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                           this->microsun, 0, this->unix_socket, 0);
         mysql_real_query(mysql,sql.c_str(),sql.length());
@@ -258,6 +270,9 @@ unsigned long long int UniClient::Database::getSingle(UniClient::Microsun::Probl
 
     mysql= mysql_init(NULL);
     mysql_set_character_set(mysql,"utf8mb4");
+
+    enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+    mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
 
     /* connect to MariaDB server */
     if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
@@ -333,6 +348,9 @@ unsigned long long int UniClient::Database::deleteError(std::string table,unsign
 
     mysql= mysql_init(NULL);
     mysql_set_character_set(mysql,"utf8mb4");
+
+    enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_SOCKET;
+    mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
 
     /* connect to MariaDB server */
     if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
