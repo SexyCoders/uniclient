@@ -1,15 +1,15 @@
-#include <mariadb/mysql.h>
-#include <database.h>
-#include <sqlite3.h>
-#include <stdlib.h>
-#include <iostream>
-#include <string>
-#include <any>
-#include <vector>
-#include <stdlib.h>
-#include <my_time.h>
-#include <sstream>
-#include <cstring>
+//#include <mariadb/mysql.h>
+//#include <database.h>
+//#include <sqlite3.h>
+//#include <stdlib.h>
+//#include <iostream>
+//#include <string>
+//#include <any>
+//#include <vector>
+//#include <stdlib.h>
+//#include <my_time.h>
+//#include <sstream>
+//#include <cstring>
 
 //MYSQL* mysql;
 
