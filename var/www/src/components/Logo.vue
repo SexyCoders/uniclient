@@ -1,3 +1,3 @@
 <template>
-  <h1>LOGO</h1>
+  <img src="https://lib.sexycoders.org/UniClient-logos.jpeg"/>
 </template>
