@@ -37,13 +37,12 @@ Php::Value UniClient::Database::getPlants()
         tmp.reserve(n_rows);
         for(unsigned long int j=0;j<n_rows;j++)
             {
-              tmp.push_back(this->getPlant(*argv));
+              tmp.push_back(this->getPlant(argv[j]));
             }
           std::vector<Php::Object> phptmp;
           for(unsigned long int j=0;j<tmp.size();j++)
               phptmp.push_back(Php::Object("MicrosunPlant",tmp[j]));
     return phptmp;
-      
     }
 
 
