@@ -25,7 +25,7 @@ PHPCPP_EXPORT void *get_module()
             database.method<&UniClient::Database::getGroupMembers>("getGroupMembers", {});
 //            database.method<&Microsun::Database::getPlants>("getPlants", {});
             database.method<&UniClient::Database::getPending>("getPending", {});
-//            database.method<&Microsun::Database::getStored>("getStored", {});
+            database.method<&UniClient::Database::getStored>("getStored", {});
 //            database.method<&Microsun::Database::getMechNames>("getMechNames", {});
             database.method<&UniClient::Database::getPendingCount>("getPendingCount", {});
 //            database.method<&Microsun::Database::newError>("newError",{Php::ByVal("parameter",Php::Type::String,true)});
