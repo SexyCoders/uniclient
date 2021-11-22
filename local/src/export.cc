@@ -23,7 +23,7 @@ PHPCPP_EXPORT void *get_module()
 //            //database.method<&Microsun::Database::phpgetID>("getID", {});
             database.method<&UniClient::Database::getCustomers>("getCustomers", {});
             database.method<&UniClient::Database::getGroupMembers>("getGroupMembers", {});
-//            database.method<&Microsun::Database::getPlants>("getPlants", {});
+            database.method<&UniClient::Database::getPlants>("getPlants", {});
             database.method<&UniClient::Database::getPending>("getPending", {});
             database.method<&UniClient::Database::getStored>("getStored", {});
 //            database.method<&Microsun::Database::getMechNames>("getMechNames", {});
