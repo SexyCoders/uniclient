@@ -24,6 +24,7 @@
 										<span class="form-label">Owner</span>
 										<select class="form-control" v-model="Owner">
 											<option v-for="customer in this.$store.customers" :value=customer> {{customer.Company}}</option>
+										</select>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -83,13 +84,12 @@ export default {
     },
     data() {
 		return {
-			Plant:"",
-			Pos:"",
-			Type:"",
-			ErrorCode:"",
-			ErrorNotes:"",
-			AssignedMech:"",
-			PlantTable:[]
+			Counties:"",
+			Panels:"",
+			Mounters:"",
+			Inverters:"",
+			Cboards:"",
+			Constructors:""
 		}
   },
     computed()
@@ -147,6 +147,38 @@ export default {
      created()
         {
 			this.setTitle("new Error");
+
+        function compare_counties(a, b) {
+          // Use toUpperCase() to ignore character casing
+          const CountyA = a.Name.toUpperCase();
+          const CountyB = b.Name.toUpperCase();
+
+          let comparison = 0;
+          if (CountyA > CountyB) {
+            comparison = 1;
+          } else if (CountyA < CountyB) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_county_names",
+          data: JSON.stringify([window.__auth__.oauth2.token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+                  this.$data.Counties=Object.values(JSON.parse(response)).filter((county)=>county.ID!=1).sort(compare_counties);
+              },
+            async:false
+            });
         }
 };
 </script>

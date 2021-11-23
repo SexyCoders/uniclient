@@ -220,3 +220,11 @@ function get_plant_log($data)
             }
     return $to_return;
     }
+
+function get_county_names()
+    {
+        $database=new MicrosunDatabase;
+        $check=$database->getCountyNames(); 
+        $to_return=$check;
+    return $to_return;
+    }
