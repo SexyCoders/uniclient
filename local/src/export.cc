@@ -20,22 +20,22 @@ PHPCPP_EXPORT void *get_module()
         //Php::Class<Microsun::Problem> problem("MicrosunProblem");
             //myExtension.add(std::move(problem));
         Php::Class<UniClient::Database> database("MicrosunDatabase");
-//            //database.method<&Microsun::Database::phpgetID>("getID", {});
-            database.method<&UniClient::Database::getCustomers>("getCustomers", {});
+            database.method<&UniClient::Database::getCounties>("getCounties",{});
+            database.method<&UniClient::Database::getCountyNames>("getCountyNames",{});
+
             database.method<&UniClient::Database::getGroupMembers>("getGroupMembers", {});
+
+            database.method<&UniClient::Database::getCustomers>("getCustomers", {});
+
             database.method<&UniClient::Database::getPlants>("getPlants", {});
+//            database.method<&Microsun::Database::getPlantLog>("getPlantLog",{Php::ByVal("parameter",Php::Type::String,true)});
+
             database.method<&UniClient::Database::getPending>("getPending", {});
             database.method<&UniClient::Database::getStored>("getStored", {});
-//            database.method<&Microsun::Database::getMechNames>("getMechNames", {});
             database.method<&UniClient::Database::getPendingCount>("getPendingCount", {});
             database.method<&UniClient::Database::newError>("newError",{Php::ByVal("parameter",Php::Type::String,true)});
             database.method<&UniClient::Database::tempError>("tempError",{Php::ByVal("parameter",Php::Type::String,true)});
             database.method<&UniClient::Database::resolve_error>("ResolveError",{Php::ByVal("parameter",Php::Type::String,true)});
-//            database.method<&Microsun::Database::getPlantLog>("getPlantLog",{Php::ByVal("parameter",Php::Type::String,true)});
-//            //database.method<&Microsun::Database::getStoredCustomers>("getStoredCustomers", {});
-//            //database.method<&Microsun::Database::getStoredPlants>("getStoredPlants", {});
-//            //database.method<&Microsun::Database::getStoredProblems>("getStoredProblems", {});
-//            //database.method<&Microsun::Database::phpget>("get",{Php::ByVal("parameter",Php::Type::String,true)});
             myExtension.add(std::move(database));
 // 
         Php::Class<UniClient::data::Customer> customer("MicrosunCustomer");

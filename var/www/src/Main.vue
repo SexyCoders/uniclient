@@ -85,6 +85,20 @@
         this.setCopyright('Developed by SexyCoders');
         this.getErrorCount();
 
+        function compare_customers(a, b) {
+          // Use toUpperCase() to ignore character casing
+          const CompA = a.Company.toUpperCase();
+          const CompB = b.Company.toUpperCase();
+
+          let comparison = 0;
+          if (CompA > CompB) {
+            comparison = 1;
+          } else if (CompA < CompB) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
       $.ajax({
           type: 'POST',
           url: window.__SCD.datacenter+"/get_customer_data_full",
@@ -98,7 +112,7 @@
                           this.$store.state.NOAUTH=true;
                           return;
                       }
-                  this.storeCustomers((Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=0)).sort());
+                  this.storeCustomers(Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=1).sort(compare_customers));
               },
             async:false
             });

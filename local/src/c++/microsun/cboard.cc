@@ -16,7 +16,7 @@ static void show_stmt_error(MYSQL_STMT *stmt)
   exit(-1);
 }
 
-UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int id)
+UniClient::Microsun::CBoard* UniClient::Database::getCboardByID(unsigned long int id)
   {
     MYSQL *mysql;
     MYSQL_STMT *stmt;
@@ -38,7 +38,7 @@ UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int 
 
 
     stmt= mysql_stmt_init(mysql);
-    std::string sql="SELECT * FROM panels WHERE ID=?;";
+    std::string sql="SELECT * FROM cboards WHERE ID=?;";
 
     if (mysql_stmt_prepare(stmt, sql.c_str(), -1))
       show_stmt_error(stmt);
@@ -47,17 +47,17 @@ UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int 
 
     /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
 
-    char NONE_INDICATOR=STMT_INDICATOR_NONE;
+    char NTS_INDICATOR=STMT_INDICATOR_NTS;
 
-    bind[0].buffer_type= MYSQL_TYPE_LONG;
-    bind[0].buffer= &id;
-    bind[0].u.indicator= &NONE_INDICATOR;
+    bind[0].buffer_type= MYSQL_TYPE_TINY_BLOB;
+    bind[0].buffer= (void*)id;
+    bind[0].u.indicator= &NTS_INDICATOR;
 
     /* set array size */
     mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
     /* set row size */
-    size_t row_size=2*sizeof(id);
+    size_t row_size=2*sizeof(unsigned long int);
 
     mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
 
@@ -73,21 +73,20 @@ UniClient::Microsun::Panel* UniClient::Database::getPanelById(unsigned long int 
 
     MYSQL_ROW argv=mysql_fetch_row(res);
     my_ulonglong n_rows=mysql_num_rows(res);
-    UniClient::Microsun::Panel* tmp=new UniClient::Microsun::Panel();
+    UniClient::Microsun::CBoard* tmp=new UniClient::Microsun::CBoard();
     for(unsigned int j=0;j<n_rows;j++)
         {
-            tmp->ID=atol(argv[0]);
-            tmp->Make=argv[1];
-            tmp->Model=argv[2];
+          tmp->ID=atoi(*argv);
+          tmp->Model=argv[1];
         }
 
     mysql_stmt_close(stmt);
   return tmp;
   }
 
-Php::Value UniClient::Database::getPanels()
+Php::Value UniClient::Database::getCboards()
     {
-        std::string sql="SELECT ID FROM panels;";
+        std::string sql="SELECT ID FROM cboards;";
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
         enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
@@ -101,21 +100,21 @@ Php::Value UniClient::Database::getPanels()
         mysql_close(mysql);
         MYSQL_ROW argv=mysql_fetch_row(res);
         my_ulonglong n_rows=mysql_num_rows(res);
-        std::vector<UniClient::Microsun::Panel*> tmp;
+        std::vector<UniClient::Microsun::CBoard*> tmp;
         tmp.reserve(n_rows);
         for(unsigned long int j=0;j<n_rows;j++)
             {
-              tmp.push_back(this->getPanelById(atol(argv[j])));
+              tmp.push_back(this->getCboardByID(atol(argv[j])));
             }
           std::vector<Php::Object> phptmp;
           for(unsigned long int j=0;j<tmp.size();j++)
-              phptmp.push_back(Php::Object("MicrosunPanel",tmp[j]));
+              phptmp.push_back(Php::Object("MicrosunCBoard",tmp[j]));
     return phptmp;
     }
 
-Php::Value UniClient::Database::getPanelModels()
+Php::Value UniClient::Database::getCboardModels()
     {
-        std::string sql="SELECT MODEL FROM panels;";
+        std::string sql="SELECT MODEL FROM cboards;";
         MYSQL *mysql= mysql_init(NULL);
         mysql_set_character_set(mysql,"utf8mb4");
         enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
@@ -129,11 +128,11 @@ Php::Value UniClient::Database::getPanelModels()
         mysql_close(mysql);
         MYSQL_ROW argv=mysql_fetch_row(res);
         my_ulonglong n_rows=mysql_num_rows(res);
-        std::vector<int> tmp;
+        std::vector<std::string> tmp;
         tmp.reserve(n_rows);
         for(unsigned long int j=0;j<n_rows;j++)
             {
-              tmp.push_back(atoi(argv[j]));
+              tmp.push_back(argv[j]);
             }
           std::vector<Php::Value> phptmp;
           for(unsigned long int j=0;j<tmp.size();j++)
