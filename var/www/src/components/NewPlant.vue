@@ -10,19 +10,20 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<span class="form-label">ID</span>
-										<input class="form-control" type="text" placeholder="plant id (text)" v-model="id" required="">
+										<input class="form-control" type="text" placeholder="plant id (text)" v-model="ID" required="">
 									</div>
 								</div>
 								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Power</span>
-										<input class="form-control" type="text" placeholder="power in MW" v-model="power" required="">
+										<input class="form-control" type="text" placeholder="power in kW" v-model="Power" required="">
 									</div>
 								</div>
 								<div class="col-md-2">
 									<div class="form-group">
 										<span class="form-label">Owner</span>
-										<input class="form-control" type="text" placeholder="owner name or id" v-model="Pos">
+										<select class="form-control" v-model="Owner">
+											<option v-for="customer in this.$store.customers" :value=customer> {{customer.Company}}</option>
 									</div>
 								</div>
 								<div class="col-md-2">

@@ -60,7 +60,8 @@ class Database : public Php::Base
                     FILE* pwdfile=fopen(temp_string.c_str(),"r");
                     //password is sha256 hashed
                     char* buffer=(char*)malloc(65*sizeof(char));
-                    fscanf(pwdfile,"%s",buffer);
+                    if(fscanf(pwdfile,"%s",buffer)==-1)
+                        exit(1);
 
                     this->passwd=(char*) malloc((strlen(buffer)+1)*sizeof(char));
                     strcpy(this->passwd,buffer);
@@ -131,6 +132,8 @@ class Database : public Php::Base
             //system data
             Php::Value getCustomers();//bulk
             Php::Value getPlants();//bulk
+            Php::Value getCounties();//bulk
+            Php::Value getCountyNames();//bulk
             UniClient::Microsun::Plant* getPlant(std::string ID);
             UniClient::data::County* getCountyByName(std::string name);
 //            UniClient::data::Customer* getCustomerByCompanyName(std::string name);
@@ -138,9 +141,20 @@ class Database : public Php::Base
             //microsun dataclasses
 //            UniClient::Microsun::Plant* getPlant(std::string ID);
             UniClient::Microsun::Panel* getPanelById(unsigned long int id);
+            Php::Value getPanels();
+            Php::Value getPanelModels();
             UniClient::Microsun::Mounter* getMounterByName(std::string Name);
+            Php::Value getMounters();
+            Php::Value getMounterNames();
             UniClient::Microsun::Inverter* getInverterByModel(std::string model);
+            Php::Value getInverters();
+            Php::Value getInverterModels();
+            UniClient::Microsun::CBoard* getCboardByID(unsigned long int id);
+            Php::Value getCboards();
+            Php::Value getCboardModels();
             UniClient::Microsun::Constructor* getConstructorByCompany(std::string company);
+            Php::Value getConstructors();
+            Php::Value getConstructorCompanies();
 
             //microsun error functions
             Php::Value getPending();//bulk
