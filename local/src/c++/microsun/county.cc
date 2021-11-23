@@ -119,33 +119,35 @@ Php::Value UniClient::Database::getCounties()
 
 Php::Value UniClient::Database::getCountyNames()
     {
-        //std::string sql="SELECT NAME FROM counties;";
-        //MYSQL *mysql= mysql_init(NULL);
-        //mysql_set_character_set(mysql,"utf8mb4");
-        //enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
-        //mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
-        //mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
+        std::string sql="SELECT NAME FROM counties;";
+        MYSQL *mysql= mysql_init(NULL);
+        mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+        mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
 
-        //mysql_real_connect(mysql,this->host,this->user,this->passwd, 
-                          //this->system, 0, this->unix_socket, 0);
-        //mysql_real_query(mysql,sql.c_str(),sql.length());
-        //MYSQL_RES *res=mysql_store_result(mysql);
-        //mysql_close(mysql);
-        //MYSQL_ROW argv=mysql_fetch_row(res);
-        //my_ulonglong n_rows=mysql_num_rows(res);
-        //std::string tmp[n_rows];
-        ////std::vector<std::string*> tmp;
-        ////tmp.reserve(n_rows);
-        //for(unsigned long int j=0;j<n_rows;j++)
-            //{
-              ////std::string* t=new std::string();
-              ////t->assign(argv[j]);
-              ////tmp.push_back(t);
-              //tmp[j]=argv[j];
-            //}
-          //std::vector<Php::Value> phptmp;
-          //for(unsigned long int j=0;j<n_rows;j++)
-              //phptmp.push_back(tmp[j]);
-    //return phptmp;
-    return "test";
+        mysql_real_connect(mysql,this->host,this->user,this->passwd, 
+                          this->system, 0, this->unix_socket, 0);
+        mysql_real_query(mysql,sql.c_str(),sql.length());
+        MYSQL_RES *res=mysql_store_result(mysql);
+        mysql_close(mysql);
+        MYSQL_ROW argv=mysql_fetch_row(res);
+        my_ulonglong n_rows=mysql_num_rows(res);
+        std::string* tmp[n_rows];
+        for(unsigned long int j=0;j<n_rows;j++)
+            tmp[j]=new std::string();
+        //std::vector<std::string*> tmp;
+        //tmp.reserve(n_rows);
+        for(unsigned long int j=0;j<n_rows;j++)
+            {
+              //std::string* t=new std::string();
+              //t->assign(argv[j]);
+              //tmp.push_back(t);
+              tmp[j]->assign(argv[j]);
+            }
+          std::vector<Php::Value> phptmp;
+          for(unsigned long int j=0;j<n_rows;j++)
+              phptmp.push_back(tmp[j]);
+    return phptmp;
+    //return "test";
     }
