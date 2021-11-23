@@ -162,7 +162,7 @@ $app->post('/get_county_names',function(Request $request,Response $response)
         if(auth(end($t)))
             $k="NOAUTH";
         else
-            $k=get_county_names($t);
+            $k=get_county_names();
         $response->getBody()->write(json_encode($k));
         return $response;
     });
