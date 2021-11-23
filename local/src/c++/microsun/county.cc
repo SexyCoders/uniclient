@@ -141,8 +141,8 @@ Php::Value UniClient::Database::getCountyNames()
               t->assign(argv[j]);
               tmp.push_back(t);
             }
-          std::vector<Php::Value> phptmp;
-          for(unsigned long int j=0;j<tmp.size();j++)
-              phptmp.push_back(tmp[j]);
-    return phptmp;
+          //std::vector<Php::Value> phptmp;
+          //for(unsigned long int j=0;j<tmp.size();j++)
+              //phptmp.push_back(tmp[j]);
+    return tmp;
     }
