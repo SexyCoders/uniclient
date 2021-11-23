@@ -155,5 +155,16 @@ $app->post('/get_plant_log',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
+$app->post('/get_county_names',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        if(auth(end($t)))
+            $k="NOAUTH";
+        else
+            $k=get_county_names($t);
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
 $app->run();
 
