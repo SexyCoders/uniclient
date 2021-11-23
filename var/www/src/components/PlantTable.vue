@@ -1,8 +1,14 @@
 <template>
   <div style="height=15vh">
     <h3>{{$store.page_title}}</h3>
-    <!--<button type="button" class="btn btn-success" @click="this.$router.push('newplant');">new</button>-->
-    <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter"/>
+  <div class="row">
+      <div class="col-md-2">
+        <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
+        </div>
+      <div class="col-md-1">
+          <button type="button" class="btn btn-warning" @click="this.$router.push('newplant');">new</button>
+      </div>
+  </div>
   </div>
       
   <ag-grid-vue

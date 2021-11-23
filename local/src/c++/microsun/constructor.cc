@@ -85,3 +85,58 @@ UniClient::Microsun::Constructor* UniClient::Database::getConstructorByCompany(s
   return tmp;
   }
 
+Php::Value UniClient::Database::getConstructors()
+    {
+        std::string sql="SELECT COMPANY FROM constructors;";
+        MYSQL *mysql= mysql_init(NULL);
+        mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+        mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
+
+        mysql_real_connect(mysql,this->host,this->user,this->passwd, 
+                          this->microsun, 0, this->unix_socket, 0);
+        mysql_real_query(mysql,sql.c_str(),sql.length());
+        MYSQL_RES *res=mysql_store_result(mysql);
+        mysql_close(mysql);
+        MYSQL_ROW argv=mysql_fetch_row(res);
+        my_ulonglong n_rows=mysql_num_rows(res);
+        std::vector<UniClient::Microsun::Constructor*> tmp;
+        tmp.reserve(n_rows);
+        for(unsigned long int j=0;j<n_rows;j++)
+            {
+              tmp.push_back(this->getConstructorByCompany(argv[j]));
+            }
+          std::vector<Php::Object> phptmp;
+          for(unsigned long int j=0;j<tmp.size();j++)
+              phptmp.push_back(Php::Object("MicrosunConstructor",tmp[j]));
+    return phptmp;
+    }
+
+Php::Value UniClient::Database::getConstructorCompanies()
+    {
+        std::string sql="SELECT COMPANY FROM constructors;";
+        MYSQL *mysql= mysql_init(NULL);
+        mysql_set_character_set(mysql,"utf8mb4");
+        enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
+        mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
+        mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
+
+        mysql_real_connect(mysql,this->host,this->user,this->passwd, 
+                          this->microsun, 0, this->unix_socket, 0);
+        mysql_real_query(mysql,sql.c_str(),sql.length());
+        MYSQL_RES *res=mysql_store_result(mysql);
+        mysql_close(mysql);
+        MYSQL_ROW argv=mysql_fetch_row(res);
+        my_ulonglong n_rows=mysql_num_rows(res);
+        std::vector<std::string> tmp;
+        tmp.reserve(n_rows);
+        for(unsigned long int j=0;j<n_rows;j++)
+            {
+              tmp.push_back(argv[j]);
+            }
+          std::vector<Php::Value> phptmp;
+          for(unsigned long int j=0;j<tmp.size();j++)
+              phptmp.push_back(tmp[j]);
+    return phptmp;
+    }
