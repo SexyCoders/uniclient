@@ -98,7 +98,7 @@
                           this.$store.state.NOAUTH=true;
                           return;
                       }
-                  this.storeCustomers(Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=0));
+                  this.storeCustomers((Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=0)).sort());
               },
             async:false
             });
