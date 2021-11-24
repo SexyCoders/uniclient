@@ -175,6 +175,40 @@ export default {
               },
             async:false
             });
+
+        function compare_panels(a, b) {
+          // Use toUpperCase() to ignore character casing
+          const A = a.Model.toUpperCase();
+          const B = b.Model.toUpperCase();
+
+          let comparison = 0;
+          if (A > B) {
+            comparison = 1;
+          } else if (A < B) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_panel_models",
+          data: JSON.stringify([window.__auth__.oauth2.token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+                  this.$data.Panels=Object.values(JSON.parse(response)).filter((panel)=>panel.ID!=1).sort(compare_panels);
+				  console.log(this.$data.Panels);
+              },
+            async:false
+            });
         }
 };
 </script>
