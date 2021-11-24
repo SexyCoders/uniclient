@@ -229,3 +229,12 @@ function get_county_names()
         $to_return->CountyNames=$database->getCountyNames(); 
     return $to_return;
     }
+
+function get_mounter_names()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        //$to_return=$database->getCountyNames(); 
+        $to_return->CountyNames=$database->getMounterNames(); 
+    return $to_return;
+    }

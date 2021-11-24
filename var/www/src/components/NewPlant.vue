@@ -150,13 +150,13 @@ export default {
 
         function compare_counties(a, b) {
           // Use toUpperCase() to ignore character casing
-          const CountyA = a.Name.toUpperCase();
-          const CountyB = b.Name.toUpperCase();
+          const A = a.Name.toUpperCase();
+          const B = b.Name.toUpperCase();
 
           let comparison = 0;
-          if (CountyA > CountyB) {
+          if (A > B) {
             comparison = 1;
-          } else if (CountyA < CountyB) {
+          } else if (A < B) {
             comparison = -1;
           }
           return comparison;
@@ -176,6 +176,41 @@ export default {
                           return;
                       }
                   this.$data.Counties=Object.values(JSON.parse(response)).filter((county)=>county.ID!=1).sort(compare_counties);
+				  console.log(this.$data.Counties);
+              },
+            async:false
+            });
+
+        function compare_mounters(a, b) {
+          // Use toUpperCase() to ignore character casing
+          const A = a.Name.toUpperCase();
+          const B = b.Name.toUpperCase();
+
+          let comparison = 0;
+          if (A > B) {
+            comparison = 1;
+          } else if (A < B) {
+            comparison = -1;
+          }
+          return comparison;
+        }
+
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_mounter_names",
+          data: JSON.stringify([window.__auth__.oauth2.token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+                  this.$data.Mounters=Object.values(JSON.parse(response)).filter((mounter)=>mounter.ID!=1).sort(compare_mounters);
+				  console.log(this.$data.Mounters);
               },
             async:false
             });
