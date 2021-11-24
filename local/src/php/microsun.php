@@ -236,3 +236,11 @@ function get_mounter_names()
         $to_return->MounterNames=$database->getMounterNames(); 
     return $to_return;
     }
+
+function get_panel_models()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->PanelModels=$database->getPanelModels(); 
+    return $to_return;
+    }
