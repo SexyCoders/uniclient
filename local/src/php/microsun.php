@@ -224,7 +224,8 @@ function get_plant_log($data)
 function get_county_names()
     {
         $database=new MicrosunDatabase;
-        $to_return=new stdClass;
-        $to_return->CountyNames=$database->getCountyNames(); 
+        //$to_return=new stdClass;
+        $to_return=$database->getCountyNames(); 
+        //$to_return->CountyNames=$database->getCountyNames(); 
     return $to_return;
     }
