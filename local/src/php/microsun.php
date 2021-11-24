@@ -225,6 +225,7 @@ function get_county_names()
     {
         $database=new MicrosunDatabase;
         $check=$database->getCountyNames(); 
-        $to_return=$check;
-    return $to_return;
+        //$to_return=$check;
+    //return $to_return;
+    return $check;
     }
