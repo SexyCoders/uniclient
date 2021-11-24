@@ -100,45 +100,6 @@ export default {
     },
     methods: 
 		{
-			getPlantIdTable()
-				{
-					console.log(this.$store.plants);
-					Object.values(this.$store.plants).forEach((value) => {
-						this.$data.PlantTable.push(value.ID);
-					});
-					console.log(this.$data.PlantTable);
-				},
-			NewError()
-				{
-					var senddata = Object.assign({},this.$data);
-					if(senddata.Plant=="" || senddata.Pos=="" || senddata.ErrorNotes=="" || senddata.AssignedMech=="")
-						alert("Please fill in all the required fields!!!");
-					delete senddata.PlantTable;
-					senddata.token=window.__auth__.oauth2.token;
-					senddata=JSON.stringify(Object.values(senddata));
-					console.log(senddata);
-					$.ajax({
-						type: 'POST',
-						url: window.__SCD.datacenter+"/new_error",
-						data:senddata, 
-						success:
-						(response) =>
-							{
-								var t=JSON.parse(response);
-                                if(response=="NOAUTH")
-                                    {
-                                        this.$store.NOAUTH=1;
-                                        return;
-                                    }
-								else
-									{
-										alert("Error "+t.reg_id+" succcesfully registered.");
-										this.$router.push("errors");
-									}
-							},
-							async:false
-							});
-				},
 			setTitle(title)
 				{
 					this.$store.page_title=title;
@@ -146,7 +107,7 @@ export default {
         },
      created()
         {
-			this.setTitle("new Error");
+			this.setTitle("new Plant");
 
         function compare_counties(a, b) {
           // Use toUpperCase() to ignore character casing
