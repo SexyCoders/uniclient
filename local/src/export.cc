@@ -23,6 +23,9 @@ PHPCPP_EXPORT void *get_module()
             database.method<&UniClient::Database::getCounties>("getCounties",{});
             database.method<&UniClient::Database::getCountyNames>("getCountyNames",{});
 
+            database.method<&UniClient::Database::getMounters>("getMounters",{});
+            database.method<&UniClient::Database::getMounterNames>("getMounterNames",{});
+
             database.method<&UniClient::Database::getGroupMembers>("getGroupMembers", {});
 
             database.method<&UniClient::Database::getCustomers>("getCustomers", {});
