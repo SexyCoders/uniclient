@@ -133,10 +133,10 @@ Php::Value UniClient::Database::getCountyNames()
         mysql_close(mysql);
         MYSQL_ROW argv=mysql_fetch_row(res);
         my_ulonglong n_rows=mysql_num_rows(res);
-        //std::string* tmp[n_rows];
-        //for(unsigned long int j=0;j<n_rows;j++)
-            //tmp[j]=new std::string();
-        ////std::vector<std::string*> tmp;
+        std::string tmp[n_rows];
+        for(unsigned long int j=0;j<n_rows;j++)
+            tmp[j]=argv[j];
+        //std::vector<std::string*> tmp;
         ////tmp.reserve(n_rows);
         //for(unsigned long int j=0;j<n_rows;j++)
             //{
@@ -153,9 +153,6 @@ Php::Value UniClient::Database::getCountyNames()
               //phptmp.push_back(argv[j]);
     //return phptmp;
     //return "test";
-        std::vector<std::string> t;
-        for(unsigned long int j=0;j<n_rows;j++)
-            t.push_back(argv[j]);
-    return t;
     //return *argv;
+    return tmp;
     }
