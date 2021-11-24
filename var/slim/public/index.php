@@ -177,5 +177,16 @@ $app->post('/get_mounter_names',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
+$app->post('/get_panel_models',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        if(auth(end($t)))
+            $k="NOAUTH";
+        else
+            $k=get_panel_models();
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
 $app->run();
 
