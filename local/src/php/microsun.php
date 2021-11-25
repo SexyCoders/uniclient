@@ -244,3 +244,27 @@ function get_panel_models()
         $to_return->PanelModels=$database->getPanelModels(); 
     return $to_return;
     }
+
+function get_cboard_models()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->CboardModels=$database->getCboardModels(); 
+    return $to_return;
+    }
+
+function get_inverter_models()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->InverterModels=$database->getInverterModels(); 
+    return $to_return;
+    }
+
+function get_constructor_companies()
+    {
+        $database=new MicrosunDatabase;
+        $to_return=new stdClass;
+        $to_return->ConstructorCompanies=$database->getConstructorCompanies(); 
+    return $to_return;
+    }

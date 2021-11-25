@@ -29,6 +29,15 @@ PHPCPP_EXPORT void *get_module()
             database.method<&UniClient::Database::getPanels>("getPanels",{});
             database.method<&UniClient::Database::getPanelModels>("getPanelModels",{});
 
+            database.method<&UniClient::Database::getCboards>("getCboards",{});
+            database.method<&UniClient::Database::getCboardModels>("getCboardModels",{});
+
+            database.method<&UniClient::Database::getInverters>("getInverters",{});
+            database.method<&UniClient::Database::getInverterModels>("getInverterModels",{});
+
+            database.method<&UniClient::Database::getConstructors>("getConstructors",{});
+            database.method<&UniClient::Database::getConstructorCompanies>("getConstructorCompanies",{});
+
             database.method<&UniClient::Database::getGroupMembers>("getGroupMembers", {});
 
             database.method<&UniClient::Database::getCustomers>("getCustomers", {});

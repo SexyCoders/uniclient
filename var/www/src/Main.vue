@@ -113,6 +113,7 @@
                           return;
                       }
                   this.storeCustomers(Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=1).sort(compare_customers));
+                console.log(this.$store.Customers);
               },
             async:false
             });
