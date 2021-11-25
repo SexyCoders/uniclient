@@ -96,7 +96,6 @@ export default {
         {
         },
     mounted() {
-		this.getPlantIdTable();
     },
     methods: 
 		{
@@ -104,24 +103,34 @@ export default {
 				{
 					this.$store.page_title=title;
 				},
+			storeCounties(t)
+				{
+					this.$data.Counties=t;
+				},
+			storeMounters(t)
+				{
+					this.$data.Mounters=t;
+				},
+			storePanels(t)
+				{
+					this.$data.Panels=t;
+				},
+			storeCboards(t)
+				{
+					this.$data.Cboards=t;
+				},
+			storeInverters(t)
+				{
+					this.$data.Inverters=t;
+				},
+			storeConstructors(t)
+				{
+					this.$data.Constructors=t;
+				},
         },
      created()
         {
 			this.setTitle("new Plant");
-
-        function compare_counties(a, b) {
-          // Use toUpperCase() to ignore character casing
-          const A = a.Name.toUpperCase();
-          const B = b.Name.toUpperCase();
-
-          let comparison = 0;
-          if (A > B) {
-            comparison = 1;
-          } else if (A < B) {
-            comparison = -1;
-          }
-          return comparison;
-        }
 
       $.ajax({
           type: 'POST',
@@ -136,26 +145,11 @@ export default {
                           this.$store.state.NOAUTH=true;
                           return;
                       }
-                  this.$data.Counties=Object.values(JSON.parse(response)).filter((county)=>county.ID!=1).sort(compare_counties);
+                  this.storeCounties(Object.values(JSON.parse(response))[0].filter((county)=>county!='dummy').sort());
 				  console.log(this.$data.Counties);
               },
             async:false
             });
-
-        function compare_mounters(a, b) {
-          // Use toUpperCase() to ignore character casing
-          const A = a.Name.toUpperCase();
-          const B = b.Name.toUpperCase();
-
-          let comparison = 0;
-          if (A > B) {
-            comparison = 1;
-          } else if (A < B) {
-            comparison = -1;
-          }
-          return comparison;
-        }
-
 
       $.ajax({
           type: 'POST',
@@ -170,26 +164,11 @@ export default {
                           this.$store.state.NOAUTH=true;
                           return;
                       }
-                  this.$data.Mounters=Object.values(JSON.parse(response)).filter((mounter)=>mounter.ID!=1).sort(compare_mounters);
+                  this.storeMounters(Object.values(JSON.parse(response))[0].filter((mounter)=>mounter!='dummy').sort());
 				  console.log(this.$data.Mounters);
               },
             async:false
             });
-
-        function compare_panels(a, b) {
-          // Use toUpperCase() to ignore character casing
-          const A = a.Model.toUpperCase();
-          const B = b.Model.toUpperCase();
-
-          let comparison = 0;
-          if (A > B) {
-            comparison = 1;
-          } else if (A < B) {
-            comparison = -1;
-          }
-          return comparison;
-        }
-
 
       $.ajax({
           type: 'POST',
@@ -204,8 +183,65 @@ export default {
                           this.$store.state.NOAUTH=true;
                           return;
                       }
-                  this.$data.Panels=Object.values(JSON.parse(response)).filter((panel)=>panel.ID!=1).sort(compare_panels);
+				  this.storePanels(Object.values(JSON.parse(response))[0].filter((panel)=>panel!='DUMMY').sort());
 				  console.log(this.$data.Panels);
+              },
+            async:false
+            });
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_cboard_models",
+          data: JSON.stringify([window.__auth__.oauth2.token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+				  this.storeCboards(Object.values(JSON.parse(response))[0].filter((cboard)=>cboard!='DUMMY').sort());
+				  console.log(this.$data.Cboards);
+              },
+            async:false
+            });
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_inverter_models",
+          data: JSON.stringify([window.__auth__.oauth2.token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+				  this.storeInverters(Object.values(JSON.parse(response))[0].filter((inverter)=>inverter!='DUMMY').sort());
+				  console.log(this.$data.Inverters);
+              },
+            async:false
+            });
+
+      $.ajax({
+          type: 'POST',
+          url: window.__SCD.datacenter+"/get_constructor_companies",
+          data: JSON.stringify([window.__auth__.oauth2.token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.NOAUTH=true;
+                          return;
+                      }
+				  this.storeConstructors(Object.values(JSON.parse(response))[0].filter((constructor)=>constructor!='DUMMY').sort());
+				  console.log(this.$data.Constructors);
               },
             async:false
             });
