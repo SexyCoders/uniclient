@@ -126,16 +126,13 @@ Php::Value UniClient::Database::getCboardModels()
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
-        MYSQL_ROW argv=mysql_fetch_row(res);
         my_ulonglong n_rows=mysql_num_rows(res);
-        std::vector<std::string> tmp;
-        tmp.reserve(n_rows);
+        std::vector<std::string> phptmp;
+        phptmp.reserve(n_rows);
         for(unsigned long int j=0;j<n_rows;j++)
             {
-              tmp.push_back(argv[j]);
+                MYSQL_ROW argv=mysql_fetch_row(res);
+                phptmp.push_back(*argv);
             }
-          std::vector<Php::Value> phptmp;
-          for(unsigned long int j=0;j<tmp.size();j++)
-              phptmp.push_back(tmp[j]);
     return phptmp;
     }

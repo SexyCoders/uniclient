@@ -188,5 +188,38 @@ $app->post('/get_panel_models',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
+$app->post('/get_cboard_models',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        if(auth(end($t)))
+            $k="NOAUTH";
+        else
+            $k=get_cboard_models();
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
+$app->post('/get_inverter_models',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        if(auth(end($t)))
+            $k="NOAUTH";
+        else
+            $k=get_inverter_models();
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
+$app->post('/get_constructor_companies',function(Request $request,Response $response)
+    {
+        $t=$request->getBody();
+        $t=json_decode($t);
+        if(auth(end($t)))
+            $k="NOAUTH";
+        else
+            $k=get_constructor_companies();
+        $response->getBody()->write(json_encode($k));
+        return $response;
+    });
 $app->run();
 
