@@ -31,12 +31,12 @@ Php::Value UniClient::Database::getPlants()
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
-        MYSQL_ROW argv=mysql_fetch_row(res);
         my_ulonglong n_rows=mysql_num_rows(res);
         std::vector<Microsun::Plant*> tmp;
         tmp.reserve(n_rows);
         for(unsigned long int j=0;j<n_rows;j++)
             {
+		MYSQL_ROW argv=mysql_fetch_row(res);
               tmp.push_back(this->getPlant(argv[j]));
             }
           std::vector<Php::Object> phptmp;

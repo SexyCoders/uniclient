@@ -25,10 +25,10 @@ function customer_data_all()
 function plant_data_all()
     {
         $database=new MicrosunDatabase;
-        //$to_return=new stdClass;
+        $to_return=new stdClass;
         //$check=$database->getPlants();
-        //for($j=0;$j<count($check);$j++)
-            //{
+        for($j=0;$j<count($check);$j++)
+            {
                 //$owner=$check[$j]->getOwner();
                 //$county=$check[$j]->getCounty();
                 //$panel=$check[$j]->getPanel();
@@ -94,7 +94,7 @@ function plant_data_all()
                 ////price
                 //$to_json->SellPrice=$check[$j]->getSellPrice();
             //$to_return->{$j}=$to_json;
-            //}
+            }
     //return $to_return;
 	return "check";
     }
