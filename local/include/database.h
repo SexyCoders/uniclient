@@ -135,6 +135,7 @@ class Database : public Php::Base
             Php::Value getCounties();//bulk
             Php::Value getCountyNames();//bulk
             UniClient::Microsun::Plant* getPlant(std::string ID);
+            std::string getPlant(std::string ID);//debug
             UniClient::data::County* getCountyByName(std::string name);
 //            UniClient::data::Customer* getCustomerByCompanyName(std::string name);
 
