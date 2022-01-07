@@ -94,7 +94,7 @@ function plant_data_all()
                 ////price
                 //$to_json->SellPrice=$check[$j]->getSellPrice();
             //$to_return->{$j}=$to_json;
-            }
+            //}
     //return $to_return;
 	//return "check";
     return $check;
