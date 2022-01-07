@@ -26,7 +26,7 @@ function plant_data_all()
     {
         $database=new MicrosunDatabase;
         $to_return=new stdClass;
-        //$check=$database->getPlants();
+        $check=$database->getPlants();
         for($j=0;$j<count($check);$j++)
             {
                 //$owner=$check[$j]->getOwner();
