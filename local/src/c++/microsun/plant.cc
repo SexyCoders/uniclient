@@ -133,7 +133,7 @@ std::string  UniClient::Database::getPlantDebug(std::string ID)
       if (mysql_stmt_execute(stmt))
         show_stmt_error(stmt);
 
-      //MYSQL_RES *res=mysql_store_result(mysql);
+      MYSQL_RES *res=mysql_store_result(mysql);
 
       my_ulonglong n_rows=mysql_num_rows(res);
       for(unsigned int j=0;j<n_rows;j++)
