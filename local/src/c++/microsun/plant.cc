@@ -40,7 +40,7 @@ Php::Value UniClient::Database::getPlants()
               MYSQL_ROW argv=mysql_fetch_row(res);
               debug.push_back(argv[j]);
               //tmp.push_back(this->getPlant(argv[j]));
-              debug.push_back(this->getPlant(argv[j]));
+              debug.push_back(this->getPlantDebug(argv[j]));
             }
           //std::vector<Php::Object> phptmp;
           //for(unsigned long int j=0;j<tmp.size();j++)
