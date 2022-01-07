@@ -78,32 +78,32 @@ std::string  UniClient::Database::getPlantDebug(std::string ID)
 
       stmt= mysql_stmt_init(mysql);
       std::string sql="select plants.ID,\
-                       POWER,\
-                       BOROUGH,\
-                       LOCATION, \
-                       plants.AREA,\
-                       NPANELS,\
+                       power,\
+                       borough,\
+                       location, \
+                       plants.area,\
+                       npanels,\
                        panels.*,\
-                       STRINGS,\
+                       strings,\
                        mounters.*,\
                        inverters.*, \
                        constructors.*,\
-                       CONNUMBER,\
-                       CONDATE,\
-                       TRACKBEGIN,\
-                       PRICE \
-                       FROM \
+                       connumber,\
+                       condate,\
+                       trackbegin,\
+                       price \
+                       from \
                        plants,\
                        panels,\
                        mounters,\
                        inverters,\
                        constructors \
-                       WHERE \
-                       PANEL=panels.ID AND \
-                       MOUNTING=mounters.ID AND \
-                       INVERTER=inverters.ID AND \
-                       CONSTRUCTOR=constructors.ID AND \
-                       plants.ID='"+ID+"';";
+                       where \
+                       panel=panels.id and \
+                       mounting=mounters.id and \
+                       inverter=inverters.id and \
+                       constructor=constructors.id and \
+                       plants.id='"+ID+"';";
 
       if (mysql_stmt_prepare(stmt, sql.c_str(), -1))
         show_stmt_error(stmt);
