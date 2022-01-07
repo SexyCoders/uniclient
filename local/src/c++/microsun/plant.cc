@@ -34,12 +34,13 @@ Php::Value UniClient::Database::getPlants()
         my_ulonglong n_rows=mysql_num_rows(res);
         //std::vector<Microsun::Plant*> tmp;
         //tmp.reserve(n_rows);
-        std::string debug;
+        std::vector<std::string> debug;
         for(unsigned long int j=0;j<n_rows;j++)
             {
               MYSQL_ROW argv=mysql_fetch_row(res);
-              debug+=argv[j];
+              debug.push_back(argv[j]);
               //tmp.push_back(this->getPlant(argv[j]));
+              //debug.push_back(this->getPlant(argv[j]));
             }
           //std::vector<Php::Object> phptmp;
           //for(unsigned long int j=0;j<tmp.size();j++)
