@@ -31,7 +31,7 @@ Php::Value UniClient::Database::getPlants()
         mysql_real_query(mysql,sql.c_str(),sql.length());
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
-        my_ulonglong n_rows=mysql_num_rows(res);
+        //my_ulonglong n_rows=mysql_num_rows(res);
         //std::vector<Microsun::Plant*> tmp;
         //tmp.reserve(n_rows);
         //for(unsigned long int j=0;j<n_rows;j++)
@@ -221,7 +221,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       n_rows=mysql_num_rows(res);
       for(unsigned int j=0;j<n_rows;j++)
           {
-                argv=mysql_fetch_row(res);
+                MYSQL_ROW argv=mysql_fetch_row(res);
                 PLANT->Owner->ID=atoi(argv[++j]);
                 PLANT->Owner->Company=argv[++j];
                 PLANT->Owner->FirstName=argv[++j];
