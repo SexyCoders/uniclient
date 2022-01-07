@@ -32,16 +32,17 @@ Php::Value UniClient::Database::getPlants()
         MYSQL_RES *res=mysql_store_result(mysql);
         mysql_close(mysql);
         my_ulonglong n_rows=mysql_num_rows(res);
-        std::vector<Microsun::Plant*> tmp;
-        tmp.reserve(n_rows);
-        for(unsigned long int j=0;j<n_rows;j++)
-            {
-              MYSQL_ROW argv=mysql_fetch_row(res);
-              tmp.push_back(this->getPlant(argv[j]));
-            }
+        //std::vector<Microsun::Plant*> tmp;
+        //tmp.reserve(n_rows);
+        //for(unsigned long int j=0;j<n_rows;j++)
+            //{
+              //MYSQL_ROW argv=mysql_fetch_row(res);
+              //tmp.push_back(this->getPlant(argv[j]));
+            //}
           std::vector<Php::Object> phptmp;
           for(unsigned long int j=0;j<tmp.size();j++)
-              phptmp.push_back(Php::Object("MicrosunPlant",tmp[j]));
+              phptmp.push_back("test");
+              //phptmp.push_back(Php::Object("MicrosunPlant",tmp[j]));
     return phptmp;
     }
 
@@ -63,7 +64,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
       mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
 
-      /* connect to MariaDB server */
+      [> connect to MariaDB server <]
       if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                               this->microsun, 0,this->unix_socket, 0))
         show_mysql_error(mysql);
@@ -103,7 +104,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       memset(bind, '\0', sizeof(MYSQL_BIND) * 1);
 
-      /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
+      [> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
 
       char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
@@ -111,18 +112,18 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       bind[0].buffer= &ID;
       bind[0].u.indicator= &NONE_INDICATOR;
 
-      /* set array size */
+      [> set array size <]
       mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
-      /* set row size */
+      [> set row size <]
       size_t row_size=2*sizeof(unsigned long long int);
 
       mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
 
-      /* bind parameter */
+      [> bind parameter <]
       mysql_stmt_bind_param(stmt, bind);
 
-      /* execute */
+      [> execute <]
       if (mysql_stmt_execute(stmt))
         show_stmt_error(stmt);
 
@@ -191,7 +192,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       memset(bind2, '\0', sizeof(MYSQL_BIND) * 2);
 
-      /* We autogenerate id's, so all indicators are STMT_INDICATOR_NULL */
+      [> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
       bind2[0].buffer_type= MYSQL_TYPE_LONG;
       bind2[0].buffer= &ID;
       bind2[0].u.indicator= &NONE_INDICATOR;
@@ -200,18 +201,18 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       bind2[1].buffer= &ID;
       bind2[1].u.indicator= &NONE_INDICATOR;
 
-      /* set array size */
+      [> set array size <]
       mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
-      /* set row size */
+      [> set row size <]
       row_size=4*sizeof(unsigned long long int);
 
       mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
 
-      /* bind parameter */
+      [> bind parameter <]
       mysql_stmt_bind_param(stmt, bind2);
 
-      /* execute */
+      [> execute <]
       if (mysql_stmt_execute(stmt))
         show_stmt_error(stmt);
 
@@ -241,4 +242,5 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
           }
       mysql_stmt_close(stmt);
     return PLANT;
+
     }
