@@ -104,85 +104,86 @@ std::string  UniClient::Database::getPlantDebug(std::string ID)
                        inverter=inverters.id and \
                        constructor=constructors.id and \
                        plants.id='"+ID+"';";
+      debug+=sql;
 
-      if (mysql_stmt_prepare(stmt, sql.c_str(), -1))
-        show_stmt_error(stmt);
+      //if (mysql_stmt_prepare(stmt, sql.c_str(), -1))
+        //show_stmt_error(stmt);
 
-      memset(bind, '\0', sizeof(MYSQL_BIND) * 1);
+      //memset(bind, '\0', sizeof(MYSQL_BIND) * 1);
 
-      ////[> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
+      //////[> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
 
-      char NONE_INDICATOR=STMT_INDICATOR_NONE;
+      //char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
-      bind[0].buffer_type= MYSQL_TYPE_LONG;
-      bind[0].buffer= &ID;
-      bind[0].u.indicator= &NONE_INDICATOR;
+      //bind[0].buffer_type= MYSQL_TYPE_LONG;
+      //bind[0].buffer= &ID;
+      //bind[0].u.indicator= &NONE_INDICATOR;
 
-      ////[> set array size <]
-      mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
+      //////[> set array size <]
+      //mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
-      ////[> set row size <]
-      size_t row_size=2*sizeof(unsigned long long int);
+      //////[> set row size <]
+      //size_t row_size=2*sizeof(unsigned long long int);
 
-      mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
+      //mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
 
-      ////[> bind parameter <]
-      mysql_stmt_bind_param(stmt, bind);
+      //////[> bind parameter <]
+      //mysql_stmt_bind_param(stmt, bind);
 
-      ////[> execute <]
-      if (mysql_stmt_execute(stmt))
-        show_stmt_error(stmt);
+      //////[> execute <]
+      //if (mysql_stmt_execute(stmt))
+        //show_stmt_error(stmt);
 
-      MYSQL_RES *res=mysql_store_result(mysql);
+      //MYSQL_RES *res=mysql_store_result(mysql);
 
-      my_ulonglong n_rows=mysql_num_rows(res);
-      for(unsigned int j=0;j<n_rows;j++)
-          {
-                MYSQL_ROW argv=mysql_fetch_row(res);
-                debug+=argv[j];
-                //PLANT->ID=argv[j];
-                debug+=argv[++j];
-                //PLANT->Power=atof(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->Borough=argv[++j];
-                debug+=argv[++j];
-                //PLANT->Location=argv[++j];
-                debug+=argv[++j];
-                //PLANT->Area=atof(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->NPanels=atoi(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->panel->ID=atoi(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->panel->Make=argv[++j];
-                debug+=argv[++j];
-                //PLANT->panel->Model=argv[++j];
-                debug+=argv[++j];
-                //PLANT->Strings=argv[++j];
-                debug+=argv[++j];
-                //PLANT->Mounting->ID=atoi(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->Mounting->Name=argv[++j];
-                debug+=argv[++j];
-                //PLANT->inverter->ID=atoi(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->inverter->Model=argv[++j];
-                debug+=argv[++j];
-                //PLANT->inverter->Type=argv[++j];
-                debug+=argv[++j];
-                //PLANT->constructor->ID=atoi(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->constructor->Company=argv[++j];
-                debug+=argv[++j];
-                //PLANT->ConnectionNumber=atoi(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->ConnectionDate->fromString(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->TrackerBegin->fromString(argv[++j]);
-                debug+=argv[++j];
-                //PLANT->SellPrice=atof(argv[++j]);
-          }
-      mysql_stmt_close(stmt);
+      //my_ulonglong n_rows=mysql_num_rows(res);
+      //for(unsigned int j=0;j<n_rows;j++)
+          //{
+                //MYSQL_ROW argv=mysql_fetch_row(res);
+                //debug+=argv[j];
+                ////PLANT->ID=argv[j];
+                //debug+=argv[++j];
+                ////PLANT->Power=atof(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->Borough=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->Location=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->Area=atof(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->NPanels=atoi(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->panel->ID=atoi(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->panel->Make=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->panel->Model=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->Strings=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->Mounting->ID=atoi(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->Mounting->Name=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->inverter->ID=atoi(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->inverter->Model=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->inverter->Type=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->constructor->ID=atoi(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->constructor->Company=argv[++j];
+                //debug+=argv[++j];
+                ////PLANT->ConnectionNumber=atoi(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->ConnectionDate->fromString(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->TrackerBegin->fromString(argv[++j]);
+                //debug+=argv[++j];
+                ////PLANT->SellPrice=atof(argv[++j]);
+          //}
+      //mysql_stmt_close(stmt);
 
 
       //mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
