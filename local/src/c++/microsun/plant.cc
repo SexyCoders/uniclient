@@ -64,7 +64,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
       mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
 
-      [> connect to MariaDB server <]
+      //[> connect to MariaDB server <]
       if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
                               this->microsun, 0,this->unix_socket, 0))
         show_mysql_error(mysql);
@@ -104,7 +104,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       memset(bind, '\0', sizeof(MYSQL_BIND) * 1);
 
-      [> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
+      //[> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
 
       char NONE_INDICATOR=STMT_INDICATOR_NONE;
 
@@ -112,18 +112,18 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       bind[0].buffer= &ID;
       bind[0].u.indicator= &NONE_INDICATOR;
 
-      [> set array size <]
+      //[> set array size <]
       mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
-      [> set row size <]
+      //[> set row size <]
       size_t row_size=2*sizeof(unsigned long long int);
 
       mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
 
-      [> bind parameter <]
+      //[> bind parameter <]
       mysql_stmt_bind_param(stmt, bind);
 
-      [> execute <]
+      //[> execute <]
       if (mysql_stmt_execute(stmt))
         show_stmt_error(stmt);
 
@@ -192,7 +192,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       memset(bind2, '\0', sizeof(MYSQL_BIND) * 2);
 
-      [> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
+      //[> We autogenerate id's, so all indicators are STMT_INDICATOR_NULL <]
       bind2[0].buffer_type= MYSQL_TYPE_LONG;
       bind2[0].buffer= &ID;
       bind2[0].u.indicator= &NONE_INDICATOR;
@@ -201,18 +201,18 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
       bind2[1].buffer= &ID;
       bind2[1].u.indicator= &NONE_INDICATOR;
 
-      [> set array size <]
+      //[> set array size <]
       mysql_stmt_attr_set(stmt, STMT_ATTR_ARRAY_SIZE, &array_size);
 
-      [> set row size <]
+      //[> set row size <]
       row_size=4*sizeof(unsigned long long int);
 
       mysql_stmt_attr_set(stmt, STMT_ATTR_ROW_SIZE, &row_size);
 
-      [> bind parameter <]
+      //[> bind parameter <]
       mysql_stmt_bind_param(stmt, bind2);
 
-      [> execute <]
+      //[> execute <]
       if (mysql_stmt_execute(stmt))
         show_stmt_error(stmt);
 
