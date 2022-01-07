@@ -44,7 +44,7 @@ Php::Value UniClient::Database::getPlants()
             }
           std::vector<Php::Object> phptmp;
           for(unsigned long int j=0;j<tmp.size();j++)
-              phptmp.push_back("test");
+              //phptmp.push_back("test");
               phptmp.push_back(Php::Object("MicrosunPlant",tmp[j]));
     return phptmp;
     //return debug;
