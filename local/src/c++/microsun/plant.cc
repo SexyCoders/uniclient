@@ -36,7 +36,7 @@ Php::Value UniClient::Database::getPlants()
         tmp.reserve(n_rows);
         for(unsigned long int j=0;j<n_rows;j++)
             {
-		MYSQL_ROW argv=mysql_fetch_row(res);
+              MYSQL_ROW argv=mysql_fetch_row(res);
               tmp.push_back(this->getPlant(argv[j]));
             }
           std::vector<Php::Object> phptmp;
@@ -61,7 +61,7 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       enum mysql_protocol_type prot_type= MYSQL_PROTOCOL_TCP;
       mysql_optionsv(mysql, MYSQL_OPT_PROTOCOL, (void *)&prot_type);
-    mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
+      mysql_optionsv(mysql, MYSQL_SET_CHARSET_NAME, (void *)"utf8mb4");
 
       /* connect to MariaDB server */
       if (!mysql_real_connect(mysql,this->host,this->user,this->passwd, 
