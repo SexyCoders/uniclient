@@ -52,7 +52,7 @@ Php::Value UniClient::Database::getPlants()
 
 
 //UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
-std::string  UniClient::Database::getPlant(std::string ID)
+std::string  UniClient::Database::getPlantDebug(std::string ID)
     {
       std::string debug;
       //UniClient::Microsun::Plant* PLANT=new UniClient::Microsun::Plant();
