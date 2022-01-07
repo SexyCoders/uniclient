@@ -35,9 +35,9 @@ Php::Value UniClient::Database::getPlants()
         std::vector<Microsun::Plant*> tmp;
         tmp.reserve(n_rows);
         std::vector<std::string> debug;
+              MYSQL_ROW argv=mysql_fetch_row(res);
         for(unsigned long int j=0;j<n_rows;j++)
             {
-              MYSQL_ROW argv=mysql_fetch_row(res);
               debug.push_back(argv[j]);
               tmp.push_back(this->getPlant(argv[j]));
               //debug.push_back(this->getPlantDebug(argv[j]));
@@ -137,9 +137,9 @@ plants.id='"+ID+"';";
       MYSQL_RES *res=mysql_store_result(mysql);
 
       my_ulonglong n_rows=mysql_num_rows(res);
+                MYSQL_ROW argv=mysql_fetch_row(res);
       for(unsigned int j=0;j<n_rows;j++)
           {
-                MYSQL_ROW argv=mysql_fetch_row(res);
                 //debug+=argv[j];
                 PLANT->ID=argv[j];
                 //debug+=argv[++j];
@@ -247,9 +247,9 @@ plants.id='"+ID+"';";
       res=mysql_store_result(mysql);
 
       n_rows=mysql_num_rows(res);
+                MYSQL_ROW argv=mysql_fetch_row(res);
       for(unsigned int j=0;j<n_rows;j++)
           {
-                MYSQL_ROW argv=mysql_fetch_row(res);
                 PLANT->Owner->ID=atoi(argv[++j]);
                 PLANT->Owner->Company=argv[++j];
                 PLANT->Owner->FirstName=argv[++j];
