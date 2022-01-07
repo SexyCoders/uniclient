@@ -247,7 +247,7 @@ counties.ID=(SELECT county FROM microsun.plants WHERE id='"+ID+"';);";
       res=mysql_store_result(mysql);
 
       n_rows=mysql_num_rows(res);
-                MYSQL_ROW argv=mysql_fetch_row(res);
+                argv=mysql_fetch_row(res);
       for(unsigned int j=0;j<n_rows;j++)
           {
                 PLANT->Owner->ID=atoi(argv[++j]);
