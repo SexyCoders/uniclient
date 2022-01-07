@@ -196,24 +196,24 @@ plants.id='"+ID+"';";
       stmt= mysql_stmt_init(mysql);
 
         sql="select plants.id,\
-             power,\
-             customers.ID,\
-             customers.COMPANY,\
-             customers.NAME,\
-             customers.LNAME,\
-             customers.PHONE,\
-             customers.EMAIL,\
-             customers.ADDRESS,\
-             customers.ZIP,\
-             customers.TIN,\
-             customers.NOTES,\
-             counties.*,\
-             FROM \
-             customers,\
-             counties,\
-             WHERE \
-             customers.ID=(SELECT owner FROM microsun.plants WHERE id='"+ID+"';) AND\
-                 counties.ID=(SELECT county FROM microsun.plants WHERE id='"+ID+"';);";
+power,\
+customers.ID,\
+customers.COMPANY,\
+customers.NAME,\
+customers.LNAME,\
+customers.PHONE,\
+customers.EMAIL,\
+customers.ADDRESS,\
+customers.ZIP,\
+customers.TIN,\
+customers.NOTES,\
+counties.*,\
+FROM \
+customers,\
+counties,\
+WHERE \
+customers.ID=(SELECT owner FROM microsun.plants WHERE id='"+ID+"';) AND\
+counties.ID=(SELECT county FROM microsun.plants WHERE id='"+ID+"';);";
 
       if (mysql_stmt_prepare(stmt, sql.c_str(), -1))
         show_stmt_error(stmt);
