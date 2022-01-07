@@ -128,10 +128,10 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       MYSQL_RES *res=mysql_store_result(mysql);
 
-      MYSQL_ROW argv=mysql_fetch_row(res);
       my_ulonglong n_rows=mysql_num_rows(res);
       for(unsigned int j=0;j<n_rows;j++)
           {
+                MYSQL_ROW argv=mysql_fetch_row(res);
                 PLANT->ID=argv[j];
                 PLANT->Power=atof(argv[++j]);
                 PLANT->Borough=argv[++j];
@@ -217,10 +217,10 @@ UniClient::Microsun::Plant* UniClient::Database::getPlant(std::string ID)
 
       res=mysql_store_result(mysql);
 
-      argv=mysql_fetch_row(res);
       n_rows=mysql_num_rows(res);
       for(unsigned int j=0;j<n_rows;j++)
           {
+                argv=mysql_fetch_row(res);
                 PLANT->Owner->ID=atoi(argv[++j]);
                 PLANT->Owner->Company=argv[++j];
                 PLANT->Owner->FirstName=argv[++j];
