@@ -7,3 +7,6 @@
 [submodule "local/lib/libtime.cc"]
 	path = local/lib/libtime.cc
 	url = git@gitlab.com:sexycoders/libtime.cc.git
+[submodule "local/lib/time.php"]
+	path = local/lib/time.php
+	url = git@git.sexycoders.org:SexyCoders/time.php.git
