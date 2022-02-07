@@ -65,6 +65,11 @@ node_modules/
 node_modules.old/
 jspm_packages/
 
+##########################
+#vscode
+##########################
+.vscode/
+
 # TypeScript v1 declaration files
 typings/
 
