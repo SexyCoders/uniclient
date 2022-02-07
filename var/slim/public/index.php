@@ -4,46 +4,21 @@ use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
 require '../../../local/src/php/microsun.php';
+require '../src/auth.php';
+require '../../../local/lib/time.php/my_time.php';
 
-function auth($token)
-    {
-        //The url you wish to send the POST request to
-        $url = "https://oauth2.sexycoders.org/validate.php";
+$filename='/etc/uniclient/passwd';
+$handle = fopen($filename, "r");
+$passwd = fscanf($handle,"%s");
+fclose($handle);
 
-        //The data you want to send via POST
-        $fields = [
-            'access_token'      => $token
-        ];
-
-        //url-ify the data for the POST
-        $fields_string = http_build_query($fields);
-
-        //open connection
-        $ch = curl_init();
-
-        $headers = array(
-        "Origin: https://data.sexycoders.org",
-        );
-
-        //set the url, number of POST vars, POST data
-        curl_setopt($ch,CURLOPT_URL, $url);
-        curl_setopt($ch,CURLOPT_POST, true);
-        curl_setopt($ch,CURLOPT_HTTPHEADER, $headers);
-        curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
-
-        //So that curl_exec returns the contents of the cURL; rather than echoing it
-        curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
-
-        //execute post
-        $result = curl_exec($ch);
-        $result=json_decode($result);
-        if($result->active==true)
-            return 0;
-        else
-            return 1;
-        return $result;
-    }
-
+$pdo_microsun = new \pdo(
+    "mysql:host=10.0.0.33; dbname=microsun; charset=utf8mb4; port=3306",'uniclient',$passwd[0] ,
+[
+    \pdo::ATTR_ERRMODE            => \pdo::ERRMODE_EXCEPTION,
+    \pdo::ATTR_DEFAULT_FETCH_MODE => \pdo::FETCH_ASSOC,
+    \pdo::ATTR_EMULATE_PREPARES   => false,
+]); 
 $app = new \Slim\App;
 $app->add(new \Eko3alpha\Slim\Middleware\CorsMiddleware([
     'https://oauth2.sexycoders.org' => ['POST'],
@@ -56,52 +31,103 @@ $app->get('/hello/{name}', function (Request $request, Response $response, array
 
     return $response;
 });
-$app->post('/get_customer_data_full',function(Request $request,Response $response)
-    {
+$app->post('/get_customer_data_full',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
             $t="NOAUTH";
         else
-            $t=customer_data_all();
+            $t = $pdo_microsun->query("SELECT ID as id,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
         $response->getBody()->write(json_encode($t));
         return $response;
     });
-$app->post('/get_plant_data_full',function(Request $request,Response $response)
-    {
+$app->post('/get_plant_data_full',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
             $t="NOAUTH";
         else
-            $t=plant_data_all();
-        $response->getBody()->write(json_encode($t));
+            {
+                $stmt = $pdo_microsun->prepare("select plants.ID as ID,
+                                                power as Power,
+                                                counties.NAME as County,
+                                                borough as Borough,
+                                                location as Location,
+                                                plants.area as Area,
+                                                panels.*,
+                                                strings as Strings,
+                                                mounters.name as mname,
+                                                inverters.model as imodel,
+                                                inverters.type as itype,
+                                                constructors.*,
+                                                connumber as ConnectionNumber,
+                                                condate as ConnectionDate,
+                                                trackbegin as TrackerBegin,
+                                                price as SellPrice
+                                                from 
+                                                plants,
+                                                panels,
+                                                mounters,
+                                                inverters,
+                                                constructors,
+                                                counties 
+                                                where 
+                                                panel=panels.id and 
+                                                mounting=mounters.id and 
+                                                inverter=inverters.id and 
+                                                constructor=constructors.id;"
+                                                );
+                $res=array();
+                $stmt->execute([]);
+                while ($row = $stmt->fetch()) {
+                    array_push($res,$row); 
+                }
+                $t=$res;
+            }
+                $response->getBody()->write(json_encode($t));
         return $response;
     });
-$app->post('/get_pending_errors_all',function(Request $request,Response $response)
-    {
+$app->post('/get_pending_errors_all',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
             $t="NOAUTH";
         else
-            $t=pending_errors_all();
+        {
+            $t = $pdo_microsun->query("SELECT * FROM pending_errors;") -> fetchAll();
+        };
         $response->getBody()->write(json_encode($t));
         return $response;
     });
-$app->post('/get_pending_errors_count',function(Request $request,Response $response)
-    {
+$app->post('/get_pending_errors_count',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
             $t="NOAUTH";
         else
-            $t=pending_errors_count();
-        $response->getBody()->write(json_encode($t));
+            $t= $pdo_microsun->query("SELECT COUNT(*) as count FROM pending_errors;") -> fetchAll();
+        $response->getBody()->write(json_encode($t[0]));
         return $response;
     });
-$app->post('/temp_error',function(Request $request,Response $response)
+function getSingleError($id,$table){
+    $stmt = $pdo_microsun->prepare("SELECT * FROM ".$table." WHERE ID=?;");
+    $stmt->execute([$id]);
+    $res = $stmt->fetch();
+    return json_decode($res);
+};
+function storeError($problem,$table){
+    $sql="";
+    if($table=="pending_errors")
     {
+        $sql="INSERT INTO ".$table." VALUES (:ID,:PLANT,:POS,:TYPE,:ERROR_CODE,:REPORTED_DATE,:REPORTED_USER,:ERROR_NOTES,:ASSIGNED_MECH)";
+        $problem->ID="NULL";
+    }
+    else
+        $sql="INSERT INTO ".$table." VALUES (:ID,:PLANT,:POS,:TYPE,:ERROR_CODE,:REPORTED_DATE,:REPORTED_USER,:ERROR_NOTES,:ASSIGNED_MECH,:RESOLVED_DATE,:MECH_NOTES)";
+    $stmt = $pdo_microsun->prepare($sql);
+    $stmt->execute(array_values(get_object_vars($problem)));
+};
+$app->post('/temp_error',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -111,19 +137,19 @@ $app->post('/temp_error',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_mech_names',function(Request $request,Response $response)
-    {
+$app->post('/get_mech_names',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
+            $t="NOAUTH";
         else
-            $k=get_mech_names();
-        $response->getBody()->write(json_encode($k));
+            $t= $pdo_microsun->query("select * from groups where NAME='microsun_technical_mech'") -> fetchAll();
+        $t=explode(";",$t[0]["USERS"]);
+        array_pop($t);
+        $response->getBody()->write(json_encode($t));
         return $response;
     });
-$app->post('/new_error',function(Request $request,Response $response)
-    {
+$app->post('/new_error',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -133,8 +159,7 @@ $app->post('/new_error',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/resolve_error',function(Request $request,Response $response)
-    {
+$app->post('/resolve_error',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -144,8 +169,7 @@ $app->post('/resolve_error',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_plant_log',function(Request $request,Response $response)
-    {
+$app->post('/get_plant_log',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -155,19 +179,17 @@ $app->post('/get_plant_log',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_county_names',function(Request $request,Response $response)
-    {
+$app->post('/get_county_names',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
+            $t="NOAUTH";
         else
-            $k=get_county_names();
-        $response->getBody()->write(json_encode($k));
+            $t= $pdo_microsun->query("select name from counties") -> fetchAll();
+        $response->getBody()->write(json_encode($t[0]["NAME"]));
         return $response;
     });
-$app->post('/get_mounter_names',function(Request $request,Response $response)
-    {
+$app->post('/get_mounter_names',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -177,8 +199,7 @@ $app->post('/get_mounter_names',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_panel_models',function(Request $request,Response $response)
-    {
+$app->post('/get_panel_models',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -188,8 +209,7 @@ $app->post('/get_panel_models',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_cboard_models',function(Request $request,Response $response)
-    {
+$app->post('/get_cboard_models',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -199,8 +219,7 @@ $app->post('/get_cboard_models',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_inverter_models',function(Request $request,Response $response)
-    {
+$app->post('/get_inverter_models',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
@@ -210,8 +229,7 @@ $app->post('/get_inverter_models',function(Request $request,Response $response)
         $response->getBody()->write(json_encode($k));
         return $response;
     });
-$app->post('/get_constructor_companies',function(Request $request,Response $response)
-    {
+$app->post('/get_constructor_companies',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))

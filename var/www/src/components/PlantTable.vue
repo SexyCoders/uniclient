@@ -90,12 +90,12 @@ export default {
           t.Borough=value.Borough;
           t.Location=value.Location;
           t.Area=value.Area;
-          t.Panel=value.Panel.Make+"/"+value.Panel.Model;
-          t.Inverter=value.Inverter.Model+"/"+value.Inverter.Type;
+          //t.Panel=value.make+"/"+value.model;
+          t.Inverter=value.imodel+"/"+value.itype;
           t.Strings=value.Strings;
-          t.CBoard=value.CBoard.Name;
-          t.Constructor=value.Constructor.Company;
-          t.Mounter=value.Mounter.Name;
+          t.CBoard=value.name;
+          t.Constructor=value.company;
+          t.Mounter=value.mname;
           t.ConnectionNumber=value.ConnectionNumber;
           var temp=new Time();
           temp.fromString(value.ConnectionDate);
