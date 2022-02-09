@@ -1,5 +1,6 @@
 <template>
   <h3>{{$store.page_title}}</h3>
+  <div style="height=10vh">
   <div class="row">
       <div class="col-md-2">
         <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
@@ -8,9 +9,10 @@
           <button type="button" class="btn btn-warning" @click="this.$router.push('newerror');">new</button>
       </div>
   </div>
+  </div>
   <br>
   <ag-grid-vue
-    style="height: 500px"
+    style="height: 80vh"
     class="ag-theme-alpine"
     id="myGrid"
     @grid-ready="onGridReady"
@@ -31,7 +33,7 @@ import "@ag-grid-community/core/dist/styles/ag-theme-alpine.css";
 import {Time} from "@sexycoders/time.js"
 
 const cols = [
-  { field: "ID"},
+  //{ field: "ID"},
   { field: "Plant"},
   { field: "Pos" },
   { field: "Type" },
@@ -40,7 +42,7 @@ const cols = [
   { field: "ErrorNotes" },
   { field: "AssignedMech" },
   { field: "stored" , cellStyle: params => {
-                      if (params.value === 'false') {
+                      if (params.value === "NO") {
                           //check if its been saved and mark green
                           return {color: 'red'};
                       }
@@ -97,7 +99,7 @@ export default {
           t.Reported=temp.toStringf("dmys-","c",1);
           t.ErrorNotes=error.ErrorNotes;
           t.AssignedMech=error.AssignedMech;
-          t.stored=error.stored;
+          t.stored=error.stored?"YES":"NO";
           table.push(t);
         });
         params.api.setRowData(table);

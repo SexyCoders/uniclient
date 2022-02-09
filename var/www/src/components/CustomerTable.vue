@@ -1,14 +1,15 @@
 <template>
-  <div style="height=15vh">
     <h3>{{$store.page_title}}</h3>
+  <div style="height=10vh">
     <div class="row">
         <div class="col-md-1">
           <input placeholder="filter" type="text" @input="this.onFilterChanged()" v-model="filter">
           </div>
     </div>
   </div>
+  <br>
   <ag-grid-vue
-    style="height: 85vh"
+    style="height: 80vh"
     class="ag-theme-alpine"
     id="myGrid"
     @grid-ready="onGridReady"
@@ -36,7 +37,7 @@ const cols = [
   { field: "email"},
   { field: "PhoneNumber" },
   { field: "Address" },
-  { field: "zip" },
+  { field: "ZIP" },
   { field: "TIN" },
 ];
 export default {

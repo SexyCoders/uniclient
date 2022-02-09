@@ -22,7 +22,13 @@
 								<div class="col-md-2">
 									<div class="form-group">
 										<span class="form-label"><b>Reported Date</b></span>
-										<span class="form-label">15/7/21</span>
+										<span class="form-label">{{this.$data.ReportedDate}}</span>
+									</div>
+								</div>
+								<div class="col-md-2">
+									<div class="form-group">
+										<span class="form-label"><b>Stored Date</b></span>
+										<span class="form-label">{{this.$data.ResolvedDate}}</span>
 									</div>
 								</div>
 								<div class="col-md-2">
@@ -53,7 +59,7 @@
 								</div>
 							</div>
 							<div class="row">
-								<div class="col-md-1" v-if="this.$store.selection.stored==='false'">
+								<div class="col-md-1" v-if="this.$store.selection.stored===0">
 									<div class="form-btn">
 										<button type="button" class="btn btn-success" @click='tempError();'>store</button>
 									</div>
@@ -81,22 +87,32 @@ export default {
     data() {
 		return {
 			ID:"",
-			Notes:""
+			Notes:"",
+			ReportedDate:"",
+			ResolvedDate:"",
 		}
   },
     computed()
         {
         },
+	beforeMount(){
+		var temp_time=new Time();
+		temp_time.fromString(this.$store.selection.ReportedDate);
+		this.$data.ReportedDate=temp_time.toStringf("dmyl-","c",1);
+	},
     mounted() {
-		if(this.$store.selection.stored=="true")
-			this.getNotes();
+		if(this.$store.selection.stored===1)
+			this.onStored();
     },
     methods: 
 		{
 			tempError()
 				{
-					this.$data.ID=this.$store.selection.reg_id;
-					var senddata = Object.assign({},this.$data);
+					//this.$data.ID=this.$store.selection.reg_id;
+					var send=this.$store.selection;
+					send.MechNotes=this.$data.Notes;
+					var senddata = {};
+					senddata.data=send;
 					senddata.token=window.__auth__.oauth2.token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
@@ -115,7 +131,7 @@ export default {
                                     }
 								else
 									{
-										alert("Error "+t.reg_id+" succcesfully stored.");
+										alert("Error "+t+" succcesfully stored.");
 										this.$router.push("errors");
 									}
 								console.log(response);
@@ -125,12 +141,19 @@ export default {
 				},
 			resolveError()
 				{
-					this.$data.ID=this.$store.selection.reg_id;
-					var senddata = Object.assign({},this.$data);
-					senddata.stored=this.$store.selection.stored;
+					var send=this.$store.selection;
+					send.MechNotes=this.$data.Notes;
+					var senddata = {};
+					senddata.data=send;
 					senddata.token=window.__auth__.oauth2.token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
+					//this.$data.ID=this.$store.selection.reg_id;
+					//var senddata = Object.assign({},this.$data);
+					//senddata.stored=this.$store.selection.stored;
+					//senddata.token=window.__auth__.oauth2.token;
+					//senddata=JSON.stringify(Object.values(senddata));
+					//console.log(senddata);
 					$.ajax({
 						type: 'POST',
 						url: window.__SCD.datacenter+"/resolve_error",
@@ -146,7 +169,7 @@ export default {
                                     }
 								else
 									{
-										alert("Error "+t.reg_id+" succcesfully resolved.");
+										alert("Error "+t+" succcesfully resolved.");
 										this.$router.push("errors");
 									}
 								console.log(response);
@@ -158,9 +181,36 @@ export default {
 				{
 					this.$store.page_title=title;
 				},
-			getNotes()
+			onStored()
 				{
 					this.$data.Notes=this.$store.selection.MechNotes;
+					var senddata={};
+					senddata.id=this.$store.selection.reg_id;
+					senddata.token=window.__auth__.oauth2.token;
+					senddata=JSON.stringify(Object.values(senddata));
+					$.ajax({
+						type: 'POST',
+						url: window.__SCD.datacenter+"/get_resolved_date",
+						data:senddata, 
+						success:
+						(response) =>
+							{
+                                var t=JSON.parse(response);
+                                if(response=="NOAUTH")
+                                    {
+                                        this.$store.state.NOAUTH=true;
+                                        return;
+                                    }
+								else
+									{
+										var temp_time=new Time();
+										temp_time.fromString(t.ResolvedDate);
+										this.$data.ResolvedDate=temp_time.toStringf("dmyl-","c",1);
+									}
+								console.log(response);
+							},
+							async:false
+							});
 				}
         },
      created()

@@ -13,6 +13,7 @@ ROOT=$DIR/../..
 cd $ROOT/var/www;
 npm run build;
 HASH=$(git rev-parse HEAD);
+rm -rfv /home/sotiris/Projects/LIVE-REPOS/uniclient-live/dist;
 cp -rv ./dist /home/sotiris/Projects/LIVE-REPOS/uniclient-live;
 cd /home/sotiris/Projects/LIVE-REPOS/uniclient-live;
 git add .;

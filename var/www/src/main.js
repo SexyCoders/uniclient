@@ -22,10 +22,10 @@ const store = createStore({
       page:"",
       plants:"",
       selection:null,
-      MechNames:""
+      MechNames:"",
+      FONT:"NOT_LOADED",
     }
   }
-
 })
 
 app.use(store);
