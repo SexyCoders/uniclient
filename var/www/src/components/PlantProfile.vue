@@ -25,17 +25,17 @@
                 <p class="text-muted mb-2 font-13"><strong>Area :</strong> 
                     <span class="ml-2">{{$store.selection.Area}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Panel :</strong> 
-                    <span class="ml-2">{{$store.selection.Panel.Make+" | "+$store.selection.Panel.Model}}</span></p>
+                    <span class="ml-2">{{$store.selection.make+" | "+$store.selection.model}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Strings :</strong> 
                     <span class="ml-2">{{$store.selection.Strings}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Mounter :</strong> 
-                    <span class="ml-2">{{$store.selection.Mounter.Name}}</span></p>
+                    <span class="ml-2">{{$store.selection.mname}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Inverter :</strong> 
-                    <span class="ml-2">{{$store.selection.Inverter.Model+" | "+$store.selection.Inverter.Type}}</span></p>
+                    <span class="ml-2">{{$store.selection.imodel+" | "+$store.selection.itype}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>CBoard :</strong> 
-                    <span class="ml-2">{{$store.selection.CBoard.Name}}</span></p>
+                    <span class="ml-2">{{$store.selection.cmodel}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Constuctor :</strong> 
-                    <span class="ml-2">{{$store.selection.Constructor.Company}}</span></p>
+                    <span class="ml-2">{{$store.selection.company}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Connection Number :</strong> 
                     <span class="ml-2">{{$store.selection.ConnectionNumber}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Connection Date :</strong> 
@@ -71,13 +71,13 @@
                             </thead>
                             <tbody>
                                 <tr v-for="error in ErrorLog" :value=error>
-                                    <td>{{error.reg_id}}</td>
-                                    <td>DATE</td>
-                                    <td>{{error.Type}} | {{error.Pos}}</td>
-                                    <td>{{error.ErrorNotes}}</td>
-                                    <td>{{error.AssignedMech}}</td>
-                                    <td>{{error.MechNotes}}</td>
-                                    <td>RESOLVED</td>
+                                    <td>{{error.ID}}</td>
+                                    <td>{{error.REPORTED_DATE}}</td>
+                                    <td>{{error.TYPE}} | {{error.POS}}</td>
+                                    <td>{{error.ERROR_NOTES}}</td>
+                                    <td>{{error.ASSIGNED_MECH}}</td>
+                                    <td>{{error.MECH_NOTES}}</td>
+                                    <td>{{error.RESOLVED_DATE}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -132,8 +132,16 @@ export default {
                                         this.$store.state.NOAUTH=true;
                                         return;
                                     }
-                                this.$data.ErrorLog=JSON.parse(response);
-                                console.log(this.$data.ErrorLog);
+                                var tmp=JSON.parse(response);
+                                tmp.forEach(function(error){
+                                    var tt=new Time();
+                                    tt.fromString(error.REPORTED_DATE);
+                                    error.REPORTED_DATE=tt.toStringf("dmyl-","c",1);
+                                    tt.fromString(error.RESOLVED_DATE);
+                                    error.RESOLVED_DATE=tt.toStringf("dmyl-","c",1);
+                                })
+                                this.$data.ErrorLog=tmp;
+                                //console.log(this.$data.ErrorLog);
 							},
 							async:false
 							});

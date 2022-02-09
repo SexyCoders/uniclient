@@ -7,8 +7,8 @@
 
             <h4 class="mb-0">Customer {{$store.selection.ID}}</h4>
 
-            <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Edit</button>
-            <button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Delete</button>
+            <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light" @click="print()">print</button>
+            <!--<button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Delete</button>-->
 
             <div class="text-left mt-3">
                 <h5 class="font-13 text-uppercase">Details:</h5>
@@ -352,6 +352,10 @@
 </template>
 <script>
 import {Time} from "@sexycoders/time.js"
+import jsPDF from 'jspdf'
+import 'jspdf-autotable'
+import $ from "jquery";
+
 export default {
     components: {
     },
@@ -360,16 +364,36 @@ export default {
             connection_time:"",
             tracker_time:""
         };
-  },
+    },
     computed()
         {
         },
+    beforeMount(){
+    },
     mounted() {
     },
     methods: {
         setTitle(title)
         {
             this.$store.page_title=title;
+        },
+        print(){
+                var doc = new jsPDF()
+                doc.setFont("utf8_font");
+
+                // It can parse html:
+                // <table id="my-table"><!-- ... --></table>
+                //doc.autoTable({ html: '#my-table' })
+
+                // Or use javascript directly:
+                doc.autoTable({
+                head: [Object.keys(this.$store.selection)],
+                body: [
+                    Object.values(this.$store.selection)
+                ],
+                })
+
+                doc.save('table.pdf')
         },
         },
      created()
@@ -382,7 +406,7 @@ export default {
         //this.connection_time=t.toStringf("dmyl-","c",1);
         //t.fromString(this.$store.selection.TrackerBegin);
         //this.tracker_time=t.toStringf("dmyl-","c",1);
-        }
+        },
 };
 </script>
 <style scoped>
