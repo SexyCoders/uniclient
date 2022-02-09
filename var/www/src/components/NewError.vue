@@ -117,7 +117,7 @@ export default {
 						alert("Please fill in all the required fields!!!");
 					delete senddata.PlantTable;
 					senddata.token=window.__auth__.oauth2.token;
-					senddata=JSON.stringify(Object.values(senddata));
+					senddata=JSON.stringify(senddata);
 					console.log(senddata);
 					$.ajax({
 						type: 'POST',
@@ -134,7 +134,7 @@ export default {
                                     }
 								else
 									{
-										alert("Error "+t.reg_id+" succcesfully registered.");
+										alert("Error "+t+" succcesfully registered.");
 										this.$router.push("errors");
 									}
 							},

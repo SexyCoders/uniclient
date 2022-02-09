@@ -37,7 +37,7 @@ $app->post('/get_customer_data_full',function(Request $request,Response $respons
         if(auth(end($t)))
             $t="NOAUTH";
         else
-            $t = $pdo_microsun->query("SELECT ID as id,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
+            $t = $pdo_microsun->query("SELECT ID,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
         $response->getBody()->write(json_encode($t));
         return $response;
     });
@@ -59,6 +59,7 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
                                                 mounters.name as mname,
                                                 inverters.model as imodel,
                                                 inverters.type as itype,
+                                                cboards.model as cmodel,
                                                 constructors.*,
                                                 connumber as ConnectionNumber,
                                                 condate as ConnectionDate,
@@ -69,13 +70,16 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
                                                 panels,
                                                 mounters,
                                                 inverters,
+                                                cboards,
                                                 constructors,
                                                 counties 
                                                 where 
                                                 panel=panels.id and 
                                                 mounting=mounters.id and 
                                                 inverter=inverters.id and 
-                                                constructor=constructors.id;"
+                                                constructor=constructors.id and
+                                                counties.id=county and
+                                                cboards.id=cboard;"
                                                 );
                 $res=array();
                 $stmt->execute([]);
@@ -94,7 +98,7 @@ $app->post('/get_pending_errors_all',function(Request $request,Response $respons
             $t="NOAUTH";
         else
         {
-            $t = $pdo_microsun->query("SELECT * FROM pending_errors;") -> fetchAll();
+            $t = $pdo_microsun->query("SELECT ID as reg_id,PLANT as plant_id,POS as Pos,TYPE as Type,ERROR_CODE as ErrorCode,REPORTED_DATE as ReportedDate,REPORTED_USER as ReportedUser,ERROR_NOTES as ErrorNotes, ASSIGNED_MECH as AssignedMech,stored FROM pending_errors;") -> fetchAll();
         };
         $response->getBody()->write(json_encode($t));
         return $response;
@@ -109,32 +113,49 @@ $app->post('/get_pending_errors_count',function(Request $request,Response $respo
         $response->getBody()->write(json_encode($t[0]));
         return $response;
     });
-function getSingleError($id,$table){
+function getSingleError($id,$table,$pdo_microsun){
     $stmt = $pdo_microsun->prepare("SELECT * FROM ".$table." WHERE ID=?;");
     $stmt->execute([$id]);
     $res = $stmt->fetch();
     return json_decode($res);
 };
-function storeError($problem,$table){
+function storeError($problem,$table,$pdo_microsun){
     $sql="";
     if($table=="pending_errors")
     {
-        $sql="INSERT INTO ".$table." VALUES (:ID,:PLANT,:POS,:TYPE,:ERROR_CODE,:REPORTED_DATE,:REPORTED_USER,:ERROR_NOTES,:ASSIGNED_MECH)";
-        $problem->ID="NULL";
+        unset($problem->ID);
+        $date_tmp=new Time();
+        $date_tmp->getTime();
+        $problem->ReportedDate=$date_tmp->toString();
+        $problem->ReportedUser="root";
+        $sql="INSERT INTO ".$table." (PLANT,POS,TYPE,ERROR_CODE,REPORTED_DATE,REPORTED_USER,ERROR_NOTES,ASSIGNED_MECH) VALUES (:Plant,:Pos,:Type,:ErrorCode,:ReportedDate,:ReportedUser,:ErrorNotes,:AssignedMech)";
     }
     else
-        $sql="INSERT INTO ".$table." VALUES (:ID,:PLANT,:POS,:TYPE,:ERROR_CODE,:REPORTED_DATE,:REPORTED_USER,:ERROR_NOTES,:ASSIGNED_MECH,:RESOLVED_DATE,:MECH_NOTES)";
+    {
+        $sql="INSERT INTO ".$table." VALUES (:reg_id,:plant_id,:Pos,:Type,:ErrorCode,:ReportedDate,:ReportedUser,:ErrorNotes,:AssignedMech,:ResolvedDate,:MechNotes)";
+    }
     $stmt = $pdo_microsun->prepare($sql);
-    $stmt->execute(array_values(get_object_vars($problem)));
+    $stmt->execute(get_object_vars($problem));
+    return $pdo_microsun->lastInsertId();
 };
 $app->post('/temp_error',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
+            $t="NOAUTH";
         else
-            $k=temp_error($t);
-        $response->getBody()->write(json_encode($k));
+            {
+                $date_tmp=new Time();
+                $date_tmp->getTime();
+                $t=$t[0];
+                unset($t->stored);
+                $id_keep=$t->reg_id;
+                $t->ResolvedDate=$date_tmp->toString();
+                $t=storeError($t,"temp_stored_errors",$pdo_microsun); 
+                $stmt = $pdo_microsun->prepare("update pending_errors set stored=1 where ID=?");
+                $stmt->execute([$id_keep]);
+            }
+        $response->getBody()->write(json_encode($t));
         return $response;
     });
 $app->post('/get_mech_names',function(Request $request,Response $response) use($pdo_microsun){
@@ -153,20 +174,50 @@ $app->post('/new_error',function(Request $request,Response $response) use($pdo_m
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
+            $t="NOAUTH";
         else
-            $k=new_error($t);
-        $response->getBody()->write(json_encode($k));
+            {
+                unset($t->token);
+                $t=storeError($t,"pending_errors",$pdo_microsun);
+            }
+        $response->getBody()->write(json_encode($t));
         return $response;
     });
 $app->post('/resolve_error',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
+            $t="NOAUTH";
         else 
-            $k=resolve_error($t);
-        $response->getBody()->write(json_encode($k));
+            {
+                $date_tmp=new Time();
+                $date_tmp->getTime();
+                $t=$t[0];
+                unset($t->stored);
+                $id_keep=$t->reg_id;
+                $t->ResolvedDate=$date_tmp->toString();
+                $t=storeError($t,"error_log",$pdo_microsun); 
+                $stmt = $pdo_microsun->prepare("delete from pending_errors where ID=?");
+                $stmt->execute([$id_keep]);
+                $stmt = $pdo_microsun->prepare("delete from temp_stored_errors where ID=?");
+                $stmt->execute([$id_keep]);
+                $t=$id_keep;
+            }
+        $response->getBody()->write(json_encode($t));
+        return $response;
+    });
+$app->post('/get_resolved_date',function(Request $request,Response $response) use($pdo_microsun){
+        $t=$request->getBody();
+        $t=json_decode($t);
+        if(auth(end($t)))
+            $t="NOAUTH";
+        else
+            {
+                $stmt = $pdo_microsun->prepare("SELECT RESOLVED_DATE as ResolvedDate FROM temp_stored_errors where ID=?;");
+                $stmt->execute([$t[0]]);
+                $t = $stmt->fetch();
+            }
+        $response->getBody()->write(json_encode($t));
         return $response;
     });
 $app->post('/get_plant_log',function(Request $request,Response $response) use($pdo_microsun){
@@ -175,8 +226,17 @@ $app->post('/get_plant_log',function(Request $request,Response $response) use($p
         if(auth(end($t)))
             $k="NOAUTH";
         else
-            $k=get_plant_log($t);
-        $response->getBody()->write(json_encode($k));
+            {
+                $stmt = $pdo_microsun->prepare("SELECT * FROM error_log where PLANT=? ORDER BY ID DESC LIMIT 30;");
+                $res=array();
+                $stmt->execute([$t[0]]);
+                $t = $stmt->fetch();
+                while ($row = $stmt->fetch()) {
+                    array_push($res,$row); 
+                }
+                $t=$res;
+            }
+        $response->getBody()->write(json_encode($t));
         return $response;
     });
 $app->post('/get_county_names',function(Request $request,Response $response) use($pdo_microsun){

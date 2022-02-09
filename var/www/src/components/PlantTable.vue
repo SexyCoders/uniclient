@@ -1,5 +1,5 @@
 <template>
-  <div style="height=15vh">
+  <div style="height=10vh">
     <h3>{{$store.page_title}}</h3>
   <div class="row">
       <div class="col-md-2">
@@ -10,9 +10,10 @@
       </div>
   </div>
   </div>
+  <br>
       
   <ag-grid-vue
-    style="height: 85vh;"
+    style="height: 80vh;"
     class="ag-theme-alpine"
     id="myGrid"
     @grid-ready="onGridReady"
@@ -90,7 +91,7 @@ export default {
           t.Borough=value.Borough;
           t.Location=value.Location;
           t.Area=value.Area;
-          //t.Panel=value.make+"/"+value.model;
+          t.Panel=value.make+"/"+value.model;
           t.Inverter=value.imodel+"/"+value.itype;
           t.Strings=value.Strings;
           t.CBoard=value.name;

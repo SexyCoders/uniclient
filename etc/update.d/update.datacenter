@@ -19,6 +19,7 @@ cp -v $WORKDIR/public/.htaccess $LIVEDIR/public;
 cat $WORKDIR/public/index.php | awk '{sub("../../local/src/php/microsun.php","microsun.php")}1' | awk '{sub("../src/auth.php","../auth.php")}1' | awk '{sub("../../../local/lib/time.php/my_time.php","../my_time.php")}1'> $LIVEDIR/public/index.php;
 cp -v $ROOT/local/src/php/microsun.php $LIVEDIR;
 cp -v $WORKDIR/src/auth.php $LIVEDIR;
+cp -v $WORKDIR/files/font $LIVEDIR;
 cp $ROOT/etc/apache2/datacenter.conf $LIVEDIR;
 cp $ROOT/local/lib/time.php/my_time.php $LIVEDIR/my_time.php;
 

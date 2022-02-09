@@ -73,7 +73,14 @@
         setCopyright(cr)
           {
           this.$store.copyright=cr;
-        }
+        },
+        fetchFonts(){
+          fetch('https://lib.sexycoders.org/utf8_font_for_printer/font-base64').then(function(response){
+            //this.$store.FONT=response.text();
+            //console.log(this.$store.FONT);
+            console.log(response);
+          });
+        },
     },
   computed: {
     routes() {
@@ -84,6 +91,7 @@
         this.setTitle('UniClient');
         this.setCopyright('Developed by SexyCoders');
         this.getErrorCount();
+        this.fetchFonts();
 
         function compare_customers(a, b) {
           // Use toUpperCase() to ignore character casing
@@ -98,6 +106,7 @@
           }
           return comparison;
         }
+
 
       $.ajax({
           type: 'POST',
@@ -149,7 +158,7 @@
                           this.$store.state.NOAUTH=true;
                           return;
                       }
-                  this.storeMechNames((JSON.parse(response)).MechNames);
+                  this.storeMechNames((JSON.parse(response)));
               },
           async:false
           });
