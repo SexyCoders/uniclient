@@ -83,11 +83,8 @@ export default {
           var t=new Object();
           t.ID=value.ID;
           t.Power=value.Power;
-          var owner=this.$store.customers.filter((customer)=>customer.ID==value.Owner);
-         console.log(owner);
-
-          t.Owner=owner.Company;
-          t.County=value.County.Name;
+          t.Owner=value.Owner;
+          t.County=value.County;
           t.Borough=value.Borough;
           t.Location=value.Location;
           t.Area=value.Area;

@@ -50,6 +50,7 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
             {
                 $stmt = $pdo_microsun->prepare("select plants.ID as ID,
                                                 power as Power,
+                                                customers.COMPANY as Owner,
                                                 counties.NAME as County,
                                                 borough as Borough,
                                                 location as Location,
@@ -72,14 +73,16 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
                                                 inverters,
                                                 cboards,
                                                 constructors,
-                                                counties 
+                                                counties,
+                                                customers  
                                                 where 
                                                 panel=panels.id and 
                                                 mounting=mounters.id and 
                                                 inverter=inverters.id and 
                                                 constructor=constructors.id and
                                                 counties.id=county and
-                                                cboards.id=cboard;"
+                                                cboards.id=cboard and
+                                                customers.ID=plants.owner;"
                                                 );
                 $res=array();
                 $stmt->execute([]);
