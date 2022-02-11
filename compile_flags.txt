@@ -1,2 +1,0 @@
--I./headers
--std=c++17
