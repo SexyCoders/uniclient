@@ -7,6 +7,8 @@
 
             <h4 class="mb-0">{{$store.selection.ID}}</h4>
 
+            <button type="button" class="btn btn-primary btn-xs waves-effect mb-2 waves-light" @click="print_info()">print info</button>
+            <button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light" @click="print()">print log</button>
             <!--<button type="button" class="btn btn-success btn-xs waves-effect mb-2 waves-light">Edit</button>-->
             <!--<button type="button" class="btn btn-danger btn-xs waves-effect mb-2 waves-light">Delete</button>-->
 
@@ -17,7 +19,7 @@
                 <p class="text-muted mb-2 font-13"><strong>Owner :</strong> 
                     <span class="ml-2 ">{{$store.selection.Owner}}</span></p>
                 <p class="text-muted mb-1 font-13"><strong>County :</strong> 
-                    <span class="ml-2">{{$store.selection.County.Name}}</span></p>
+                    <span class="ml-2">{{$store.selection.County}}</span></p>
                 <p class="text-muted mb-1 font-13"><strong>Borough :</strong> 
                     <span class="ml-2">{{$store.selection.Borough}}</span></p>
                 <p class="text-muted mb-2 font-13"><strong>Location :</strong> 
@@ -91,7 +93,9 @@
 </template>
 <script>
 import $ from "jquery";
-import {Time} from "@sexycoders/time.js"
+import {Time} from "@sexycoders/time.js";
+import getUniClientLogo from '../assets/get_uniclient_logo.js';
+import getMicrosunLogo from '../assets/getMicrosunLogo.js';
 export default {
     components: {
     },
@@ -145,8 +149,120 @@ export default {
 							},
 							async:false
 							});
-            }
+            },
+        print(){
+            var table_data=[];
+            console.log(this.$data.ErrorLog);
+            var tt=[];
+            Object.keys(this.$data.ErrorLog[0]).forEach(function(title){
+                var t={text: title, fontSize: 10}
+                tt.push(t);
+            });
+            table_data.push(tt);
+
+            this.$data.ErrorLog.forEach(function(value){
+                delete value.Plant;
+                console.log(value);
+                table_data.push(Object.values(value));
+            });
+            console.log("data:");
+            console.log(table_data);
+            var dd={
+                pageMargins: [ 10, 10, 10, 10 ],
+                pageOrientation: 'landscape',
+                defaultFileName:"plant_log-"+this.$store.selection.ID+"110222-1020",
+                info: {
+                    title:"plant_log-"+this.$store.selection.ID+"110222-1020",
+                    author: 'john doe',
+                    subject: 'plant maintenance log',
+                },
+                content: [
+                    {text: 'Plant '+this.$store.selection.ID, fontSize: 14, bold: true, margin: [0, 38,0,0]},
+                    {text: this.$store.selection.Owner+" | "+this.$store.selection.Power+"MW | "+this.$store.selection.County+"/"+this.$store.selection.Location, fontSize: 9, bold: false,margin:[0,0,0,0]},
+                    {text: 'Maintenance log:', fontSize: 12, bold: true, margin: [0, 5,0,0]},
+                    {
+                        style: 'tableExample',
+                        table: {
+                            headerRows: 1,
+                            body: table_data
+                        },
+                        layout: 'lightHorizontalLines',
+                    },
+                    {
+                        image: 'microsun_logo', 
+                        width: 150,
+                        alignment: 'left',
+                        absolutePosition: {y: 20},
+                        margin:[0,20,0,0],
+                    },
+                    {
+                        image: 'uniclient_logo', 
+                        width: 150,
+                        alignment: 'right',
+                        absolutePosition: {y: 20},
+                        margin:[0,20,0,0],
+                    },
+                ],
+                images:{
+                    uniclient_logo:'data:image/jpeg;base64,'+getUniClientLogo(),
+                    microsun_logo:'data:image/jpeg;base64,'+getMicrosunLogo(),
+                }
+            };
+            this.$store.pdfMake.createPdf(dd).open();
         },
+        print_info(){
+            var table_data=[];
+            console.log(this.$data.ErrorLog);
+            var ttt=JSON.parse(JSON.stringify(this.$store.selection));
+            delete ttt.ID;
+            table_data.push(["",""]);
+            Object.keys(ttt).forEach(function(title){
+                var t=[{text: title, fontSize: 10},ttt[title]];
+                table_data.push(t);
+            });
+            console.log("data:");
+            console.log(table_data);
+            var dd={
+                pageMargins: [ 10, 10, 10, 10 ],
+                defaultFileName:"plant_info-"+this.$store.selection.ID+"110222-1020",
+                info: {
+                    title:"plant_info-"+this.$store.selection.ID+"110222-1020",
+                    author: 'john doe',
+                    subject: 'plant maintenance log',
+                },
+                content: [
+                    {text: 'Plant '+this.$store.selection.ID, fontSize: 14, bold: true, margin: [0, 38,0,0]},
+                    {text: 'Details:', fontSize: 12, bold: true, margin: [0, 5,0,0]},
+                    {
+                        style: 'tableExample',
+                        table: {
+                            body: table_data
+                        },
+                        layout: 'lightHorizontalLines',
+                    },
+                    {
+                        image: 'microsun_logo', 
+                        width: 150,
+                        alignment: 'left',
+                        absolutePosition: {y: 20},
+                        margin:[0,20,0,0],
+                    },
+                    {
+                        image: 'uniclient_logo', 
+                        width: 150,
+                        alignment: 'right',
+                        absolutePosition: {y: 20},
+                        margin:[0,20,0,0],
+                    },
+                ],
+                images:{
+                    uniclient_logo:'data:image/jpeg;base64,'+getUniClientLogo(),
+                    microsun_logo:'data:image/jpeg;base64,'+getMicrosunLogo(),
+                }
+            };
+            this.$store.pdfMake.createPdf(dd).open();
+        },
+    },
      created()
         {
             if(typeof this.$store.selection == 'undefined')

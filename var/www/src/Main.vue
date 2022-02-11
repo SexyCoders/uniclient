@@ -9,6 +9,8 @@
 
 <script>
     import $ from "jquery";
+    import pdfMake from "pdfmake/build/pdfmake";
+    import pdfFonts from "pdfmake/build/vfs_fonts";
 
     export default {
       name:"Main",
@@ -74,13 +76,6 @@
           {
           this.$store.copyright=cr;
         },
-        fetchFonts(){
-          fetch('https://lib.sexycoders.org/utf8_font_for_printer/font-base64').then(function(response){
-            //this.$store.FONT=response.text();
-            //console.log(this.$store.FONT);
-            console.log(response);
-          });
-        },
     },
   computed: {
     routes() {
@@ -91,7 +86,8 @@
         this.setTitle('UniClient');
         this.setCopyright('Developed by SexyCoders');
         this.getErrorCount();
-        this.fetchFonts();
+        this.$store.pdfMake=pdfMake;
+        this.$store.pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
         function compare_customers(a, b) {
           // Use toUpperCase() to ignore character casing
@@ -162,6 +158,8 @@
               },
           async:false
           });
+        this.$store.FONT=window.font;
+        console.log(this.$store.FONT);
       }
 
     };
@@ -183,5 +181,4 @@
           font-size: 3.5rem;
         }
       }
-
 </style>

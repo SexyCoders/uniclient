@@ -352,9 +352,8 @@
 </template>
 <script>
 import {Time} from "@sexycoders/time.js"
-import jsPDF from 'jspdf'
-import 'jspdf-autotable'
 import $ from "jquery";
+
 
 export default {
     components: {
@@ -377,36 +376,11 @@ export default {
         {
             this.$store.page_title=title;
         },
-        print(){
-                var doc = new jsPDF()
-                doc.setFont("utf8_font");
-
-                // It can parse html:
-                // <table id="my-table"><!-- ... --></table>
-                //doc.autoTable({ html: '#my-table' })
-
-                // Or use javascript directly:
-                doc.autoTable({
-                head: [Object.keys(this.$store.selection)],
-                body: [
-                    Object.values(this.$store.selection)
-                ],
-                })
-
-                doc.save('table.pdf')
-        },
-        },
      created()
         {
         this.setTitle('Customer Profile');
-        if(this.$store.selection=='nothing')
-            this.$router.push('plants');
-        //var t=new Time();
-        //t.fromString(this.$store.selection.ConnectionDate);
-        //this.connection_time=t.toStringf("dmyl-","c",1);
-        //t.fromString(this.$store.selection.TrackerBegin);
-        //this.tracker_time=t.toStringf("dmyl-","c",1);
         },
+    },
 };
 </script>
 <style scoped>
