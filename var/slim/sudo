@@ -1,0 +1,472 @@
+#!/usr/bin/php
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+use GuzzleHttp\Client as GuzzleClient;
+//use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+use GuzzleHttp\Psr7\Request;
+use Nahid\JsonQ\Jsonq;
+use GuzzleHttp\Exception\RequestException;
+//use Http\Message\MessageFactory\GuzzleMessageFactory;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+
+$client = new GuzzleHttp\Client();
+function swarm_container_instance($clienthttp, $data ){
+	$option='GET';
+	$url = "http://localhost/services/$data";
+	$curl = [
+		'curl' => [
+			CURLOPT_UNIX_SOCKET_PATH => '/var/run/docker.sock'
+		]
+	];
+	$res = $clienthttp->request("$option", "$url", $curl);
+	$body = $res->getBody();
+	$resbody = json_decode($body, true);
+	$serid=trim($resbody["ID"]);
+
+	$url = "http://localhost/tasks";
+	$res1 = $clienthttp->request("$option", "$url", $curl);
+	$body1 = $res1->getBody();
+	$resbody1 = json_decode($body1, true);
+	$count=count($resbody1);
+	$cc=0;
+	for($c=0;$c<$count;$c++){
+		$conid=trim($resbody1[$c]["ServiceID"]);
+		$status=trim($resbody1[$c]["Status"]["State"]);
+		if("$conid" == "$serid" && "$status" == 'running'){
+			$container_idtmp[$cc] = trim($resbody1[$c]["Status"]["ContainerStatus"]["ContainerID"]);
+			$node_idtmp[$cc] = trim($resbody1[$c]["NodeID"]);
+			$cc++;
+		}
+	}
+
+	$count1=count($container_idtmp);
+	if($count1 > 0){
+		$rand = array_rand($container_idtmp);
+		$container_id=$container_idtmp[$rand];
+		$node_id=$node_idtmp[$rand];
+	}else{
+		$container_id=$container_idtmp[0];
+		$node_id=$node_idtmp[0];
+	}
+
+	$url = "http://localhost/nodes/$node_id";
+	$resip = $clienthttp->request("$option", "$url", $curl);
+	$bodyip = $resip->getBody();
+	$resbodyip = json_decode($bodyip, true);
+	$conipstatus = trim($resbodyip["Status"]["State"]);
+	$conipaddr = trim($resbodyip["Status"]["Addr"]);
+	if($conipaddr == '0.0.0.0'){
+		$conipaddrtmp = trim($resbodyip["ManagerStatus"]["Addr"]);
+		$contmp = explode(':',$conipaddrtmp);
+		$conip = $contmp[0];
+	}else{
+		$conip = $conipaddr;
+	}
+
+ 	$r = new stdClass;
+        $r->id = $container_id;
+        $r->ip = $conip;
+        $r->status = $conipstatus;
+	return $r;
+}
+	$data="swarmlab_test";
+$container = swarm_container_instance($client, $data);
+
+echo $container->ip;
+echo $container->id;
+echo $container->status;
+
+
+$con =  $container->id;
+/*
+     curl --include \
+     --no-buffer \
+     --unix-socket "/var/run/docker.sock" \
+     --header "Connection: Upgrade" \
+     --header "Upgrade: websocket" \
+     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+     --header "Sec-WebSocket-Version: 13" \
+     "http://localhost/containers/swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w/attach/ws?stream=1&stdout=1&stdin=1&logs=1"
+                                                                                                                      
+ 
+  $headers = [
+            'Connection'        => 'Upgrade',
+            'Upgrade'        => 'websocket',
+            'Sec-WebSocket-Key' => 'Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==',
+            'Sec-WebSocket-Version' => '13'
+        ];
+
+*/                                                                                                                     
+                                                                                                       
+	//$option='POST';
+	//$url = "http://localhost/containers/$con/attach/ws?stream=1&stdout=1&stdin=1&logs=1";
+//$url = "http://localhost/containers/swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w/attach/ws?stream=1&stdout=1&stdin=1&logs=1";
+
+/*
+object(GuzzleHttp\Psr7\Response)#31 (6) {
+  ["reasonPhrase":"GuzzleHttp\Psr7\Response":private]=>
+  string(2) "OK"
+  ["statusCode":"GuzzleHttp\Psr7\Response":private]=>
+  int(200)
+  ["headers":"GuzzleHttp\Psr7\Response":private]=>
+  array(1) {
+    ["Content-Type"]=>
+    array(1) {
+      [0]=>
+      string(33) "application/vnd.docker.raw-stream"
+    }
+  }
+  ["headerNames":"GuzzleHttp\Psr7\Response":private]=>
+  array(1) {
+    ["content-type"]=>
+    string(12) "Content-Type"
+  }
+  ["protocol":"GuzzleHttp\Psr7\Response":private]=>
+  string(3) "1.1"
+  ["stream":"GuzzleHttp\Psr7\Response":private]=>
+  object(GuzzleHttp\Psr7\Stream)#16 (7) {
+    ["stream":"GuzzleHttp\Psr7\Stream":private]=>
+    resource(85) of type (stream)
+    ["size":"GuzzleHttp\Psr7\Stream":private]=>
+    NULL
+ ["seekable":"GuzzleHttp\Psr7\Stream":private]=>
+    bool(true)
+    ["readable":"GuzzleHttp\Psr7\Stream":private]=>
+    bool(true)
+    ["writable":"GuzzleHttp\Psr7\Stream":private]=>
+    bool(true)
+    ["uri":"GuzzleHttp\Psr7\Stream":private]=>
+    string(10) "php://temp"
+    ["customMetadata":"GuzzleHttp\Psr7\Stream":private]=>
+    array(0) {
+    }
+  }
+}
+
+
+$container = [];
+$history = Middleware::history($container);
+
+$stack = HandlerStack::create();
+// Add the history middleware to the handler stack.
+$stack->push($history);
+
+$client = new GuzzleHttp\Client(['handler' => $stack]);
+
+//	$url = "http://localhost/containers/swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w/attach";
+$client->request('POST', 'http://httpbin.org/post',[
+//$client->request('POST', $url, $curl,[
+    'body' => 'Hello World'
+]);
+
+// Iterate over the requests and responses
+foreach ($container as $transaction) {
+    echo (string) $transaction['request']->getBody(); // Hello World
+}
+//$client1 = new GuzzleHttp\Client(['handler' => $stack]);
+//var_dump($client1);
+
+*/	
+
+	$headers = [
+            'Content-Type' => 'application/json'
+        ];
+  	$data = [
+		"AttachStdin" =>  true,
+		"AttachStdout" => true,
+		"AttachStderr" => true,
+		"DetachKeys" => "ctrl-p,ctrl-q",
+		"Tty" => true,
+		"Cmd" => [
+		"/bin/bash","-c","ps"
+		],
+		"Env" => [
+		"FOO=bar",
+		"BAZ=quux"
+		],
+		"Privileged" => true,
+		"User" => "root"
+	];
+
+	$curl = [
+		'json' => $data,
+		'headers' => $headers,
+		'curl' => [
+			CURLOPT_UNIX_SOCKET_PATH => '/var/run/docker.sock'
+		]
+	];
+  	$con = "swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w";
+	$url = "http://localhost/containers/$con/exec";
+	$option='POST';
+	$rescreate = $client->request("$option", "$url", $curl);
+	if ($rescreate->getStatusCode() == 201){
+		$bodycreate = $rescreate->getBody();
+		$resbodycreate = json_decode($bodycreate, true);
+		echo "\n";
+		echo $resbodycreate["Id"];
+		//var_dump($resbodycreate);
+		echo "\n";
+		//var_dump($rescreate);
+  	$data = [
+		"Detach" =>  false,
+		"Tty" => true
+	];
+	$curl = [
+		'json' => $data,
+		'headers' => $headers,
+		'curl' => [
+			CURLOPT_UNIX_SOCKET_PATH => '/var/run/docker.sock'
+		]
+	];
+  	$con = trim($resbodycreate["Id"]);
+	$url = "http://localhost/exec/$con/start";
+	$option='POST';
+	$rescreate1 = $client->request("$option", "$url", $curl);
+		$bodycreate1 = $rescreate1->getBody();
+		$resbodycreate1 = json_decode($bodycreate1, true);
+		echo $resbodycreate1;
+		var_dump($resbodycreate1);
+	}
+#curl -X POST -H "Content-Type: application/json" http://127.0.0.1:2375/containers/vanilla2/exec -d '{ "AttachStdin":false,"AttachStdout":true,"AttachStderr":true, "Tty":false, "Cmd":["/bin/date"] }'
+#
+#{"Id":"213f4f0abd592b302a6af43637f4422f6387b63a9759643b3e6024655099b298"}
+con="6eb28f25e2d98c8a4543fddd3617eeb01419540ffd0c5665c3c4caf475d0d8ad";
+url="http://localhost/exec/$con/start";
+curl -X POST -H "Content-Type: application/json" $url -d '{ "Detach":false,"Tty":false}'
+#!/usr/bin/php
+<?php
+require __DIR__ . '/../vendor/autoload.php';
+use GuzzleHttp\Client as GuzzleClient;
+//use Http\Adapter\Guzzle6\Client as GuzzleAdapter;
+use GuzzleHttp\Psr7\Request;
+use Nahid\JsonQ\Jsonq;
+use GuzzleHttp\Exception\RequestException;
+//use Http\Message\MessageFactory\GuzzleMessageFactory;
+use GuzzleHttp\HandlerStack;
+use GuzzleHttp\Middleware;
+
+$client = new GuzzleHttp\Client();
+function swarm_container_instance($clienthttp, $data ){
+	$option='GET';
+	$url = "http://localhost/services/$data";
+	$curl = [
+		'curl' => [
+			CURLOPT_UNIX_SOCKET_PATH => '/var/run/docker.sock'
+		]
+	];
+	$res = $clienthttp->request("$option", "$url", $curl);
+	$body = $res->getBody();
+	$resbody = json_decode($body, true);
+	$serid=trim($resbody["ID"]);
+
+	$url = "http://localhost/tasks";
+	$res1 = $clienthttp->request("$option", "$url", $curl);
+	$body1 = $res1->getBody();
+	$resbody1 = json_decode($body1, true);
+	$count=count($resbody1);
+	$cc=0;
+	for($c=0;$c<$count;$c++){
+		$conid=trim($resbody1[$c]["ServiceID"]);
+		$status=trim($resbody1[$c]["Status"]["State"]);
+		if("$conid" == "$serid" && "$status" == 'running'){
+			$container_idtmp[$cc] = trim($resbody1[$c]["Status"]["ContainerStatus"]["ContainerID"]);
+			$node_idtmp[$cc] = trim($resbody1[$c]["NodeID"]);
+			$cc++;
+		}
+	}
+
+	$count1=count($container_idtmp);
+	if($count1 > 0){
+		$rand = array_rand($container_idtmp);
+		$container_id=$container_idtmp[$rand];
+		$node_id=$node_idtmp[$rand];
+	}else{
+		$container_id=$container_idtmp[0];
+		$node_id=$node_idtmp[0];
+	}
+
+	$url = "http://localhost/nodes/$node_id";
+	$resip = $clienthttp->request("$option", "$url", $curl);
+	$bodyip = $resip->getBody();
+	$resbodyip = json_decode($bodyip, true);
+	$conipstatus = trim($resbodyip["Status"]["State"]);
+	$conipaddr = trim($resbodyip["Status"]["Addr"]);
+	if($conipaddr == '0.0.0.0'){
+		$conipaddrtmp = trim($resbodyip["ManagerStatus"]["Addr"]);
+		$contmp = explode(':',$conipaddrtmp);
+		$conip = $contmp[0];
+	}else{
+		$conip = $conipaddr;
+	}
+
+ 	$r = new stdClass;
+        $r->id = $container_id;
+        $r->ip = $conip;
+        $r->status = $conipstatus;
+	return $r;
+}
+	$data="swarmlab_test";
+$container = swarm_container_instance($client, $data);
+
+echo $container->ip;
+echo $container->id;
+echo $container->status;
+
+
+$con =  $container->id;
+/*
+     curl --include \
+     --no-buffer \
+     --unix-socket "/var/run/docker.sock" \
+     --header "Connection: Upgrade" \
+     --header "Upgrade: websocket" \
+     --header "Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==" \
+     --header "Sec-WebSocket-Version: 13" \
+     "http://localhost/containers/swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w/attach/ws?stream=1&stdout=1&stdin=1&logs=1"
+                                                                                                                      
+ 
+  $headers = [
+            'Connection'        => 'Upgrade',
+            'Upgrade'        => 'websocket',
+            'Sec-WebSocket-Key' => 'Sec-WebSocket-Key: SGVsbG8sIHdvcmxkIQ==',
+            'Sec-WebSocket-Version' => '13'
+        ];
+
+*/                                                                                                                     
+                                                                                                       
+	//$option='POST';
+	//$url = "http://localhost/containers/$con/attach/ws?stream=1&stdout=1&stdin=1&logs=1";
+//$url = "http://localhost/containers/swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w/attach/ws?stream=1&stdout=1&stdin=1&logs=1";
+
+/*
+object(GuzzleHttp\Psr7\Response)#31 (6) {
+  ["reasonPhrase":"GuzzleHttp\Psr7\Response":private]=>
+  string(2) "OK"
+  ["statusCode":"GuzzleHttp\Psr7\Response":private]=>
+  int(200)
+  ["headers":"GuzzleHttp\Psr7\Response":private]=>
+  array(1) {
+    ["Content-Type"]=>
+    array(1) {
+      [0]=>
+      string(33) "application/vnd.docker.raw-stream"
+    }
+  }
+  ["headerNames":"GuzzleHttp\Psr7\Response":private]=>
+  array(1) {
+    ["content-type"]=>
+    string(12) "Content-Type"
+  }
+  ["protocol":"GuzzleHttp\Psr7\Response":private]=>
+  string(3) "1.1"
+  ["stream":"GuzzleHttp\Psr7\Response":private]=>
+  object(GuzzleHttp\Psr7\Stream)#16 (7) {
+    ["stream":"GuzzleHttp\Psr7\Stream":private]=>
+    resource(85) of type (stream)
+    ["size":"GuzzleHttp\Psr7\Stream":private]=>
+    NULL
+ ["seekable":"GuzzleHttp\Psr7\Stream":private]=>
+    bool(true)
+    ["readable":"GuzzleHttp\Psr7\Stream":private]=>
+    bool(true)
+    ["writable":"GuzzleHttp\Psr7\Stream":private]=>
+    bool(true)
+    ["uri":"GuzzleHttp\Psr7\Stream":private]=>
+    string(10) "php://temp"
+    ["customMetadata":"GuzzleHttp\Psr7\Stream":private]=>
+    array(0) {
+    }
+  }
+}
+
+
+$container = [];
+$history = Middleware::history($container);
+
+$stack = HandlerStack::create();
+// Add the history middleware to the handler stack.
+$stack->push($history);
+
+$client = new GuzzleHttp\Client(['handler' => $stack]);
+
+//	$url = "http://localhost/containers/swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w/attach";
+$client->request('POST', 'http://httpbin.org/post',[
+//$client->request('POST', $url, $curl,[
+    'body' => 'Hello World'
+]);
+
+// Iterate over the requests and responses
+foreach ($container as $transaction) {
+    echo (string) $transaction['request']->getBody(); // Hello World
+}
+//$client1 = new GuzzleHttp\Client(['handler' => $stack]);
+//var_dump($client1);
+
+*/	
+
+	$headers = [
+            'Content-Type' => 'application/json'
+        ];
+  	$data = [
+		"AttachStdin" =>  true,
+		"AttachStdout" => true,
+		"AttachStderr" => true,
+		"DetachKeys" => "ctrl-p,ctrl-q",
+		"Tty" => true,
+		"Cmd" => [
+		"/bin/bash","-c","ps"
+		],
+		"Env" => [
+		"FOO=bar",
+		"BAZ=quux"
+		],
+		"Privileged" => true,
+		"User" => "root"
+	];
+
+	$curl = [
+		'json' => $data,
+		'headers' => $headers,
+		'curl' => [
+			CURLOPT_UNIX_SOCKET_PATH => '/var/run/docker.sock'
+		]
+	];
+  	$con = "swarmlab_test.5.jd9qbanvr33cr64umdadwlk3w";
+	$url = "http://localhost/containers/$con/exec";
+	$option='POST';
+	$rescreate = $client->request("$option", "$url", $curl);
+	if ($rescreate->getStatusCode() == 201){
+		$bodycreate = $rescreate->getBody();
+		$resbodycreate = json_decode($bodycreate, true);
+		echo "\n";
+		echo $resbodycreate["Id"];
+		//var_dump($resbodycreate);
+		echo "\n";
+		//var_dump($rescreate);
+  	$data = [
+		"Detach" =>  false,
+		"Tty" => true
+	];
+	$curl = [
+		'json' => $data,
+		'headers' => $headers,
+		'curl' => [
+			CURLOPT_UNIX_SOCKET_PATH => '/var/run/docker.sock'
+		]
+	];
+  	$con = trim($resbodycreate["Id"]);
+	$url = "http://localhost/exec/$con/start";
+	$option='POST';
+	$rescreate1 = $client->request("$option", "$url", $curl);
+		$bodycreate1 = $rescreate1->getBody();
+		$resbodycreate1 = json_decode($bodycreate1, true);
+		echo $resbodycreate1;
+		var_dump($resbodycreate1);
+	}
+#curl -X POST -H "Content-Type: application/json" http://127.0.0.1:2375/containers/vanilla2/exec -d '{ "AttachStdin":false,"AttachStdout":true,"AttachStderr":true, "Tty":false, "Cmd":["/bin/date"] }'
+#
+#{"Id":"213f4f0abd592b302a6af43637f4422f6387b63a9759643b3e6024655099b298"}
+con="6eb28f25e2d98c8a4543fddd3617eeb01419540ffd0c5665c3c4caf475d0d8ad";
+url="http://localhost/exec/$con/start";
+curl -X POST -H "Content-Type: application/json" $url -d '{ "Detach":false,"Tty":false}'
