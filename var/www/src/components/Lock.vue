@@ -22,8 +22,7 @@
 </template>
 
 <script>
-import { oauth2 } from "@sexycoders/oauth2";
-import { unlock_oauth2 } from "@sexycoders/runtime";
+import $ from "jquery";
 
 export default {
   name: 'Lock',
@@ -44,7 +43,31 @@ export default {
   methods : {
     UNLOCK()
       {
-        unlock_oauth2();
+    var data=new Object();
+    data.username=($('form').serializeArray()[0].value);
+    data.password=($('form').serializeArray()[1].value);
+    data.grant_type='password';
+    data.command='token';
+      console.log(data);
+    var FORCE_AUTH=this.$store.force_auth;
+    var AUTH_TOKEN=this.$store.oauth_token;
+    $.ajax({
+        type: 'POST',
+        url: this.$store.get_token,
+        data: "grant_type=client_credentials&client_id="+data.username+
+            "&client_secret="+data.password,
+        success:
+        function(response,STORE)
+            {
+                var data=JSON.parse(response);
+                //console.log(data);
+                FORCE_AUTH=0;
+                AUTH_TOKEN=data.access_token;
+                console.log("obtained token "+data.access_token);
+                localStorage.setItem("oauth2_token",data.access_token);
+            },
+        async:false
+        });
       }
   }
 }

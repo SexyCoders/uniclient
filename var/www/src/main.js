@@ -12,20 +12,30 @@ import { createStore } from 'vuex'
 const store = createStore({
   state () {
     return {
-      NOAUTH: 0,
-      copyright:"",
-      title:"",
-      page_title:"",
-      customers:"",
-      pending_errors:"",
-      pending_errors_count:"",
-      page:"",
-      plants:"",
-      selection:null,
-      MechNames:"",
-      FONT:"NOT_LOADED",
+      //NOAUTH: 0,
+      //copyright:"",
+      //title:"",
+      //page_title:"",
+      //customers:"",
+      //pending_errors:"",
+      //pending_errors_count:"",
+      //page:"",
+      //plants:"",
+      //selection:null,
+      //MechNames:"",
+      //FONT:"NOT_LOADED",
+      datacenter:"",
+      get_token:"",
+      validate_token:"",
+      oauth_token:null,
+      force_auth:0,
     }
-  }
+  },
+   //mutations: {
+    //init (state) {
+      //state.data=new Object();
+      //}
+    //}
 })
 
 app.use(store);

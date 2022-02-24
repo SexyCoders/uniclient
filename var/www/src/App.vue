@@ -1,5 +1,5 @@
 <template>
-  <Lock v-if="this.$store.state.NOAUTH">
+  <Lock v-if="this.$store.force_auth">
   </Lock>
   <div id="main" v-else>
     <Header/>
@@ -16,8 +16,8 @@
 import $ from "jquery";
 import Lock from "../src/components/Lock.vue";
 import Main from "../src/Main.vue";
-import {SexyCodersObject} from '@sexycoders/runtime';
-import {AuthObject} from '@sexycoders/auth';
+//import {SexyCodersObject} from '@sexycoders/runtime';
+//import {AuthObject} from '@sexycoders/auth';
 import Header from "../src/components/Header.vue";
 import Menu from "../src/components/Menu.vue";
 
@@ -39,48 +39,67 @@ export default {
   },
   beforeUnmount() {
   },
+  beforeCreated()  {
+  },
   created()  {
-      window.__SCD=new SexyCodersObject();
-      if(window.__auth__==undefined)
-        window.__auth__=new AuthObject('oauth2');
-      var token=localStorage.getItem("oauth2_token");
-      if(token==null)
-        this.$store.state.NOAUTH=true;
-      else
-        {
-          window.__auth__.oauth2.token=token;
-          this.verifyToken();
-        }
+    this.initStore();
+    if(this.$store.oauth_token==null)
+      {
+        var t=localStorage.getItem("oauth2_token");
+        if(t!=null)
+          this.$store.oauth_token=t;
+      }
+    this.verifyToken();
+
+    console.log("setting auth watcher");
     setInterval(this.AuthWatcher,50);
   },
   methods : {
+    initStore(){
+      //this.$store.commit("init");
+      this.$store.get_token="https://oauth2.sexycoders.org/token";
+      this.$store.validate_token="https://oauth2.sexycoders.org/validate";
+      this.$store.oauth_token=null;
+      this.$store.force_auth=0;
+      this.$store.datacenter="https://data.sexycoders.org";
+      //console.log(JSON.stringify(this.$store.data));
+      },
     AuthWatcher()
       {
-        if(window.__auth_flag==true)
+        if(this.$store.oauth_token)
           {
-            this.$store.state.NOAUTH=false;
+            console.log("setting auth flag to false");
+            this.$store.state.force_auth=false;
           }
       },
     verifyToken()
       {
       $.ajax({
           type: 'POST',
-          url: window.__auth__.oauth2.validate,
-          data: "access_token="+window.__auth__.oauth2.token,
+          url: this.$store.validate_token,
+          data: "access_token="+this.$store.oauth_token,
           success:
           (response) =>
               {
+                console.log(response);
                 var data=JSON.parse(response);
-                if(data.active!=true)
-                  this.$store.state.NOAUTH=true;
+                if(data.success!=true)
+                  {
+                    this.$store.oauth_token=null;
+                    this.$store.force_auth=true;
+                  }
                 else
-                  console.log(data.message);
+                  {
+                    this.$store.force_auth=false;
+                    console.log(data.message);
+                  }
               },
           error:
           (response) =>
                 {
                     localStorage.removeItem("oauth2_token");
-                    this.$store.state.NOAUTH=true;
+                    this.$store.oauth_token=null;
+                    this.$store.force_auth=1;
                 },
             async:false
             });

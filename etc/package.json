@@ -15,7 +15,7 @@
   "dependencies": {
     "@ag-grid-community/client-side-row-model": "^26.0.0",
     "@ag-grid-community/vue3": "^26.0.0",
-    "@sexycoders/auth": "^1.5.0",
+    "@sexycoders/auth": "^1.6.0",
     "@sexycoders/libauth.js": "^2.0.0",
     "@sexycoders/runtime": "^2.1.0",
     "@sexycoders/time.js": "^1.3.0",
