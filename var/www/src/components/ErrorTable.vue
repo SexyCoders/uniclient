@@ -71,68 +71,72 @@ export default {
   mounted() {
     this.gridApi = this.gridOptions.api;
     this.gridColumnApi = this.gridOptions.columnApi;
+    this.getData();
   },
   methods: {
-    onFilterChanged() {
-    this.gridOptions.api.setQuickFilter(this.$data.filter);
-},
-    setTitle(title)
-      {
-        this.$store.page_title=title;
-      },
-    storeErrors(errors)
-      {
-        this.$store.pending_errors=errors;
-      },
-    onGridReady(params) {
-      const updateData = (dummy) => {
-        var table=new Array();
-        Object.values(this.$store.pending_errors).forEach((error) => {
-          var t=new Object();
-          t.ID=error.reg_id;
-          t.Plant=error.plant_id;
-          t.Type=error.Type;
-          t.Pos=error.Pos;
-          t.ErrorCode=error.ErrorCode;
-          var temp=new Time();
-          temp.fromString(error.ReportedDate);
-          t.Reported=temp.toStringf("dmys-","c",1);
-          t.ErrorNotes=error.ErrorNotes;
-          t.AssignedMech=error.AssignedMech;
-          t.stored=error.stored?"YES":"NO";
-          table.push(t);
-        });
-        params.api.setRowData(table);
-      };
-      
+    async getData(){
       $.ajax({
           type: 'POST',
-          url: window.__SCD.datacenter+"/get_pending_errors_all",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
+          url: this.$store.datacenter+"/get_pending_errors_all",
+          data: JSON.stringify([this.$store.oauth_token]),
           success:
         (response) =>
               {
                   var t=JSON.parse(response);
                   if(response=="NOAUTH")
                       {
-                          this.$store.state.NOAUTH=true;
+                          this.$store.force_auth=true;
+                          this.$store.oauth_token=null;
                           return;
                       }
-                  this.storeErrors(t);
-                  updateData();
+                  this.$store.data.pending_errors=Object.values(t);
+                  //console.log(this.$store.data.pending_errors);
+                  this.onGridReady();
               },
           async:false
           });
-
       },
+    onFilterChanged() {
+    this.gridOptions.api.setQuickFilter(this.$data.filter);
+      },
+    setTitle(title){
+        this.$store.page_title=title;
+      },
+    onGridReady(params) {
+      const updateData = (dummy) => {
+        var table=new Array();
+        this.$store.data.pending_errors.forEach((error) => {
+            var t=new Object();
+            t.ID=error.reg_id;
+            t.Plant=error.plant_id;
+            t.Type=error.Type;
+            t.Pos=error.Pos;
+            t.ErrorCode=error.ErrorCode;
+            var temp=new Time();
+            temp.fromString(error.ReportedDate);
+            t.Reported=temp.toStringf("dmys-","c",1);
+            t.ErrorNotes=error.ErrorNotes;
+            t.AssignedMech=error.AssignedMech;
+            t.stored=error.stored?"YES":"NO";
+            table.push(t);
+          });
+          try{
+          params.api.setRowData(table);
+          }
+          catch (e){
+            1==1;
+          }
+        };
+      updateData();
+    },
     onSelectionChanged() {
       var selectedRows = this.gridApi.getSelectedRows();
       //this.$store.selection=selectedRows[0].ID;
       //console.log(selectedRows);
-      var error=Object.values(this.$store.pending_errors).filter((error)=>error.reg_id==selectedRows[0].ID);
+      var error=Object.values(this.$store.data.pending_errors).filter((error)=>error.reg_id==selectedRows[0].ID);
       this.$store.selection=error[0];
-      console.log(this.$store.selection);
-      console.log(error);
+      //console.log(this.$store.selection);
+      //console.log(error);
       this.$router.push('resolveerror');
     },
     },

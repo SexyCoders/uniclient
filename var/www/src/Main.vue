@@ -19,9 +19,9 @@
         };
       },
       watch:{
-      $route (to, from){
-        this.getErrorCount();
-          }
+      //$route (to, from){
+      //  this.getErrorCount();
+      //    }
       },
 
       components: {
@@ -41,25 +41,6 @@
           },
         setErrorCount(count){
           this.$store.pending_errors_count=count;
-        },
-        getErrorCount(){
-          $.ajax({
-              type: 'POST',
-              url: window.__SCD.datacenter+"/get_pending_errors_count",
-              data: JSON.stringify([window.__auth__.oauth2.token]),
-              success:
-            (response) =>
-                  {
-                    var t=JSON.parse(response);
-                    if(response=="NOAUTH")
-                        {
-                            this.$store.state.NOAUTH=true;
-                            return;
-                        }
-                      this.setErrorCount(t.count);
-                  },
-              async:false
-              });
         },
         changeMenu(menu) {
           this.currentMenu = menu.replace(/ +/g, '').toLowerCase();
@@ -85,81 +66,48 @@
       created() {
         this.setTitle('UniClient');
         this.setCopyright('Developed by SexyCoders');
-        this.getErrorCount();
         this.$store.pdfMake=pdfMake;
         this.$store.pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-        function compare_customers(a, b) {
-          // Use toUpperCase() to ignore character casing
-          const CompA = a.Company.toUpperCase();
-          const CompB = b.Company.toUpperCase();
-
-          let comparison = 0;
-          if (CompA > CompB) {
-            comparison = 1;
-          } else if (CompA < CompB) {
-            comparison = -1;
-          }
-          return comparison;
-        }
 
 
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_customer_data_full",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-                  this.storeCustomers(Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=1).sort(compare_customers));
-                console.log(this.$store.Customers);
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_plant_data_full",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-        (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-                  this.storePlants(JSON.parse(response));
-              },
-          async:false
-          });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_mech_names",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-        (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-                  this.storeMechNames((JSON.parse(response)));
-              },
-          async:false
-          });
-        this.$store.FONT=window.font;
-        console.log(this.$store.FONT);
+//      $.ajax({
+//          type: 'POST',
+//          url: window.__SCD.datacenter+"/get_plant_data_full",
+//          data: JSON.stringify([window.__auth__.oauth2.token]),
+//          success:
+//        (response) =>
+//              {
+//                  var t=JSON.parse(response);
+//                  if(response=="NOAUTH")
+//                      {
+//                          this.$store.state.NOAUTH=true;
+//                          return;
+//                      }
+//                  this.storePlants(JSON.parse(response));
+//              },
+//          async:false
+//          });
+//
+//      $.ajax({
+//          type: 'POST',
+//          url: window.__SCD.datacenter+"/get_mech_names",
+//          data: JSON.stringify([window.__auth__.oauth2.token]),
+//          success:
+//        (response) =>
+//              {
+//                  var t=JSON.parse(response);
+//                  if(response=="NOAUTH")
+//                      {
+//                          this.$store.state.NOAUTH=true;
+//                          return;
+//                      }
+//                  this.storeMechNames((JSON.parse(response)));
+//              },
+//          async:false
+//          });
+//        this.$store.FONT=window.font;
+//        console.log(this.$store.FONT);
       }
 
     };

@@ -1,7 +1,7 @@
 <?php
 function auth($token) {
         //The url you wish to send the POST request to
-        $url = "https://oauth2.sexycoders.org/validate.php";
+        $url = "https://oauth2.sexycoders.org/validate";
 
         //The data you want to send via POST
         $fields = [
@@ -30,7 +30,7 @@ function auth($token) {
         //execute post
         $result = curl_exec($ch);
         $result=json_decode($result);
-        if($result->active==true)
+        if($result->success==true)
             return 0;
         else
             return 1;

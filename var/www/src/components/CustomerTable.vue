@@ -65,45 +65,72 @@ export default {
   mounted() {
     this.gridApi = this.gridOptions.api;
     this.gridColumnApi = this.gridOptions.columnApi;
-    this.check();
+    this.getData();
   },
   methods: {
     onFilterChanged() {
-    this.gridOptions.api.setQuickFilter(this.$data.filter);
-},
-    check()
-      {
-//      $.ajax({
-//          type: 'POST',
-//          url: window.__SCD.datacenter+"/get_pending_errors_all",
-//          data: "",
-//          success:
-//          (response) =>
-//              {
-//                console.log(response);
-//              },
-//            async:false
-//            });
+        this.gridOptions.api.setQuickFilter(this.$data.filter);
       },
-    setTitle(title)
-      {
+    setTitle(title){
         this.$store.page_title=title;
       },
     onGridReady(params) {
-      const updateData = (dummy) => {
-        params.api.setRowData(Object.values(this.$store.customers));
-      };
-      updateData();
+        const updateData = (dummy) => {
+          try{
+          params.api.setRowData(Object.values(this.$store.data.customers));
+          }
+          catch (e){
+            1==1;
+          }
+        };
+        updateData();
       },
     onSelectionChanged() {
       var selectedRows = this.gridApi.getSelectedRows();
       //this.$store.selection=selectedRows[0].ID;
       //console.log(selectedRows);
-      var customer=this.$store.customers.filter((customer)=>customer.ID==selectedRows[0].ID);
+      var customer=this.$store.data.customers.filter((customer)=>customer.ID==selectedRows[0].ID);
       this.$store.selection=customer[0];
       console.log(JSON.stringify(this.$store.selection));
       this.$router.push('customerprofile');
-    },
+      },
+      compare_customers(a, b) {
+          // Use toUpperCase() to ignore character casing
+          const CompA = a.Company.toUpperCase();
+          const CompB = b.Company.toUpperCase();
+
+          let comparison = 0;
+          if (CompA > CompB) {
+            comparison = 1;
+          } else if (CompA < CompB) {
+            comparison = -1;
+          }
+          return comparison;
+        },
+
+    getData(){
+      $.ajax({
+          type: 'POST',
+          url: this.$store.datacenter+"/get_customer_data_full",
+          data: JSON.stringify([this.$store.oauth_token]),
+          success:
+          (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.force_auth=true;
+                          this.$store.oauth_token=null;
+                          return;
+                      }
+                  //this.storeCustomers(Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=1).sort(this.compare_customers));
+                  this.$store.data.customers=Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=1).sort(this.compare_customers);
+                //console.log(this.$store.Customers);
+                this.onGridReady();
+              },
+        async:false
+            });
+      }
     },
   created()
     {

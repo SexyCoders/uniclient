@@ -64,7 +64,7 @@
         this.$data.links.push(["Customers","/customers"]);
         this.$data.links.push(["Plants","/plants"]);
         this.$data.links.push(["Errors","/errors"]);
-        console.log(JSON.stringify(this.$data.links));
+        //console.log(JSON.stringify(this.$data.links));
       }
     };
 </script>

@@ -66,11 +66,33 @@ export default {
   mounted() {
     this.gridApi = this.gridOptions.api;
     this.gridColumnApi = this.gridOptions.columnApi;
+    this.getData();
   },
   methods: {
     onFilterChanged() {
     this.gridOptions.api.setQuickFilter(this.$data.filter);
-},
+    },
+    getData(){
+      $.ajax({
+          type: 'POST',
+          url: this.$store.datacenter+"/get_plant_data_full",
+          data: JSON.stringify([this.$store.oauth_token]),
+          success:
+        (response) =>
+              {
+                  var t=JSON.parse(response);
+                  if(response=="NOAUTH")
+                      {
+                          this.$store.state.force_auth=true;
+                          return;
+                      }
+                  this.$store.data.plants=t;
+                  //console.log(t);
+                  this.onGridReady();
+              },
+          async:false
+          });
+    },
     setTitle(title)
       {
         this.$store.page_title=title;
@@ -78,8 +100,8 @@ export default {
     onGridReady(params) {
       const updateData = (dummy) => {
         var table=new Array();
-        Object.values(this.$store.plants).forEach((value) => {
-          console.log(JSON.stringify(value));
+        Object.values(this.$store.data.plants).forEach((value) => {
+          //console.log(JSON.stringify(value));
           var t=new Object();
           t.ID=value.ID;
           t.Power=value.Power;
@@ -104,7 +126,12 @@ export default {
           table.push(t);
           //console.log(JSON.stringify(t));
         });
-        params.api.setRowData(table);
+          try{
+          params.api.setRowData(table);
+          }
+          catch (e){
+            1==1;
+          }
       };
       updateData();
       
@@ -113,9 +140,9 @@ export default {
       var selectedRows = this.gridApi.getSelectedRows();
       //this.$store.selection=selectedRows[0].ID;
       //console.log(selectedRows);
-      var plant=Object.values(this.$store.plants).filter((plant)=>plant.ID==selectedRows[0].ID);
+      var plant=Object.values(this.$store.data.plants).filter((plant)=>plant.ID==selectedRows[0].ID);
       this.$store.selection=plant[0];
-      console.log(JSON.stringify(this.$store.selection));
+      //console.log(JSON.stringify(this.$store.selection));
       this.$router.push('plantprofile');
     },
     },

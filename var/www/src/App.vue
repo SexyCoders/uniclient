@@ -62,18 +62,20 @@ export default {
       this.$store.oauth_token=null;
       this.$store.force_auth=0;
       this.$store.datacenter="https://data.sexycoders.org";
+      this.$store.data={};
       //console.log(JSON.stringify(this.$store.data));
       },
     AuthWatcher()
       {
         if(this.$store.oauth_token)
           {
-            console.log("setting auth flag to false");
+            console.log("testing auth trigger");
             this.$store.state.force_auth=false;
           }
       },
     verifyToken()
       {
+        console.log("Using token "+this.$store.oauth_token);
       $.ajax({
           type: 'POST',
           url: this.$store.validate_token,
@@ -81,7 +83,7 @@ export default {
           success:
           (response) =>
               {
-                console.log(response);
+                //console.log(response);
                 var data=JSON.parse(response);
                 if(data.success!=true)
                   {
