@@ -113,12 +113,12 @@ export default {
 					send.MechNotes=this.$data.Notes;
 					var senddata = {};
 					senddata.data=send;
-					senddata.token=window.__auth__.oauth2.token;
+					senddata.token=this.$store.oauth_token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
 					$.ajax({
 						type: 'POST',
-						url: window.__SCD.datacenter+"/temp_error",
+						url: this.$store.datacenter+"/temp_error",
 						data:senddata, 
 						success:
 						(response) =>
@@ -126,7 +126,7 @@ export default {
                                 var t=JSON.parse(response);
                                 if(response=="NOAUTH")
                                     {
-                                        this.$store.state.NOAUTH=true;
+                                        this.$store.state.force_auth=true;
                                         return;
                                     }
 								else
@@ -145,18 +145,12 @@ export default {
 					send.MechNotes=this.$data.Notes;
 					var senddata = {};
 					senddata.data=send;
-					senddata.token=window.__auth__.oauth2.token;
+					senddata.token=this.$store.oauth_token;
 					senddata=JSON.stringify(Object.values(senddata));
 					console.log(senddata);
-					//this.$data.ID=this.$store.selection.reg_id;
-					//var senddata = Object.assign({},this.$data);
-					//senddata.stored=this.$store.selection.stored;
-					//senddata.token=window.__auth__.oauth2.token;
-					//senddata=JSON.stringify(Object.values(senddata));
-					//console.log(senddata);
 					$.ajax({
 						type: 'POST',
-						url: window.__SCD.datacenter+"/resolve_error",
+						url: this.$store.datacenter+"/resolve_error",
 						data:senddata, 
 						success:
 						(response) =>
@@ -164,7 +158,7 @@ export default {
                                 var t=JSON.parse(response);
                                 if(response=="NOAUTH")
                                     {
-                                        this.$store.state.NOAUTH=true;
+                                        this.$store.force_auth=true;
                                         return;
                                     }
 								else
@@ -186,11 +180,11 @@ export default {
 					this.$data.Notes=this.$store.selection.MechNotes;
 					var senddata={};
 					senddata.id=this.$store.selection.reg_id;
-					senddata.token=window.__auth__.oauth2.token;
+					senddata.token=this.$store.oauth_token;
 					senddata=JSON.stringify(Object.values(senddata));
 					$.ajax({
 						type: 'POST',
-						url: window.__SCD.datacenter+"/get_resolved_date",
+						url: this.$store.datacenter+"/get_resolved_date",
 						data:senddata, 
 						success:
 						(response) =>
@@ -198,7 +192,7 @@ export default {
                                 var t=JSON.parse(response);
                                 if(response=="NOAUTH")
                                     {
-                                        this.$store.state.NOAUTH=true;
+                                        this.$store.state.force_auth=true;
                                         return;
                                     }
 								else

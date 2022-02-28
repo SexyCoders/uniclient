@@ -57,7 +57,7 @@
 									<div class="form-group">
 										<span class="form-label">AssignedMech</span>
 										<select class="form-control" v-model="AssignedMech">
-											<option v-for="mech in this.$store.MechNames" :value=mech> {{mech}}</option>
+											<option v-for="mech in this.$store.data.MechNames" :value=mech> {{mech}}</option>
 										</select>
 										<span class="select-arrow"></span>
 									</div>
@@ -99,13 +99,34 @@ export default {
         },
     mounted() {
 		this.getPlantIdTable();
+		this.getMechNames();
     },
     methods: 
 		{
+			getMechNames()
+				{
+					$.ajax({
+						type: 'POST',
+						url: this.$store.datacenter+"/get_mech_names",
+						data: JSON.stringify([this.$store.oauth_token]),
+						success:
+						(response) =>
+							{
+								var t=JSON.parse(response);
+								if(response=="NOAUTH")
+									{
+										this.$store.state.force_auth=true;
+										return;
+									}
+								this.$store.data.MechNames=JSON.parse(response);
+							},
+						async:false
+						});
+				},
 			getPlantIdTable()
 				{
-					console.log(this.$store.plants);
-					Object.values(this.$store.plants).forEach((value) => {
+					console.log(this.$store.data.plants);
+					Object.values(this.$store.data.plants).forEach((value) => {
 						this.$data.PlantTable.push(value.ID);
 					});
 					console.log(this.$data.PlantTable);
@@ -116,12 +137,12 @@ export default {
 					if(senddata.Plant=="" || senddata.Pos=="" || senddata.ErrorNotes=="" || senddata.AssignedMech=="")
 						alert("Please fill in all the required fields!!!");
 					delete senddata.PlantTable;
-					senddata.token=window.__auth__.oauth2.token;
+					senddata.token=this.$store.oauth_token;
 					senddata=JSON.stringify(senddata);
 					console.log(senddata);
 					$.ajax({
 						type: 'POST',
-						url: window.__SCD.datacenter+"/new_error",
+						url: this.$store.datacenter+"/new_error",
 						data:senddata, 
 						success:
 						(response) =>
@@ -129,7 +150,7 @@ export default {
 								var t=JSON.parse(response);
                                 if(response=="NOAUTH")
                                     {
-                                        this.$store.NOAUTH=1;
+                                        this.$store.force_auth=1;
                                         return;
                                     }
 								else
