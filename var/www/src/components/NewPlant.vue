@@ -1,5 +1,5 @@
 <template>
-    <div id="booking" class="section" style="height:600px">
+    <div id="booking" class="section" style="height:90vh">
 	<h3>{{$store.page_title}}</h3>
 		<div class="section-center">
 			<div class="container">
@@ -7,7 +7,7 @@
 					<div class="booking-form">
 						<form>
 							<div class="row">
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">ID</span>
 										<input class="form-control" type="text" placeholder="plant id (text)" v-model="ID" required="">
@@ -19,53 +19,151 @@
 										<input class="form-control" type="text" placeholder="power in kW" v-model="Power" required="">
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="form-group">
 										<span class="form-label">Owner</span>
 										<select class="form-control" v-model="Owner">
-											<option v-for="customer in this.$store.customers" :value=customer> {{customer.Company}}</option>
-										</select>
-									</div>
-								</div>
-								<div class="col-md-2">
-									<div class="form-group">
-										<span class="form-label">Type</span>
-										<select class="form-control" v-model="Type">
-											<option>Tracker</option>
-											<option>Inverter</option>
-											<option>Other (Please Comment!)</option>
+											<option v-for="customer in this.$store.data.customers" :value=customer> {{customer.Company}}</option>
 										</select>
 										<span class="select-arrow"></span>
 									</div>
 								</div>
-								<div class="col-md-2">
+								<div class="col-md-4">
 									<div class="form-group">
-										<span class="form-label">Error Code</span>
-										<input class="form-control" type="text" placeholder="text(optional)" v-model="ErrorCode">
-									</div>
-								</div>
-							</div>
-							<div class="row">
-								<div class="col-md-9">
-									<div class="form-group">
-										<span class="form-label">Error Notes</span>
-										<input class="form-control" type="text" placeholder="text" v-model="ErrorNotes" required="">
-									</div>
-								</div>
-								<div class="col-md-3">
-									<div class="form-group">
-										<span class="form-label">AssignedMech</span>
-										<select class="form-control" v-model="AssignedMech">
-											<option v-for="mech in this.$store.MechNames" :value=mech> {{mech}}</option>
+										<span class="form-label">County</span>
+										<select class="form-control" v-model="County">
+											<option v-for="county in this.$data.Counties" :value=county> {{county}}</option>
 										</select>
 										<span class="select-arrow"></span>
 									</div>
 								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Borough</span>
+										<input class="form-control" type="text" placeholder="borough (text)" v-model="Borough" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Location</span>
+										<input class="form-control" type="text" placeholder="location (text)" v-model="Location" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Area</span>
+										<input class="form-control" type="number" placeholder="area (number)" v-model="Area" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">No of Panels</span>
+										<input class="form-control" type="number" placeholder="Number of panels (number)" v-model="NPanels" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Panel</span>
+										<select class="form-control" v-model="Panel">
+											<option v-for="panel in this.$data.Panels" :value=panel> {{panel}}</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Strings</span>
+										<input class="form-control" type="text" placeholder="strings (text)" v-model="Strings" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Mounter</span>
+										<select class="form-control" v-model="Mounter">
+											<option v-for="mounter in this.$data.Mounters" :value=mounter> {{mounter}}</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Inverter</span>
+										<select class="form-control" v-model="Mounter">
+											<option v-for="inverter in this.$data.Inverters" :value=inverter> {{inverter}}</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Circuit Board</span>
+										<select class="form-control" v-model="CBoard">
+											<option v-for="cboard in this.$data.Cboards" :value=cboard> {{cboard}}</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Constructor</span>
+										<select class="form-control" v-model="Constructor">
+											<option v-for="constructor in this.$data.Constructors" :value=constructor> {{constructor}}</option>
+										</select>
+										<span class="select-arrow"></span>
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Connection Number</span>
+										<input class="form-control" type="number" placeholder="Connectino Numbmer (number)" v-model="ConnNumber" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Connection Date</span>
+										<input class="form-control" type="date" placeholder="Connectino Date (date)" v-model="ConnDate" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Tracker Begin Date</span>
+										<input class="form-control" type="date" placeholder="Tracker Begin Date (date)" v-model="TrackBegin" required="">
+									</div>
+								</div>
+								<div class="col-md-4">
+									<div class="form-group">
+										<span class="form-label">Selling Price</span>
+										<input class="form-control" type="number" placeholder="Selling Price (number)" v-model="Price" required="">
+									</div>
+								</div>
+								<!--<div class="col-md-2">-->
+									<!--<div class="form-group">-->
+										<!--<span class="form-label">Error Code</span>-->
+										<!--<input class="form-control" type="text" placeholder="text(optional)" v-model="ErrorCode">-->
+									<!--</div>-->
+								<!--</div>-->
+							<!--</div>-->
+							<!--<div class="row">-->
+								<!--<div class="col-md-9">-->
+									<!--<div class="form-group">-->
+										<!--<span class="form-label">Error Notes</span>-->
+										<!--<input class="form-control" type="text" placeholder="text" v-model="ErrorNotes" required="">-->
+									<!--</div>-->
+								<!--</div>-->
+								<!--<div class="col-md-3">-->
+									<!--<div class="form-group">-->
+										<!--<span class="form-label">AssignedMech</span>-->
+										<!--<select class="form-control" v-model="AssignedMech">-->
+											<!--<option v-for="mech in this.$store.MechNames" :value=mech> {{mech}}</option>-->
+										<!--</select>-->
+										<!--<span class="select-arrow"></span>-->
+									<!--</div>-->
+								<!--</div>-->
 							</div>
 							<div class="row">
 								<div class="col-md-3">
 									<div class="form-btn">
-										<button type="button" class="submit-btn" @click='NewError();'>save</button>
+										<button type="button" class="submit-btn" @click='NewPlant();'>save</button>
 									</div>
 								</div>
 							</div>
@@ -89,16 +187,38 @@ export default {
 			Mounters:"",
 			Inverters:"",
 			Cboards:"",
-			Constructors:""
+			Constructors:"",
+			toReturn:{}
 		}
   },
     computed()
         {
         },
     mounted() {
+		this.getConstructorCompanies();
+		this.getCountyNames();
+		this.getInverterModels();
+		this.getCboardModels();
+		this.getPanelModels();
+		this.getMounterNames();
+		this.getCustomerData();
     },
     methods: 
 		{
+			compare_customers(a, b) {
+				// Use toUpperCase() to ignore character casing
+				const CompA = a.Company.toUpperCase();
+				const CompB = b.Company.toUpperCase();
+
+				let comparison = 0;
+				if (CompA > CompB) {
+					comparison = 1;
+				} else if (CompA < CompB) {
+					comparison = -1;
+				}
+				return comparison;
+				},
+
 			setTitle(title)
 				{
 					this.$store.page_title=title;
@@ -127,124 +247,155 @@ export default {
 				{
 					this.$data.Constructors=t;
 				},
+			getCustomerData(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_customer_data_full",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.force_auth=true;
+									this.$store.oauth_token=null;
+									return;
+								}
+							//this.storeCustomers(Object.values(JSON.parse(response)).filter((customer)=>customer.ID!=1).sort(this.compare_customers));
+							this.$store.data.customers=t.filter((customer)=>customer.ID!=1).sort(this.compare_customers);
+							//console.log(this.$store.Customers);
+							//this.onGridReady();
+						},
+					async:false
+					});
+				},
+			getCountyNames(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_county_names",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.state.force_auth=true;
+									return;
+								}
+							this.storeCounties(t.filter((county)=>county!='dummy').sort());
+							//console.log(this.$data.Counties);
+						},
+						async:false
+						});
+			},
+			getMounterNames(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_mounter_names",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.state.force_auth=true;
+									return;
+								}
+							this.storeMounters(t.filter((mounter)=>mounter!='dummy').sort());
+							//console.log(this.$data.Mounters);
+						},
+						async:false
+						});
+			},
+			getPanelModels(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_panel_models",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.state.force_auth=true;
+									return;
+								}
+							this.storePanels(t.filter((panel)=>panel!='DUMMY').sort());
+							//console.log(this.$data.Panels);
+						},
+						async:false
+						});
+			},
+			getCboardModels(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_cboard_models",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.state.force_auth=true;
+									return;
+								}
+							this.storeCboards(t.filter((cboard)=>cboard!='DUMMY').sort());
+							//console.log(this.$data.Cboards);
+						},
+						async:false
+						});
+			},
+			getInverterModels(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_inverter_models",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.state.force_auth=true;
+									return;
+								}
+							this.storeInverters(t.filter((inverter)=>inverter!='DUMMY').sort());
+							//console.log(this.$data.Inverters);
+						},
+						async:false
+						});
+			},
+			getConstructorCompanies(){
+				$.ajax({
+					type: 'POST',
+					url: this.$store.datacenter+"/get_constructor_companies",
+					data: JSON.stringify([this.$store.oauth_token]),
+					success:
+					(response) =>
+						{
+							var t=JSON.parse(atob(response));
+							if(response=="NOAUTH")
+								{
+									this.$store.state.force_auth=true;
+									return;
+								}
+							this.storeConstructors(t.filter((constructor)=>constructor!='DUMMY').sort());
+							//console.log(this.$data.Constructors);
+						},
+						async:false
+						});
+			},
+			NewPlant(){
+			},
         },
      created()
         {
 			this.setTitle("new Plant");
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_county_names",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-                  this.storeCounties(Object.values(JSON.parse(response))[0].filter((county)=>county!='dummy').sort());
-				  console.log(this.$data.Counties);
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_mounter_names",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-                  this.storeMounters(Object.values(JSON.parse(response))[0].filter((mounter)=>mounter!='dummy').sort());
-				  console.log(this.$data.Mounters);
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_panel_models",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-				  this.storePanels(Object.values(JSON.parse(response))[0].filter((panel)=>panel!='DUMMY').sort());
-				  console.log(this.$data.Panels);
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_cboard_models",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-				  this.storeCboards(Object.values(JSON.parse(response))[0].filter((cboard)=>cboard!='DUMMY').sort());
-				  console.log(this.$data.Cboards);
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_inverter_models",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-				  this.storeInverters(Object.values(JSON.parse(response))[0].filter((inverter)=>inverter!='DUMMY').sort());
-				  console.log(this.$data.Inverters);
-              },
-            async:false
-            });
-
-      $.ajax({
-          type: 'POST',
-          url: window.__SCD.datacenter+"/get_constructor_companies",
-          data: JSON.stringify([window.__auth__.oauth2.token]),
-          success:
-          (response) =>
-              {
-                  var t=JSON.parse(response);
-                  if(response=="NOAUTH")
-                      {
-                          this.$store.state.NOAUTH=true;
-                          return;
-                      }
-				  this.storeConstructors(Object.values(JSON.parse(response))[0].filter((constructor)=>constructor!='DUMMY').sort());
-				  console.log(this.$data.Constructors);
-              },
-            async:false
-            });
         }
 };
 </script>

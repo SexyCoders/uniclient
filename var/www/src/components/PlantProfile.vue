@@ -121,11 +121,11 @@ export default {
             {
                     var tmp=new Array();
                     tmp.push(this.$store.selection.ID);
-                    tmp.push(window.__auth__.oauth2.token);
+                    tmp.push(this.$store.oauth_token);
                     tmp=JSON.stringify(tmp);
 					$.ajax({
 						type: 'POST',
-						url: window.__SCD.datacenter+"/get_plant_log",
+						url: this.$store.datacenter+"/get_plant_log",
 						data:tmp, 
 						success:
 						(response) =>
@@ -133,7 +133,7 @@ export default {
                                 var t=JSON.parse(response);
                                 if(response=="NOAUTH")
                                     {
-                                        this.$store.state.NOAUTH=true;
+                                        this.$store.state.force_auth=true;
                                         return;
                                     }
                                 var tmp=JSON.parse(response);

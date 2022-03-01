@@ -1,5 +1,5 @@
 <template>
-    <div id="booking" class="section" style="height:600px">
+    <div id="booking" class="section" style="height:90vh">
 	<h3>{{$store.page_title}}</h3>
 		<div class="section-center">
 			<div class="container">

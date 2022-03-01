@@ -38,7 +38,7 @@ $app->post('/get_customer_data_full',function(Request $request,Response $respons
             $t="NOAUTH";
         else
             $t = $pdo_microsun->query("SELECT ID,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
-        $response->getBody()->write(json_encode($t));
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->post('/get_plant_data_full',function(Request $request,Response $response) use($pdo_microsun){
@@ -233,7 +233,6 @@ $app->post('/get_plant_log',function(Request $request,Response $response) use($p
                 $stmt = $pdo_microsun->prepare("SELECT * FROM error_log where PLANT=? ORDER BY ID DESC LIMIT 30;");
                 $res=array();
                 $stmt->execute([$t[0]]);
-                $t = $stmt->fetch();
                 while ($row = $stmt->fetch()) {
                     array_push($res,$row); 
                 }
@@ -247,59 +246,101 @@ $app->post('/get_county_names',function(Request $request,Response $response) use
         $t=json_decode($t);
         if(auth(end($t)))
             $t="NOAUTH";
-        else
-            $t= $pdo_microsun->query("select name from counties") -> fetchAll();
-        $response->getBody()->write(json_encode($t[0]["NAME"]));
+        else {
+            $stmt= $pdo_microsun->prepare("select name from counties");
+            $res=array();
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                array_push($res,$row['NAME']); 
+            }
+            $t=$res;
+        }
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->post('/get_mounter_names',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
-        else
-            $k=get_mounter_names();
-        $response->getBody()->write(json_encode($k));
+            $t="NOAUTH";
+        else {
+            $stmt= $pdo_microsun->prepare("select name from mounters");
+            $res=array();
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                array_push($res,$row['name']); 
+            }
+            $t=$res;
+        }
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->post('/get_panel_models',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
-        else
-            $k=get_panel_models();
-        $response->getBody()->write(json_encode($k));
+            $t="NOAUTH";
+        else {
+            $stmt= $pdo_microsun->prepare("select model from panels");
+            $res=array();
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                array_push($res,$row['model']); 
+            }
+            $t=$res;
+        }
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->post('/get_cboard_models',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
-        else
-            $k=get_cboard_models();
-        $response->getBody()->write(json_encode($k));
+            $t="NOAUTH";
+        else {
+            $stmt= $pdo_microsun->prepare("select model from cboards");
+            $res=array();
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                array_push($res,$row['model']); 
+            }
+            $t=$res;
+        }
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->post('/get_inverter_models',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
-        else
-            $k=get_inverter_models();
-        $response->getBody()->write(json_encode($k));
+            $t="NOAUTH";
+        else {
+            $stmt= $pdo_microsun->prepare("select type from inverters");
+            $res=array();
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                array_push($res,$row['type']); 
+            }
+            $t=$res;
+        }
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->post('/get_constructor_companies',function(Request $request,Response $response) use($pdo_microsun){
         $t=$request->getBody();
         $t=json_decode($t);
         if(auth(end($t)))
-            $k="NOAUTH";
-        else
-            $k=get_constructor_companies();
-        $response->getBody()->write(json_encode($k));
+            $t="NOAUTH";
+        else {
+            $stmt= $pdo_microsun->prepare("select company from constructors");
+            $res=array();
+            $stmt->execute();
+            while ($row = $stmt->fetch()) {
+                array_push($res,$row['company']); 
+            }
+            $t=$res;
+        }
+        $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
 $app->run();
