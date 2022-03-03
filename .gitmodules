@@ -1,6 +1,3 @@
-[submodule "local/lib/sexycoders.js"]
-	path = local/lib/sexycoders.js
-	url = git@gitlab.com:sexycoders/sexycoders.js.git
 [submodule "local/lib/time.php"]
 	path = local/lib/time.php
-	url = git@git.sexycoders.org:SexyCoders/time.php.git
+	url = https://git.sexycoders.org/SexyCoders/time.php.git
