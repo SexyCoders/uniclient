@@ -3,9 +3,8 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 
 require '../vendor/autoload.php';
-require '../../../local/src/php/microsun.php';
 require '../src/auth.php';
-require '../../../local/lib/time.php/my_time.php';
+require '../src/my_time.php';
 
 $filename='/etc/uniclient/passwd';
 $handle = fopen($filename, "r");
@@ -18,7 +17,7 @@ $pdo_microsun = new \pdo(
     \pdo::ATTR_ERRMODE            => \pdo::ERRMODE_EXCEPTION,
     \pdo::ATTR_DEFAULT_FETCH_MODE => \pdo::FETCH_ASSOC,
     \pdo::ATTR_EMULATE_PREPARES   => false,
-]); 
+]);
 $app = new \Slim\App;
 $app->add(new \Eko3alpha\Slim\Middleware\CorsMiddleware([
     'https://oauth2.sexycoders.org' => ['POST'],
@@ -66,7 +65,7 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
                                                 condate as ConnectionDate,
                                                 trackbegin as TrackerBegin,
                                                 price as SellPrice
-                                                from 
+                                                from
                                                 plants,
                                                 panels,
                                                 mounters,
@@ -74,11 +73,11 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
                                                 cboards,
                                                 constructors,
                                                 counties,
-                                                customers  
-                                                where 
-                                                panel=panels.id and 
-                                                mounting=mounters.id and 
-                                                inverter=inverters.id and 
+                                                customers
+                                                where
+                                                panel=panels.id and
+                                                mounting=mounters.id and
+                                                inverter=inverters.id and
                                                 constructor=constructors.id and
                                                 counties.id=county and
                                                 cboards.id=cboard and
@@ -87,7 +86,7 @@ $app->post('/get_plant_data_full',function(Request $request,Response $response) 
                 $res=array();
                 $stmt->execute([]);
                 while ($row = $stmt->fetch()) {
-                    array_push($res,$row); 
+                    array_push($res,$row);
                 }
                 $t=$res;
             }
@@ -154,7 +153,7 @@ $app->post('/temp_error',function(Request $request,Response $response) use($pdo_
                 unset($t->stored);
                 $id_keep=$t->reg_id;
                 $t->ResolvedDate=$date_tmp->toString();
-                $t=storeError($t,"temp_stored_errors",$pdo_microsun); 
+                $t=storeError($t,"temp_stored_errors",$pdo_microsun);
                 $stmt = $pdo_microsun->prepare("update pending_errors set stored=1 where ID=?");
                 $stmt->execute([$id_keep]);
             }
@@ -191,7 +190,7 @@ $app->post('/resolve_error',function(Request $request,Response $response) use($p
         $t=json_decode($t);
         if(auth(end($t)))
             $t="NOAUTH";
-        else 
+        else
             {
                 $date_tmp=new Time();
                 $date_tmp->getTime();
@@ -199,7 +198,7 @@ $app->post('/resolve_error',function(Request $request,Response $response) use($p
                 unset($t->stored);
                 $id_keep=$t->reg_id;
                 $t->ResolvedDate=$date_tmp->toString();
-                $t=storeError($t,"error_log",$pdo_microsun); 
+                $t=storeError($t,"error_log",$pdo_microsun);
                 $stmt = $pdo_microsun->prepare("delete from pending_errors where ID=?");
                 $stmt->execute([$id_keep]);
                 $stmt = $pdo_microsun->prepare("delete from temp_stored_errors where ID=?");
@@ -234,7 +233,7 @@ $app->post('/get_plant_log',function(Request $request,Response $response) use($p
                 $res=array();
                 $stmt->execute([$t[0]]);
                 while ($row = $stmt->fetch()) {
-                    array_push($res,$row); 
+                    array_push($res,$row);
                 }
                 $t=$res;
             }
@@ -251,7 +250,7 @@ $app->post('/get_county_names',function(Request $request,Response $response) use
             $res=array();
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                array_push($res,$row['NAME']); 
+                array_push($res,$row['NAME']);
             }
             $t=$res;
         }
@@ -268,7 +267,7 @@ $app->post('/get_mounter_names',function(Request $request,Response $response) us
             $res=array();
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                array_push($res,$row['name']); 
+                array_push($res,$row['name']);
             }
             $t=$res;
         }
@@ -285,7 +284,7 @@ $app->post('/get_panel_models',function(Request $request,Response $response) use
             $res=array();
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                array_push($res,$row['model']); 
+                array_push($res,$row['model']);
             }
             $t=$res;
         }
@@ -302,7 +301,7 @@ $app->post('/get_cboard_models',function(Request $request,Response $response) us
             $res=array();
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                array_push($res,$row['model']); 
+                array_push($res,$row['model']);
             }
             $t=$res;
         }
@@ -319,7 +318,7 @@ $app->post('/get_inverter_models',function(Request $request,Response $response) 
             $res=array();
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                array_push($res,$row['type']); 
+                array_push($res,$row['type']);
             }
             $t=$res;
         }
@@ -336,7 +335,7 @@ $app->post('/get_constructor_companies',function(Request $request,Response $resp
             $res=array();
             $stmt->execute();
             while ($row = $stmt->fetch()) {
-                array_push($res,$row['company']); 
+                array_push($res,$row['company']);
             }
             $t=$res;
         }
@@ -344,4 +343,3 @@ $app->post('/get_constructor_companies',function(Request $request,Response $resp
         return $response;
     });
 $app->run();
-
