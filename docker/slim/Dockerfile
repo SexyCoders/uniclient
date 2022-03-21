@@ -1,23 +1,26 @@
-FROM debian:buster
+FROM debian:bullseye
 
 WORKDIR /data
 
-COPY ./public/ ./public/
-COPY ./src/ .
-COPY ./composer.json .
-COPY ./apache2.conf /etc/apache2/sites-available/my-site.conf
-COPY ./init.sh /
+EXPOSE 80
 
-RUN apt update && apt install -y composer apache2 && composer install && a2ensite my-site
-RUN service apache2 start
+COPY . .
+#COPY ./public/ ./public/
+#COPY ./src/ .
+#COPY ./composer.json .
+#COPY ./apache2.conf /etc/apache2/sites-available/my-site.conf
+#COPY ./init.sh /
 
-# CMD ["service", "apache2", "start"]
-# CMD ["tail", "-f", "/dev/null"]
-CMD ["/init.sh"]
+RUN apt-get update \ 
+&& apt-get install -y composer apache2 \
+&& apt-get clean \
+&& composer install \
+&& mv ./apache2.conf /etc/apache2/sites-available/my-site.conf \
+&& a2dissite 000-default \
+&& a2ensite my-site \
+&& a2enmod rewrite \
+&& a2enmod headers \
+&& service apache2 restart
 
-# --volume /var/lib/lib:/var/lib/lib \
-#                        --volume /var/lib/datacenter:/data \
-#                        --volume /var/lib/phpcpp:/phpcpp \
-#                        --volume /var/lib/uniclient_src:/uniclient \
-#                        --volume /etc/uniclient/:/etc/uniclient \
-#                        --volume /etc/sexycoders/keys/datacenter/:/root/.ssh/ \
+CMD ["apachectl","-D","FOREGROUND"]
+
