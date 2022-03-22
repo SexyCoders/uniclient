@@ -1,0 +1,60 @@
+version: '3.7'
+
+services:
+  system-data:
+    image: mariadb:10.3
+    container_name: system-data
+    volumes:
+      - /data/sys/system-data/data:/var/lib/mysql
+      - /data/sys/system-data/config:/etc/mysql
+    environment: 
+      MARIADB_ROOT_PASSWORD: mypass      
+    expose:
+      - 3306
+    networks:
+      - master
+  mail-data:
+    image: mariadb:10.3
+    container_name: mail-data
+    volumes:
+      - /data/sys/mail/database:/var/lib/mysql
+    environment: 
+      MARIADB_ROOT_PASSWORD: mypass      
+    expose:
+      - 3306
+    networks:
+      - master
+  database:
+    image: mariadb:10.3
+    container_name: database
+    volumes:
+      - /data/sys/datacenter/data:/var/lib/mysql
+      - /data/sys/datacenter/config:/etc/mysql
+    environment: 
+      MARIADB_ROOT_PASSWORD: mypass      
+    expose:
+      - 3306
+    networks:
+      - master
+  user-token-store:
+    image: redis:6.2-alpine
+    container_name: user-token-store
+    volumes:
+      - /data/sys/user-token-store/data:/data
+    expose:
+      - 6379
+    networks:
+      - master
+  datacenter:
+    build:
+      context: ./var/slim
+    container_name: datacenter
+    volumes:
+      - /data/sys/passwd:/etc/uniclient/passwd
+    expose:
+      - 80
+    networks:
+      - master
+networks:
+  master:
+    name: master

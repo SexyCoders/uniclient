@@ -6,13 +6,13 @@ require '../vendor/autoload.php';
 require '../src/auth.php';
 require '../src/my_time.php';
 
-$filename='/etc/uniclient/passwd';
+$filename='/etc/uniclient/passwd/datacenter';
 $handle = fopen($filename, "r");
 $passwd = fscanf($handle,"%s");
 fclose($handle);
 
 $pdo_microsun = new \pdo(
-    "mysql:host=10.0.0.33; dbname=microsun; charset=utf8mb4; port=3306",'uniclient',$passwd[0] ,
+    "mysql:host=database; dbname=microsun; charset=utf8mb4; port=3306","uniclient",$passwd[0] ,
 [
     \pdo::ATTR_ERRMODE            => \pdo::ERRMODE_EXCEPTION,
     \pdo::ATTR_DEFAULT_FETCH_MODE => \pdo::FETCH_ASSOC,
