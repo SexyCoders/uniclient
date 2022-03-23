@@ -62,8 +62,8 @@ services:
     volumes:
       - /data/letsencrypt:/etc/letsencrypt
     ports:
-      - 80
-      - 443
+      - 80:80
+      - 443:443
     networks:
       - master
   app:
