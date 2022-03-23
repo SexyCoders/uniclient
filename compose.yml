@@ -45,10 +45,41 @@ services:
       - 6379
     networks:
       - master
-  datacenter:
+  debug:
+    image: redis:6.2-alpine
+    container_name: debug
+    volumes:
+      - /data/sys/debug/data:/data
+    expose:
+      - 6379
+    networks:
+      - master
+  proxy:
+    image: proxy
+    build:
+      context: ./proxy
+    container_name: proxy
+    volumes:
+      - /data/letsencrypt:/etc/letsencrypt
+    ports:
+      - 80
+      - 443
+    networks:
+      - master
+  app:
+    image: app
+    build:
+      context: ./var/www
+    container_name: app
+    expose:
+      - 80
+    networks:
+      - master
+  solar-module:
+    image: solar-module
     build:
       context: ./var/slim
-    container_name: datacenter
+    container_name: solar-module
     volumes:
       - /data/sys/passwd:/etc/uniclient/passwd
     expose:
