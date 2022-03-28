@@ -115,6 +115,29 @@ services:
       - 80
     networks:
       - master
+  git:
+    image: gitea/gitea:1.16.5
+    container_name: gitea
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=mysql
+      - GITEA__database__HOST=git-db:3306
+      - GITEA__database__NAME=gitea
+      - GITEA__database__USER=gitea
+      - GITEA__database__PASSWD=gitea
+    restart: always
+    networks:
+      - master
+    volumes:
+      - /data/sys/git/data/:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /data/sys/git/home/:/data/git/ssh
+    expose:
+      - 3000
+    ports:
+      - "222:22"
   app:
     image: app
     build:
