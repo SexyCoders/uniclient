@@ -24,6 +24,23 @@ services:
       - 3306
     networks:
       - master
+  mail:
+    image: sexycoders/mailserver:2.2
+    container_name: mail
+    volumes:
+      - /data/sys/mail/data:/var/vmail
+      - /data/letsencrypt:/etc/letsencrypt
+    entrypoint: /bin/bash /init
+    ports:
+      - 25:25
+      - 143:143
+      - 465:465
+      - 587:587
+      - 993:993
+    expose:
+      - 80
+    networks:
+      - master
   database:
     image: mariadb:10.3
     container_name: database
