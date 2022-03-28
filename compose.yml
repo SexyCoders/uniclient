@@ -24,9 +24,9 @@ services:
       - 3306
     networks:
       - master
-  git-db:
+  git-data:
     image: mariadb:10.3
-    container_name: git-db
+    container_name: git-data
     volumes:
       - /data/sys/git/database/:/var/lib/mysql
     environment:
