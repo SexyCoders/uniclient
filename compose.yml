@@ -24,6 +24,32 @@ services:
       - 3306
     networks:
       - master
+  git-db:
+    image: mariadb:10.3
+    container_name: git-db
+    volumes:
+      - /data/sys/git/database/:/var/lib/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: gitea
+      MARIADB_USER: gitea
+      MARIADB_PASSWORD: gitea
+      MARIADB_DATABASE: gitea
+    expose:
+      - 3306
+    networks:
+      - master
+  database:
+    image: mariadb:10.3
+    container_name: database
+    volumes:
+      - /data/sys/datacenter/data:/var/lib/mysql
+      - /data/sys/datacenter/config:/etc/mysql
+    environment: 
+      MARIADB_ROOT_PASSWORD: mypass      
+    expose:
+      - 3306
+    networks:
+      - master
   mail:
     image: sexycoders/mailserver:2.2
     container_name: mail
@@ -39,18 +65,6 @@ services:
       - 993:993
     expose:
       - 80
-    networks:
-      - master
-  database:
-    image: mariadb:10.3
-    container_name: database
-    volumes:
-      - /data/sys/datacenter/data:/var/lib/mysql
-      - /data/sys/datacenter/config:/etc/mysql
-    environment: 
-      MARIADB_ROOT_PASSWORD: mypass      
-    expose:
-      - 3306
     networks:
       - master
   user-token-store:
@@ -124,20 +138,6 @@ services:
       - 3000
     ports:
       - "222:22"
-  git-db:
-    image: mariadb:10.3
-    container_name: git-db
-    volumes:
-      - /data/sys/git/database/:/var/lib/mysql
-    environment:
-      - MARIADB_ROOT_PASSWORD=gitea
-      - MARIADB_USER=gitea
-      - MARIADB_PASSWORD=gitea
-      - MARIADB_DATABASE=gitea
-    expose:
-      - 3306
-    networks:
-      - master
   app:
     image: app
     build:
