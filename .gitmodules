@@ -1,3 +1,9 @@
 [submodule "var/slim/time.php"]
 	path = var/slim/time.php
 	url = https://git.sexycoders.org/SexyCoders/time.php.git
+[submodule "oauth2"]
+	path = auth/oauth2
+	url = https://git.sexycoders.org/SexyCoders/oauth2.git
+[submodule "lib/data"]
+	path = lib/data
+	url = https://git.sexycoders.org/SexyCoders/lib.git
