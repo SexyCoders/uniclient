@@ -129,16 +129,17 @@ services:
   git-db:
     image: mariadb:10.3
     container_name: git-db
-    restart: always
-    environment:
-      - MYSQL_ROOT_PASSWORD=gitea
-      - MYSQL_USER=gitea
-      - MYSQL_PASSWORD=gitea
-      - MYSQL_DATABASE=gitea
-    networks:
-      - master
     volumes:
       - /data/sys/git/database/:/var/lib/mysql
+    environment:
+      - MARIADB_ROOT_PASSWORD=gitea
+      - MARIADB_USER=gitea
+      - MARIADB_PASSWORD=gitea
+      - MARIADB_DATABASE=gitea
+    expose:
+      - 3306
+    networks:
+      - master
   app:
     image: app
     build:
