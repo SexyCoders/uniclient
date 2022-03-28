@@ -1,12 +1,4 @@
-module.exports = {
-  chainWebpack: config => {
-    config.externals({
-      'jquery':'jQuery',
-      'bootstrap':'bootstrap'
-    })
-  },
-
-  transpileDependencies: [
-    'vuetify'
-  ]
-}
+const { defineConfig } = require('@vue/cli-service')
+module.exports = defineConfig({
+  transpileDependencies: true,
+})
