@@ -124,8 +124,6 @@ services:
       - 3000
     ports:
       - "222:22"
-    depends_on:
-      - git-db
   git-db:
     image: mariadb:10.3
     container_name: git-db
