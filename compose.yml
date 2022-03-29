@@ -161,4 +161,3 @@ services:
 networks:
   master:
     name: master
-    enable_ipv6: true
