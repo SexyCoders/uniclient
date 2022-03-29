@@ -30,7 +30,7 @@ services:
     volumes:
       - /data/sys/git/database/:/var/lib/mysql
     environment:
-      MARIADB_ROOT_PASSWORD: gitea
+      MARIADB_ROOT_PASSWORD: mypass
       MARIADB_USER: gitea
       MARIADB_PASSWORD: gitea
       MARIADB_DATABASE: gitea
