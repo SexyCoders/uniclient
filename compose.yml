@@ -91,6 +91,7 @@ services:
       context: ./proxy
     container_name: proxy
     volumes:
+      - /data/sys/proxy:/etc/nginx/conf.d
       - /data/letsencrypt:/etc/letsencrypt
     ports:
       - 80:80
