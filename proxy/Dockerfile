@@ -12,5 +12,5 @@ RUN apt-get update \
 
 #CMD ["service","nginx","restart"]
 CMD ["nginx","-g","daemon off"]
-CMD ["tail","-f","/dev/null"]
+#CMD ["tail","-f","/dev/null"]
 
