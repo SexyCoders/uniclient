@@ -49,7 +49,6 @@
     "jspdf": "^2.5.1",
     "jspdf-autotable": "^3.5.23",
     "pdfmake": "^0.2.4",
-    "vue-notifyjs": "^0.4.3"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
