@@ -135,7 +135,7 @@ services:
       context: ./var/slim
     container_name: solar-module
     volumes:
-      - /data/sys/passwd:/etc/uniclient/passwd
+      - /data/etc/uniclient:/etc/uniclient
     expose:
       - 80
     networks:
