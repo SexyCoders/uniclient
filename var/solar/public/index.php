@@ -24,7 +24,7 @@ $app->add(new \Eko3alpha\Slim\Middleware\CorsMiddleware([
     'https://data.sexycoders.org' => ['POST'],
     'https://uniclient.sexycoders.org' => ['POST'],
   ]));
-$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
+$app->get('/solar/hello/{name}', function (Request $request, Response $response, array $args) {
     $name = $args['name'];
     $response->getBody()->write("Hello, $name this is the dataserver for the UniClient platform developed by Sexy Coders. We think you are very sexy but unfortunately our clients dont, so we have to deny any further access. Have a nice one!");
 

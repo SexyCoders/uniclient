@@ -1,5 +1,5 @@
-[submodule "var/slim/time.php"]
-	path = var/slim/time.php
+[submodule "var/solar/time.php"]
+	path = var/solar/time.php
 	url = https://git.sexycoders.org/SexyCoders/time.php.git
 [submodule "oauth2"]
 	path = auth/oauth2
