@@ -102,6 +102,17 @@ services:
       - 443:443
     networks:
       - master
+  data-proxy:
+    image: data-proxy
+    build:
+      context: ./proxy
+    container_name: data-proxy
+    volumes:
+      - /data/sys/data-proxy/conf:/etc/nginx/conf.d
+    expose:
+      - 80
+    networks:
+      - master
   auth:
     image: auth
     build:
