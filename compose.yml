@@ -132,7 +132,7 @@ services:
   solar-module:
     image: solar-module
     build:
-      context: ./var/slim
+      context: ./var/solar
     container_name: solar-module
     volumes:
       - /data/etc/uniclient:/etc/uniclient
