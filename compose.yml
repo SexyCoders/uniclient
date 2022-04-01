@@ -103,7 +103,7 @@ services:
     networks:
       - master
   data-proxy:
-    image: data-proxy
+    image: proxy
     build:
       context: ./proxy
     container_name: data-proxy
