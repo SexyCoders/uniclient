@@ -141,6 +141,8 @@ services:
     networks:
       - master
   git:
+    user:
+      3000:3000
     image: gitea/gitea:1.16.5
     container_name: gitea
     environment:
