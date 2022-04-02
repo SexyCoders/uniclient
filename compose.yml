@@ -154,10 +154,10 @@ services:
     networks:
       - master
     volumes:
-      - /data/sys/git/database:/data
+      - /data/sys/git/data:/data
       - /etc/timezone:/etc/timezone:ro
       - /etc/localtime:/etc/localtime:ro
-      - /data/sys/git/home:/data/git
+      - /data/sys/git/home/.ssh:/data/git/.ssh
     expose:
       - 3000
     ports:
