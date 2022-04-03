@@ -6,18 +6,58 @@ require '../vendor/autoload.php';
 require '../src/auth.php';
 require '../src/my_time.php';
 
+    //$log_redis = new Redis();
+    //$log_redis->connect('uniclient_debug', 6379);
+
+    ////The url you wish to send the POST request to
+    //$url = "uniclient_auth/user";
+
+    ////The data you want to send via POST
+    //$fields = [
+    //'access_token'=> $token
+    //];
+
+    ////url-ify the data for the POST
+    //$fields_string = http_build_query($fields);
+
+    ////open connection
+    //$ch = curl_init();
+
+    //$headers = array(
+    //"Origin: https://data.sexycoders.org",
+    //);
+
+    ////set the url, number of POST vars, POST data
+    //curl_setopt($ch,CURLOPT_URL, $url);
+    //curl_setopt($ch,CURLOPT_POST, true);
+    //curl_setopt($ch,CURLOPT_HTTPHEADER, $headers);
+    //curl_setopt($ch,CURLOPT_POSTFIELDS, $fields_string);
+
+    ////So that curl_exec returns the contents of the cURL; rather than echoing it
+    //curl_setopt($ch,CURLOPT_RETURNTRANSFER, true);
+
+    ////execute post
+    //$result = curl_exec($ch);
+    //$result=json_decode($result);
+    //$log_redis->set("user_data_result",json_encode($result));
+
+function createPDO($company)
+{
 $filename='/etc/uniclient/passwd/datacenter';
 $handle = fopen($filename, "r");
 $passwd = fscanf($handle,"%s");
 fclose($handle);
 
 $pdo_microsun = new \pdo(
-    "mysql:host=database; dbname=microsun; charset=utf8mb4; port=3306","uniclient",$passwd[0] ,
+    "mysql:host=database; dbname=".$company."; charset=utf8mb4; port=3306","uniclient",$passwd[0] ,
 [
     \pdo::ATTR_ERRMODE            => \pdo::ERRMODE_EXCEPTION,
     \pdo::ATTR_DEFAULT_FETCH_MODE => \pdo::FETCH_ASSOC,
     \pdo::ATTR_EMULATE_PREPARES   => false,
 ]);
+return $pdo_microsun;
+}
+
 $app = new \Slim\App;
 $app->add(new \Eko3alpha\Slim\Middleware\CorsMiddleware([
     'https://oauth2.sexycoders.org' => ['POST'],
@@ -30,13 +70,17 @@ $app->get('/base/hello/{name}', function (Request $request, Response $response, 
 
     return $response;
 });
-$app->post('/get_customer_data_full',function(Request $request,Response $response) use($pdo_microsun){
+$app->post('/base/get_customer_data_full',function(Request $request,Response $response) {
         $t=$request->getBody();
         $t=json_decode($t);
-        if(auth(end($t)))
+        $t=auth(end($t));
+        if($t=='NOAUTH')
             $t="NOAUTH";
         else
-            $t = $pdo_microsun->query("SELECT ID,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
+            {
+                $pdo=createPDO($t->COMPANY_HASH);
+                $t = $pdo->query("SELECT ID,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
+            }
         $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
     });
