@@ -18,4 +18,23 @@ app.component('CIcon', CIcon)
 app.component('DocsCallout', DocsCallout)
 app.component('DocsExample', DocsExample)
 
+
+/////////////////FONTAWESOME CONFIG////////////////////
+/* import the fontawesome core */
+import { library } from '@fortawesome/fontawesome-svg-core'
+
+/* import specific icons */
+import { fas } from '@fortawesome/free-solid-svg-icons'
+
+/* import font awesome icon component */
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
+/* add icons to the library */
+library.add(fas)
+
+/* add font awesome icon component */
+app.component('font-awesome-icon', FontAwesomeIcon)
+/////////////////FONTAWESOME CONFIG END////////////////////
+
+
 app.mount('#app')
