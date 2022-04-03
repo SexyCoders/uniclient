@@ -1,0 +1,7 @@
+{
+    "require": {
+        "slim/slim": "3.*",
+        "bshaffer/oauth2-server-php": "^1.11",
+        "eko3alpha/slim-cors-middleware": "^1.1"
+    }
+}

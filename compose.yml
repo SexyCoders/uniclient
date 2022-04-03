@@ -129,6 +129,17 @@ services:
       - 80
     networks:
       - master
+  base-module:
+    image: base-module
+    build:
+      context: ./var/base
+    container_name: base-module
+    volumes:
+      - /data/etc/uniclient:/etc/uniclient
+    expose:
+      - 80
+    networks:
+      - master
   solar-module:
     image: solar-module
     build:
