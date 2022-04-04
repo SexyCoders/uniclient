@@ -23,6 +23,9 @@ export default createStore({
     updateCurrentTableHeader(state, payload) {
       state.currentTableHeader = payload;
     },
+    //updateToken(state,payload){
+      //state.oauth2_token=payload;
+    //}
   },
   actions: {},
   modules: {},
@@ -33,5 +36,11 @@ export default createStore({
     getCurrentTableHeader(state){
       return state.currentTableHeader;
     },
+    //get_token(state){
+      //return state.oauth2_token;
+    //},
+    //get_token_url(state){
+      //return state.oauth2_token_url;
+    //},
   },
 })

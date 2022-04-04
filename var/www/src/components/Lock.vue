@@ -1,32 +1,36 @@
 <template>
-  <body class="text-center">
-    <main class="form-signin">
-      <form>
-        <img class="mb-4" alt="libauth.js logo" src="https://lib.sexycoders.org/libauth_logo.png" width="72" height="57">
-        <h1 class="h3 mb-3 fw-normal">Please verify its you...</h1>
+  <Login/>
 
-        <div class="form-floating">
-          <input type="username" class="form-control" id="username" name="username">
-          <label for="username">username</label>
-        </div>
-        <div class="form-floating">
-          <input type="password" class="form-control" id="password" name="password">
-          <label for="password">password</label>
-        </div>
-        <button class="w-100 btn btn-lg btn-primary" type="submit" v-on:click="UNLOCK">Sign in</button>
-        <p class="mt-5 mb-3 text-muted">By continuing you agree to the ridiculously long terms that you didn't bother to read.</p>
-        <p class="mt-5 mb-3 text-muted">&copy; SexyCoders</p>
-      </form>
-    </main>
-  </body>
+  <!--<body class="text-center">-->
+    <!--<main class="form-signin">-->
+      <!--<form>-->
+        <!--<img class="mb-4" alt="libauth.js logo" src="https://lib.sexycoders.org/libauth_logo.png" width="72" height="57">-->
+        <!--<h1 class="h3 mb-3 fw-normal">Please verify its you...</h1>-->
+
+        <!--<div class="form-floating">-->
+          <!--<input type="username" class="form-control" id="username" name="username">-->
+          <!--<label for="username">username</label>-->
+        <!--</div>-->
+        <!--<div class="form-floating">-->
+          <!--<input type="password" class="form-control" id="password" name="password">-->
+          <!--<label for="password">password</label>-->
+        <!--</div>-->
+        <!--<button class="w-100 btn btn-lg btn-primary" type="submit" v-on:click="UNLOCK">Sign in</button>-->
+        <!--<p class="mt-5 mb-3 text-muted">By continuing you agree to the ridiculously long terms that you didn't bother to read.</p>-->
+        <!--<p class="mt-5 mb-3 text-muted">&copy; SexyCoders</p>-->
+      <!--</form>-->
+    <!--</main>-->
+  <!--</body>-->
 </template>
 
 <script>
 import $ from "jquery";
+import Login from "@/views/pages/Login.vue"
 
 export default {
   name: 'Lock',
   components: {
+    Login,
   },
   data() {
   return{

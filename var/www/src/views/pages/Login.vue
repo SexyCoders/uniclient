@@ -16,6 +16,7 @@
                     <CFormInput
                       placeholder="Username"
                       autocomplete="username"
+                      v-model="username"
                     />
                   </CInputGroup>
                   <CInputGroup class="mb-4">
@@ -26,11 +27,12 @@
                       type="password"
                       placeholder="Password"
                       autocomplete="current-password"
+                      v-model="passwd"
                     />
                   </CInputGroup>
                   <CRow>
                     <CCol :xs="6">
-                      <CButton color="primary" class="px-4"> Login </CButton>
+                      <CButton color="primary" class="px-4" v-on:click="UNLOCK"> Login </CButton>
                     </CCol>
                     <CCol :xs="6" class="text-right">
                       <CButton color="link" class="px-0">
@@ -46,9 +48,7 @@
                 <div>
                   <h2>Sign up</h2>
                   <p>
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit,
-                    sed do eiusmod tempor incididunt ut labore et dolore magna
-                    aliqua.
+                    By continuing you agree to the ridiculously long terms that you didn't bother to read.
                   </p>
                   <CButton color="light" variant="outline" class="mt-3">
                     Register Now!
@@ -64,7 +64,47 @@
 </template>
 
 <script>
+import $ from 'jquery';
 export default {
+  data(){
+    return {
+      username:"",
+      passwd:"",
+    }
+  },
   name: 'Login',
+  methods: {
+    UNLOCK()
+      {
+        var data=new Object();
+        data.username=this.$data.username;
+        data.password=this.$data.passwd;
+        data.grant_type='password';
+        data.command='token';
+        console.log(data);
+        var FORCE_AUTH=this.$store.force_auth;
+        var AUTH_TOKEN=this.$store.oauth_token;
+        $.ajax({
+            type: 'POST',
+            url: this.$store.get_token,
+            headers: {
+              "Access-Control-Allow-Origin":"https://app.uniclient.org"
+            },
+            data: "grant_type=client_credentials&client_id="+data.username+
+                "&client_secret="+data.password,
+            success:
+            function(response,STORE)
+                {
+                    var data=JSON.parse(response);
+                    console.log(data);
+                    FORCE_AUTH=0;
+                    AUTH_TOKEN=data.access_token;
+                    console.log("obtained token "+data.access_token);
+                    localStorage.setItem("oauth2_token",data.access_token);
+                  },
+            async:false
+            });
+      },
+  }
 }
 </script>
