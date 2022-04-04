@@ -1,9 +1,12 @@
 [submodule "var/solar/time.php"]
 	path = var/solar/time.php
-	url = https://git.sexycoders.org/SexyCoders/time.php.git
+	url = https://github.com/SexyCodersTimeProject/time.php.git
+[submodule "var/base/time.php"]
+	path = var/base/time.php
+	url = https://github.com/SexyCodersTimeProject/time.php.git
 [submodule "oauth2"]
 	path = auth/oauth2
-	url = https://git.sexycoders.org/SexyCoders/oauth2.git
+	url = https://github.com/SexyCoders/oauth2.git
 [submodule "lib/data"]
 	path = lib/data
-	url = https://git.sexycoders.org/SexyCoders/lib.git
+	url = https://github.com/SexyCoders/lib.git
