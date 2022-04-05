@@ -3,10 +3,6 @@
   <router-view v-else />
 </template>
 
-<style lang="scss">
-// Import Main styles for this application
-@import 'styles/style';
-</style>
 <script>
 import $ from "jquery";
 import Login from "@/views/pages/Login.vue"
@@ -99,3 +95,8 @@ export default {
 
 }
 </script>
+
+<style lang="scss">
+// Import Main styles for this application
+@import 'styles/style';
+</style>
