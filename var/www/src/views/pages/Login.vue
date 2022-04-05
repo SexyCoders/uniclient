@@ -83,13 +83,10 @@ export default {
         data.command='token';
         console.log(data);
         var FORCE_AUTH=this.$store.force_auth;
-        var AUTH_TOKEN=this.$store.oauth_token;
+        var AUTH_TOKEN=this.$store.oauth2_token;
         $.ajax({
             type: 'POST',
             url: this.$store.get_token,
-//            headers: {
-//              "Access-Control-Allow-Origin":"*"
-//            },
             data: "grant_type=client_credentials&client_id="+data.username+
                 "&client_secret="+data.password,
             success:
@@ -104,6 +101,8 @@ export default {
                   },
             async:false
             });
+            this.$store.force_auth=FORCE_AUTH;
+            this.$store.oauth2_token=AUTH_TOKEN;
       },
   }
 }
