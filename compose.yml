@@ -107,6 +107,8 @@ services:
     build:
       context: ./auth
     container_name: auth
+    volumes:
+      - /data/etc/libauth.js:/etc/libauth.js
     expose:
       - 80
     networks:
