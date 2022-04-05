@@ -1,5 +1,5 @@
 <template>
-  <Lock v-if="this.$store.force_auth" />
+  <Login v-if="this.$data.force_auth===1" />
   <router-view v-else />
 </template>
 
@@ -9,19 +9,18 @@
 </style>
 <script>
 import $ from "jquery";
-import Lock from "../src/components/Lock.vue";
+import Login from "@/views/pages/Login.vue"
 import Main from "../src/Main.vue";
 
 export default {
   name: 'App',
   components: {
-    Lock,
+    Login,
   },
   data() {
   return{
+    force_auth:'',
   }
-  },
-  computed () {
   },
   mounted() {
   },
@@ -30,58 +29,58 @@ export default {
   beforeCreated()  {
   },
   created()  {
-    this.initStore();
-    if(this.$store.oauth_token==null)
-      {
-        var t=localStorage.getItem("oauth2_token");
-        if(t!=null)
-          this.$store.oauth_token=t;
-      }
-    this.verifyToken();
 
     console.log("setting auth watcher");
     setInterval(this.AuthWatcher,50);
+    this.initStore();
+    this.verifyToken();
   },
   methods : {
     initStore(){
-      //this.$store.commit("init");
       this.$store.get_token="https://oauth2.sexycoders.org/token";
       this.$store.validate_token="https://oauth2.sexycoders.org/validate";
-      this.$store.oauth_token=null;
-      this.$store.force_auth=0;
+      this.$store.oauth2_token=null;
+      this.$store.force_auth=1;
       this.$store.datacenter={};
       this.$store.datacenter.base="https://data.uniclient.org/base";
       this.$store.data={};
-      //console.log(JSON.stringify(this.$store.data));
+      console.log("init store");
       },
     AuthWatcher()
       {
-        if(this.$store.oauth2_token)
-          {
-            console.log("testing auth trigger");
-            this.$store.force_auth=false;
-          }
+        if(this.$store.force_auth===1)
+          this.$data.force_auth=1;
+        else
+          this.$data.force_auth=0;
       },
     verifyToken()
       {
-        console.log("Using token "+this.$store.oauth_token);
+      if(this.$store.oauth2_token==null)
+        {
+          var t=localStorage.getItem("oauth2_token");
+          if(t!=null)
+            this.$store.oauth2_token=t;
+          else
+            this.$store.force_auth=1;
+        }
+        console.log("Using token "+this.$store.oauth2_token);
       $.ajax({
           type: 'POST',
           url: this.$store.validate_token,
-          data: "access_token="+this.$store.oauth_token,
+          data: "access_token="+this.$store.oauth2_token,
           success:
           (response) =>
               {
                 //console.log(response);
                 var data=JSON.parse(response);
-                if(data.success!=true)
+                if(data.success!=0)
                   {
-                    this.$store.oauth_token=null;
-                    this.$store.force_auth=true;
+                    this.$store.oauth2_token=null;
+                    this.$store.force_auth=0;
                   }
                 else
                   {
-                    this.$store.force_auth=false;
+                    this.$store.force_auth=0;
                     console.log(data.message);
                   }
               },
@@ -89,11 +88,12 @@ export default {
           (response) =>
                 {
                     localStorage.removeItem("oauth2_token");
-                    this.$store.oauth_token=null;
+                    this.$store.oauth2_token=null;
                     this.$store.force_auth=1;
                 },
             async:false
             });
+        return this.$store.force_auth;
         },
 }
 

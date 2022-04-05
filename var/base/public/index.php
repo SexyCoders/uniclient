@@ -74,6 +74,9 @@ $app->post('/base/get_customer_data_full',function(Request $request,Response $re
         $t=$request->getBody();
         $t=json_decode($t);
         $t=auth(end($t));
+        $log_redis = new Redis();
+        $log_redis->connect('uniclient_debug', 6379);
+        $log_redis->set("auth_result",json_encode($t));
         if($t=='NOAUTH')
             $t="NOAUTH";
         else
