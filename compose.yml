@@ -142,17 +142,17 @@ services:
       - 80
     networks:
       - master
-  solar-module:
-    image: solar-module
-    build:
-      context: ./var/solar
-    container_name: solar-module
-    volumes:
-      - /data/etc/uniclient:/etc/uniclient
-    expose:
-      - 80
-    networks:
-      - master
+  #solar-module:
+    #image: solar-module
+    #build:
+      #context: ./var/solar
+    #container_name: solar-module
+    #volumes:
+      #- /data/etc/uniclient:/etc/uniclient
+    #expose:
+      #- 80
+    #networks:
+      #- master
   #git:
     #user:
       #3000:3000

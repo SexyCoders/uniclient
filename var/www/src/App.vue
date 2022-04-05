@@ -71,7 +71,7 @@ export default {
                 var data=JSON.parse(response);
                 if(data.success!=0)
                   {
-                    this.$store.oauth2_token=null;
+                    //this.$store.oauth2_token=null;
                     this.$store.force_auth=0;
                   }
                 else
@@ -84,7 +84,6 @@ export default {
           (response) =>
                 {
                     localStorage.removeItem("oauth2_token");
-                    this.$store.oauth2_token=null;
                     this.$store.force_auth=1;
                 },
             async:false
