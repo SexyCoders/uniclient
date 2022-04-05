@@ -49,7 +49,8 @@ export default {
       this.$store.validate_token="https://oauth2.sexycoders.org/validate";
       this.$store.oauth_token=null;
       this.$store.force_auth=0;
-      //this.$store.datacenter="https://data.sexycoders.org";
+      this.$store.datacenter={};
+      this.$store.datacenter.base="https://data.uniclient.org/base";
       this.$store.data={};
       //console.log(JSON.stringify(this.$store.data));
       },
@@ -58,7 +59,7 @@ export default {
         if(this.$store.oauth2_token)
           {
             console.log("testing auth trigger");
-            this.$store.state.force_auth=false;
+            this.$store.force_auth=false;
           }
       },
     verifyToken()
