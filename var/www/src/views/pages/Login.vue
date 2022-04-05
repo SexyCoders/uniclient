@@ -88,7 +88,7 @@ export default {
             type: 'POST',
             url: this.$store.get_token,
 //            headers: {
-//              "Access-Control-Allow-Origin":"https://app.uniclient.org"
+//              "Access-Control-Allow-Origin":"*"
 //            },
             data: "grant_type=client_credentials&client_id="+data.username+
                 "&client_secret="+data.password,
