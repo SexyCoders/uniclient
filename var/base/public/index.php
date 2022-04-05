@@ -78,8 +78,8 @@ $app->post('/base/get_customer_data_full',function(Request $request,Response $re
             $t="NOAUTH";
         else
             {
-                $pdo=createPDO($t->COMPANY_HASH);
-                $t = $pdo->query("SELECT ID,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
+                //$pdo=createPDO($t->COMPANY_HASH);
+                //$t = $pdo->query("SELECT ID,COMPANY as Company,IFNULL(NAME,'NAN') as FirstName,IFNULL(LNAME,'NAN') as LastName,IFNULL(PHONE,0) as PhoneNumber,IFNULL(EMAIL,'NAN') as email,IFNULL(ADDRESS,'NAN') as Address,IFNULL(ZIP,0) as ZIP,IFNULL(TIN,0) as TIN,IFNULL(NOTES,'NAN') as Notes FROM customers;") -> fetchAll();
             }
         $response->getBody()->write(base64_encode(json_encode($t)));
         return $response;
