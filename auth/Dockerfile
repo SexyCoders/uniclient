@@ -8,7 +8,7 @@ COPY ./oauth2 .
 COPY ./apache2.conf /etc/apache2/sites-available/my-site.conf
 
 RUN apt-get update \ 
-&& apt-get install -y composer apache2 php7.4 php7.4-mysql php7.4-redis\
+&& apt-get install -y composer apache2 php7.4 php7.4-mysql php7.4-redis php7.4-curl\
 && apt-get clean \
 && composer install \
 && a2dissite 000-default \
