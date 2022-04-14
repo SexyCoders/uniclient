@@ -15,8 +15,8 @@ services:
     user: 3000:3000
     container_name: system-data-debug
     volumes:
-      - /home/sotiris/testing/system-data/data:/var/lib/mysql
-      - /home/sotiris/testing/system-data/config:/etc/mysql
+      - ${HOME}/testing/system-data/data:/var/lib/mysql
+      - ${HOME}/testing/system-data/config:/etc/mysql
     environment: 
       MARIADB_ROOT_PASSWORD: mypass      
     expose:
@@ -55,8 +55,8 @@ services:
     user: 3000:3000
     container_name: database-debug
     volumes:
-      - /home/sotiris/testing/datacenter/data:/var/lib/mysql
-      - /home/sotiris/testing/datacenter/config:/etc/mysql
+      - ${HOME}/testing/datacenter/data:/var/lib/mysql
+      - ${HOME}/testing/datacenter/config:/etc/mysql
     environment: 
       MARIADB_ROOT_PASSWORD: mypass      
     expose:
