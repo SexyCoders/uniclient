@@ -29,7 +29,7 @@ Finally your docker images (that you will define using 'Dockefiles' and a 'docke
 - dynamic -> no static ip access or port mapping!
 - minimal -> please create as few layers as possible, avoid COPY and RUN commands and use CMD instead!
 
-ATTENTION:
+#ATTENTION:
 
 All your data (configutation, temp, config etc) should be stored under ONE directory located at or under '/data/community/<your-module-name>'
 
