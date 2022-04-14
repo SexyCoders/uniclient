@@ -1,0 +1,43 @@
+#AUTHOR# Sotirios Anagnostopoulos
+
+# contribution roadmap for uniclient platform
+
+## Our Logic
+
+The main logic begind uniclient is modularity and customization, combined with a webbased interface that allows it to be used anytime, anywhere.
+
+Thus, all our services are designed as modules, using their own docker containers, resources, databases etc.
+
+Networking is done using docker-compose and docker-virtual networking - within a swarm -  and all ips are dynamic.
+
+## Guidelines
+
+Every module is expected to have minimal functionallity at the best possible performance. Thus you are expected to use bleeding-edge technologies, like nodejs, redis etc to make your module fast and easily maintainable.
+
+Compiled languages, like C or C++ are also encouraged in case of power hungry tasks. 
+
+You are also encouraged to use parallel processing if applicable, but please keep in mind that everything will run indide docker containers, and weigh that against possible multithreading/multiprocessing.
+
+You should try to make your implementation use as few docker containers as possible, without sacrificing any modularity! For example if you have a redis or mongo running, use it for as many databases, and as often as you can untill it starts affecting performance or the module. DONT CLUTTER THE STACK! Swarm stabillity is of the utmost importance to us!
+
+Dont overload your module! If you wish you can create multiple, but each module should be doing ONE and ONLY ONE thing! 
+
+That being said please also dont seperate modules just for the sakes of sepperation since that will lead to a debug hell for both us and you!
+
+Finally your docker images (that you will define using 'Dockefiles' and a 'docker-compose.yml' file) have to be:
+- based on debian 11
+- dynamic -> no static ip access or port mapping!
+- minimal -> please create as few layers as possible, avoid COPY and RUN commands and use CMD instead!
+
+ATTENTION:
+
+All your data (configutation, temp, config etc) should be stored under ONE directory located at or under '/data/community/<your-module-name>'
+
+This is for your information since your module will end up there in our production system! This may or may not be an issue for you but please keep it in mind!
+
+Please also use good names to avoid conflicts! We will be checking ourselves, but it will be a shame for you to have to change multiple instances of a name!
+
+Please if you wish to work on a module, reach out to team@sexycoders.org explaining roughly what it will be, so we can register you in our mailing list and update you for any changes made to the specifications/requirements or any other changes that might affect you!
+
+Have fun coding,
+Shane from Greece
