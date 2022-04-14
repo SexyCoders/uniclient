@@ -1,3 +1,5 @@
+#AUTHOR# Sotirios Anagnostopoulos
+
 # Communication between endpoints:
 
 To establish communication between the various modules, endpoints and user 
@@ -11,7 +13,7 @@ The segment consists of the following (mandatory) fields, but can and is
 amended for each communication to meed its needs. For specifics please 
 lookup the corresponding module documentation.
 
-Segment:
+## Segment:
 
 - token -> oauth2 token for verification - if this is missing the message 
 is automatically and immediatelly dropped in all endpoints
