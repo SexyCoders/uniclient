@@ -1,0 +1,191 @@
+version: '3.7'
+
+services:
+  debug-proxy:
+    image: debug-proxy
+    build:
+      context: ./debug/proxy
+    container_name: debug-proxy
+    ports:
+      - 8088:80
+    networks:
+      - master
+  system-data-debug:
+    image: mariadb:10.3
+    user: 3000:3000
+    container_name: system-data-debug
+    volumes:
+      - /home/sotiris/testing/system-data/data:/var/lib/mysql
+      - /home/sotiris/testing/system-data/config:/etc/mysql
+    environment: 
+      MARIADB_ROOT_PASSWORD: mypass      
+    expose:
+      - 3306
+    networks:
+      - master
+  #mail-data:
+    #image: mariadb:10.3
+    #user: 3000:3000
+    #container_name: mail-data
+    #volumes:
+      #- /data/sys/mail/database:/var/lib/mysql
+    #environment: 
+      #MARIADB_ROOT_PASSWORD: mypass      
+    #expose:
+      #- 3306
+    #networks:
+      #- master
+  #git-data:
+    #image: mariadb:10.3
+    #user: 3000:3000
+    #container_name: git-data
+    #volumes:
+      #- /data/sys/git/database/:/var/lib/mysql
+    #environment:
+      #MARIADB_ROOT_PASSWORD: mypass
+      #MARIADB_USER: gitea
+      #MARIADB_PASSWORD: gitea
+      #MARIADB_DATABASE: gitea
+    #expose:
+      #- 3306
+    #networks:
+      #- master
+  database-debug:
+    image: mariadb:10.3
+    user: 3000:3000
+    container_name: database-debug
+    volumes:
+      - /home/sotiris/testing/datacenter/data:/var/lib/mysql
+      - /home/sotiris/testing/datacenter/config:/etc/mysql
+    environment: 
+      MARIADB_ROOT_PASSWORD: mypass      
+    expose:
+      - 3306
+    networks:
+      - master
+  #mail:
+    #image: sexycoders/mailserver:2.2
+    #container_name: mail
+    #volumes:
+      #- /data/sys/mail/data:/var/vmail
+      #- /data/letsencrypt:/etc/letsencrypt
+    #entrypoint: /bin/bash /init
+    #ports:
+      #- 25:25
+      #- 143:143
+      #- 465:465
+      #- 587:587
+      #- 993:993
+    #expose:
+      #- 80
+    #networks:
+      #- master
+  user-token-store:
+    image: redis:6.2-alpine
+    container_name: user-token-store
+    volumes:
+      - /data/sys/user-token-store/data:/data
+    expose:
+      - 6379
+    networks:
+      - master
+  debug:
+    image: redis:6.2-alpine
+    container_name: debug
+    volumes:
+      - /data/sys/debug/data:/data
+    expose:
+      - 6379
+    networks:
+      - master
+  proxy:
+    image: proxy
+    build:
+      context: ./proxy
+    container_name: proxy
+    volumes:
+      - /data/sys/proxy/conf:/etc/nginx/conf.d
+      - /data/letsencrypt:/etc/letsencrypt
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - master
+  auth:
+    image: auth
+    build:
+      context: ./auth
+    container_name: auth
+    volumes:
+      - /data/etc/libauth.js:/etc/libauth.js
+    expose:
+      - 80
+    networks:
+      - master
+  lib:
+    image: lib
+    build:
+      context: ./lib
+    container_name: lib
+    expose:
+      - 80
+    networks:
+      - master
+  app:
+    image: app
+    build:
+      context: ./var/www
+    container_name: app
+    expose:
+      - 80
+    networks:
+      - master
+  base-module:
+    image: base-module
+    build:
+      context: ./var/base
+    container_name: base-module
+    volumes:
+      - /data/etc/uniclient:/etc/uniclient
+    expose:
+      - 80
+    networks:
+      - master
+  #solar-module:
+    #image: solar-module
+    #build:
+      #context: ./var/solar
+    #container_name: solar-module
+    #volumes:
+      #- /data/etc/uniclient:/etc/uniclient
+    #expose:
+      #- 80
+    #networks:
+      #- master
+  #git:
+    #user:
+      #3000:3000
+    #image: gitea/gitea:1.16.5
+    #container_name: gitea
+    #environment:
+      #- USER_UID=1000
+      #- USER_GID=1000
+      #- GITEA__database__DB_TYPE=mysql
+      #- GITEA__database__HOST=uniclient_git-data:3306
+      #- GITEA__database__NAME=gitea
+      #- GITEA__database__USER=gitea
+      #- GITEA__database__PASSWD=gitea
+    #networks:
+      #- master
+    #volumes:
+      #- /data/sys/git/data:/data
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
+      #- /data/sys/git/home/.ssh:/data/git/.ssh
+    #expose:
+      #- 3000
+    #ports:
+      #- 222:22
+networks:
+  master:
+    name: master
