@@ -65,6 +65,6 @@ function auth($token) {
                         return $result;
                 }
         else
-            return 'NOAUTH';
+            return 'NOAUTH1';
         return $result;
     }

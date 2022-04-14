@@ -1,0 +1,15 @@
+version: '3.7'
+
+services:
+  debug-proxy:
+    image: debug-proxy
+    build:
+      context: ./debug/proxy
+    container_name: debug-proxy
+    ports:
+      - 8088:80
+    networks:
+      - master
+networks:
+  master:
+    name: master
