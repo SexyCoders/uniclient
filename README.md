@@ -1,3 +1,3 @@
 # UniClient
 
-A client and billing management application that directly connects to sexy coders accounting platform.
+ An online, completely modular, company management platform, for anyone, anywhere! 
