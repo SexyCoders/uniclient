@@ -25,7 +25,6 @@ export default {
   beforeCreated()  {
   },
   created()  {
-
     console.log("setting auth watcher");
     setInterval(this.AuthWatcher,50);
     this.initStore();
@@ -38,7 +37,8 @@ export default {
       this.$store.oauth2_token=null;
       this.$store.force_auth=1;
       this.$store.datacenter={};
-      this.$store.datacenter.base="https://data.uniclient.org/base";
+      var DEBUG=process.env.VUE_APP_DEBUG;
+      this.$store.datacenter.base=(DEBUG?"http://localhost:8088/base":"https://data.uniclient.org/base");
       this.$store.data={};
       console.log("init store");
       },
