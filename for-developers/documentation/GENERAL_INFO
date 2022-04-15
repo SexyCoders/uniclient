@@ -28,6 +28,9 @@ Special graphics are notated by enclosing them in #'s for example
 Titles are notated using a # in the beginning of the line. The number of # 
 denotes the size of the title - '#'='<h1>' '##'='<h2>' etc.
 
+The rest is place inside '<p>' tags before the final file is asssebled 
+based on the template.
+
 To understand and/or work on the compiler please read the compiler 
 documentation (COMPILER file) or visit the corresponding page in our 
 online docs.
