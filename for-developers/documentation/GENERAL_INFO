@@ -1,0 +1,33 @@
+#AUTHOR# Sotirios Anagnostopoulos
+
+# Our Documentation Philosophy
+
+Here at SexyCoders we are big linux lovers, and thus always try to stay as 
+close to it as possible!
+
+Thus all our documentation is in plaintext and can be easilly read using 
+your favourite editor (we know its vim dont worry)!!!
+
+That being said, since we are living in an increaasingly visual and online 
+world we have to adapt and overcome. So we have created a dynamic and 
+versatile system that compiles the plaintext files into formatted html - 
+for your own usage - and for upload to our website.
+
+## Logic
+
+We have to be able to keep the file readable in plaintext and at the same 
+time have a way to parse the file and place the correct paragraphs and 
+graphics to the correct place.
+
+Thus we use the '#' symbol as our 'command char' since it doesnt obscure 
+the viewing of the file in text.
+
+Special graphics are notated by enclosing them in #'s for example 
+'#AUTHOR#' or '#NOTE#'.
+
+Titles are notated using a # in the beginning of the line. The number of # 
+denotes the size of the title - '#'='<h1>' '##'='<h2>' etc.
+
+To understand and/or work on the compiler please read the compiler 
+documentation (COMPILER file) or visit the corresponding page in our 
+online docs.
