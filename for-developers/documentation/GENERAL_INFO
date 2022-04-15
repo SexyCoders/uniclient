@@ -17,7 +17,7 @@ for your own usage - and for upload to our website.
 
 We have to be able to keep the file readable in plaintext and at the same 
 time have a way to parse the file and place the correct paragraphs and 
-graphics to the correct place.
+graphics in the correct place.
 
 Thus we use the '#' symbol as our 'command char' since it doesnt obscure 
 the viewing of the file in text.
