@@ -12,13 +12,13 @@ services:
       - master
   system-data-debug:
     image: mariadb:10.3
-    user: 3000:3000
+    # user: 3000:3000
     container_name: system-data-debug
-    volumes:
-      - ${HOME}/testing/system-data/data:/var/lib/mysql
-      - ${HOME}/testing/system-data/config:/etc/mysql
-    environment: 
-      MARIADB_ROOT_PASSWORD: mypass      
+    # volumes:
+    #   - ${HOME}/testing/system-data/data:/var/lib/mysql
+    #   - ${HOME}/testing/system-data/config:/etc/mysql
+    environment:
+      MARIADB_ROOT_PASSWORD: mypass
     expose:
       - 3306
     networks:
@@ -29,8 +29,8 @@ services:
     #container_name: mail-data
     #volumes:
       #- /data/sys/mail/database:/var/lib/mysql
-    #environment: 
-      #MARIADB_ROOT_PASSWORD: mypass      
+    #environment:
+      #MARIADB_ROOT_PASSWORD: mypass
     #expose:
       #- 3306
     #networks:
@@ -52,13 +52,13 @@ services:
       #- master
   database-debug:
     image: mariadb:10.3
-    user: 3000:3000
+    # user: 3000:3000
     container_name: database-debug
     volumes:
       - ${HOME}/testing/datacenter/data:/var/lib/mysql
       - ${HOME}/testing/datacenter/config:/etc/mysql
-    environment: 
-      MARIADB_ROOT_PASSWORD: mypass      
+    environment:
+      MARIADB_ROOT_PASSWORD: mypass
     expose:
       - 3306
     networks:
