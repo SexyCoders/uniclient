@@ -22,16 +22,16 @@ import Smart from 'assets/services/smart.svg';
 import Secure from 'assets/services/secure.svg';
 
 const data = {
-  subTitle: 'our services',
-  title: 'Business Goals Achieved with Design',
+  subTitle: 'our modules',
+  title: 'Modules used in our product!',
   features: [
     {
       id: 1,
       imgSrc: Smart,
-      altText: 'UniClient',
-      title: 'UniClient',
+      altText: 'Costumers',
+      title: 'Costumers',
       text:
-        'Est consectetur pariatur fugiat sunt anim.'
+        'Manage your customers faster and better than ever!'
     },
   ],
 };

@@ -16,9 +16,9 @@ const data = [
   {
     id: 1,
     imgSrc: Member1,
-    altText: 'Saimon Harmer',
-    title: 'Saimon Harmer',
-    designation: 'CEO and Founder',
+    altText: 'Mallios Panagiotis',
+    title: 'Mallios Panagiotis',
+    designation: ' Founder and CEO',
     socialProfile: [
       {
         id: 1,
@@ -42,10 +42,10 @@ const data = [
   },
   {
     id: 2,
-    imgSrc: Member2,
-    altText: 'Aaron Nunez',
-    title: 'Aaron Nunez',
-    designation: 'Founder',
+    imgSrc: Member4,
+    altText: 'Mouratiadis Anastasios',
+    title: 'Mouratiadis Anastasios',
+    designation: 'Co-Founder and CFO',
     socialProfile: [
       {
         id: 1,
@@ -70,9 +70,9 @@ const data = [
   {
     id: 3,
     imgSrc: Member3,
-    altText: 'Aaron Nunez',
-    title: 'Aaron Nunez',
-    designation: 'Web Designer',
+    altText: 'Fotoudi Maria',
+    title: 'Fotoudi Maria',
+    designation: 'Co-Founder and COO',
     socialProfile: [
       {
         id: 1,
@@ -94,12 +94,13 @@ const data = [
       },
     ],
   },
+
   {
     id: 4,
-    imgSrc: Member4,
-    altText: 'Lina Jutila',
-    title: 'Lina Jutila',
-    designation: 'Web Developer',
+    imgSrc: Member2,
+    altText: 'Paraskevoudis Dimos',
+    title: 'Paraskevoudis Dimos',
+    designation: 'Co-Founder and Head of Marketing',
     socialProfile: [
       {
         id: 1,
@@ -123,10 +124,10 @@ const data = [
   },
   {
     id: 5,
-    imgSrc: Member5,
-    altText: 'Saimon Harmer',
-    title: 'Saimon Harmer',
-    designation: 'CEO and Founder',
+    // imgSrc: Member5,
+    // altText: 'Saimon Harmer',
+    title: 'Coming Soon',
+    // designation: 'CEO and Founder',
     socialProfile: [
       {
         id: 1,
@@ -150,10 +151,10 @@ const data = [
   },
   {
     id: 6,
-    imgSrc: Member6,
-    altText: 'Aaron Nunez',
-    title: 'Aaron Nunez',
-    designation: 'Web Designer',
+    // imgSrc: Member6,
+    // altText: 'Aaron Nunez',
+    title: 'Coming Soon',
+    // designation: 'Web Designer',
     socialProfile: [
       {
         id: 1,

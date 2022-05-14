@@ -11,10 +11,10 @@ export default function Banner() {
       <Container sx={styles.banner.container}>
         <Box sx={styles.banner.contentBox}>
           <Heading as="h1" variant="heroPrimary">
-            Get new logistics tools fast and flexible!
+            TheBig4
           </Heading>
           <Text as="p" variant="heroSecondary">
-            Veniam deserunt duis id commodo officia do aliqua deserunt qui consequat.
+            Innovation through corporate governance excellence!
           </Text>
           <Button variant="primary">Explore</Button>
         </Box>

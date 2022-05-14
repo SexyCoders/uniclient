@@ -12,18 +12,18 @@ const data = [
   {
     id: 1,
     imgSrc: Performance,
-    altText: 'Fast Performance',
-    title: 'Fast Performance',
+    altText: 'Agile Methodology',
+    title: 'Agile Methodology',
     text:
-      'Let’s just get this out of the way - there will always be a kit version of Edu flow. Paid subscriptions allow us to continue helping learners around the world.',
+      'Using Agile methodology, we are able to deliver the best results for our clients.',
   },
   {
     id: 2,
     imgSrc: Partnership,
-    altText: 'Pro Subscription',
-    title: 'Pro Subscription',
+    altText: 'Continuous Integration/Continuous Delivery',
+    title: 'Continuous Integration/Continuous Delivery',
     text:
-      'We believe it’s important for everyone to have access to software – especially when it comes to digital learning be navigated by keyboard and screen readers.',
+      'Using CI/CD techniques, all our modules are built on top of our infrastructure, running tests and updating it as soon as possible.',
   },
   {
     id: 3,
@@ -31,15 +31,15 @@ const data = [
     altText: 'Partnership deal',
     title: 'Partnership deal',
     text:
-      'Let’s just get this out of the way - there will always be a kit version of Edu flow. Paid subscriptions allow us to continue helping learners around the world.',
+      'Work with us and we will provide you with the best support and support services.',
   },
   {
     id: 4,
     imgSrc: Support,
-    altText: 'Customer Support',
-    title: 'Customer Support',
+    altText: 'Contact Us',
+    title: 'Contact Us',
     text:
-      'We believe it’s important for everyone to have access to software – especially when it comes to digital learning be navigated by keyboard and screen readers.',
+      'Is there anything missing? Contact us and we will be happy to help you.',
   },
 ];
 
@@ -48,8 +48,8 @@ export default function Feature() {
     <section sx={{ variant: 'section.feature' }}>
       <Container>
         <SectionHeader
-          slogan="Quality features"
-          title="Amazing useful features"
+          slogan="Cloud-based platform"
+          title="An online, completely modular, company management platform, for anyone, anywhere!"
         />
 
         <Grid sx={styles.grid}>

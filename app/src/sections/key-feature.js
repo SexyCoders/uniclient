@@ -12,26 +12,26 @@ const data = [
   {
     id: 1,
     imgSrc: Performance,
-    altText: 'Fast Performance',
-    title: 'Fast Performance',
+    altText: 'Data Management',
+    title: 'Data Management',
     text:
-      'Cupidatat commodo est aliqua id esse aliqua ipsum pariatur esse sunt.',
+      "Optimizing/visualizing important data of the respecting business, keep all the data into a more centralized space.",
   },
   {
     id: 2,
     imgSrc: Partnership,
-    altText: 'Partnership deal',
-    title: 'Partnership deal',
+    altText: 'Software as a Service platform',
+    title: 'Software as a Service platform',
     text:
-      'Consequat aliquip amet sint nulla nostrud non exercitation pariatur.',
+      'A platform that allows to create small modules based on whatever technologies you want to use, deployed on our infrastructure, fast and simple.',
   },
   {
     id: 3,
     imgSrc: Subscription,
-    altText: 'Pro Subscription',
-    title: 'Pro Subscription',
+    altText: 'Payments tailored to your needs',
+    title: 'Payments tailored to your needs',
     text:
-      'Eiusmod duis est tempor et laboris magna nisi commodo dolor occaecat reprehenderit ex ut excepteur.',
+      'Pay as much as you want based on the needs of your organization, and we will provide you with the best support and support services.',
   },
   {
     id: 4,
@@ -39,7 +39,7 @@ const data = [
     altText: 'Customer Support',
     title: 'Customer Support',
     text:
-      'Enim velit ex do laboris in fugiat ut.',
+      'Send us feedback and we will try to improve our product and services for you.',
   },
 ];
 
@@ -49,7 +49,7 @@ export default function KeyFeature() {
       <Container>
         <SectionHeader
           slogan="Whats the function"
-          title="Meet the features of our products"
+          title="Meet the features of our company"
         />
 
         <Grid sx={styles.grid}>
