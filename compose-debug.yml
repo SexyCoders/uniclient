@@ -142,6 +142,15 @@ services:
       - 80
     networks:
       - master
+  homepage:
+    image: homepage
+    build:
+      context: ./var/homepage/app
+    container_name: homepage
+    expose:
+      - 80
+    networks:
+      - master
   base-module:
     image: base-module
     build:

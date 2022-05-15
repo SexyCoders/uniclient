@@ -8,8 +8,8 @@ services:
     volumes:
       - /data/sys/system-data/data:/var/lib/mysql
       - /data/sys/system-data/config:/etc/mysql
-    environment: 
-      MARIADB_ROOT_PASSWORD: mypass      
+    environment:
+      MARIADB_ROOT_PASSWORD: mypass
     expose:
       - 3306
     networks:
@@ -20,8 +20,8 @@ services:
     #container_name: mail-data
     #volumes:
       #- /data/sys/mail/database:/var/lib/mysql
-    #environment: 
-      #MARIADB_ROOT_PASSWORD: mypass      
+    #environment:
+      #MARIADB_ROOT_PASSWORD: mypass
     #expose:
       #- 3306
     #networks:
@@ -48,8 +48,8 @@ services:
     volumes:
       - /data/sys/datacenter/data:/var/lib/mysql
       - /data/sys/datacenter/config:/etc/mysql
-    environment: 
-      MARIADB_ROOT_PASSWORD: mypass      
+    environment:
+      MARIADB_ROOT_PASSWORD: mypass
     expose:
       - 3306
     networks:
@@ -127,6 +127,15 @@ services:
     build:
       context: ./var/www
     container_name: app
+    expose:
+      - 80
+    networks:
+      - master
+  homepage:
+    image: homepage
+    build:
+      context: ./var/homepage/app
+    container_name: homepage
     expose:
       - 80
     networks:
