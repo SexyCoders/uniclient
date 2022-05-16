@@ -28,10 +28,26 @@ const data = {
     {
       id: 1,
       imgSrc: Smart,
-      altText: 'Costumers',
-      title: 'Costumers',
+      altText: 'Customers',
+      title: 'Customers',
       text:
         'Manage your customers faster and better than ever!'
+    },
+    {
+      id: 2,
+      imgSrc: Smart,
+      altText: 'Storage Management',
+      title: 'Storage Management',
+      text:
+        'Manage your storage facilities with one click!'
+    },
+    {
+      id: 3,
+      imgSrc: Smart,
+      altText: 'Internal Management',
+      title: 'Internal Management',
+      text:
+        'Manage your company\'s internal management with our platform!'
     },
   ],
 };

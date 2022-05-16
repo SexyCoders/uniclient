@@ -71,7 +71,7 @@ const packages = {
         },
         {
           id: 4,
-          icon: <IoIosCloseCircle />,
+          icon: <IoIosCheckmarkCircle />,
           text: 'Basic Support',
           isAvailable: true,
         },
@@ -107,7 +107,7 @@ const packages = {
         },
         {
           id: 4,
-          icon: <IoIosCloseCircle />,
+          icon: <IoIosCheckmarkCircle />,
           text: 'Priority Support',
           isAvailable: true,
         },
@@ -142,7 +142,7 @@ const packages = {
         },
         {
           id: 4,
-          icon: <IoIosCloseCircle />,
+          icon: <IoIosCheckmarkCircle />,
           text: '24/7 Support',
           isAvailable: true,
         },
