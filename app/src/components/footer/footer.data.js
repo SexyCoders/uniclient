@@ -23,8 +23,12 @@ export default {
   ],
   menuItem: [
     {
-      path: '/',
-      label: 'Back to the top',
+      path: 'https://github.com/SexyCoders',
+      label: 'Github'
+    },
+    {
+      path: 'mailto:team@sexycoders.org',
+      label: 'Contact Us'
     }
   ],
 };

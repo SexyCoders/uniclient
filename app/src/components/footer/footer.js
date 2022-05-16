@@ -26,7 +26,7 @@ export default function Footer() {
           {/* <Link path="/">
             <Image src={FooterLogo} alt="Logo" />
           </Link> */}
-          {/* <Box sx={styles.footer.menus}>
+          <Box sx={styles.footer.menus}>
             <nav>
               {data.menuItem.map(({ path, label }, i) => (
                 <Link
@@ -37,7 +37,7 @@ export default function Footer() {
                 />
               ))}
             </nav>
-          </Box> */}
+          </Box>
           <Text sx={styles.footer.copyright}>
             © {new Date().getFullYear()} SexyCoders
           </Text>
