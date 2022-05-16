@@ -23,10 +23,10 @@ export default function Footer() {
         </Grid>
         {/* End of footer widgets area */}
         <Box sx={styles.footer.footerBottomArea}>
-          <Link path="/">
+          {/* <Link path="/">
             <Image src={FooterLogo} alt="Logo" />
-          </Link>
-          <Box sx={styles.footer.menus}>
+          </Link> */}
+          {/* <Box sx={styles.footer.menus}>
             <nav>
               {data.menuItem.map(({ path, label }, i) => (
                 <Link
@@ -37,9 +37,9 @@ export default function Footer() {
                 />
               ))}
             </nav>
-          </Box>
+          </Box> */}
           <Text sx={styles.footer.copyright}>
-            Copyright by {new Date().getFullYear()} RedQ, Inc
+            © {new Date().getFullYear()} SexyCoders
           </Text>
         </Box>
       </Container>

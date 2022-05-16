@@ -13,66 +13,66 @@ const packages = {
     {
       id: 1,
       name: 'Free Plan',
-      description: 'For Small teams or office',
-      buttonText: 'Start free trail',
+      description: '',
+      buttonText: 'Start',
       priceWithUnit: '$0',
       points: [
         {
           id: 1,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Drag & Drop Builder',
+          text: '1 user',
           isAvailable: true,
         },
         {
           id: 2,
           icon: <IoIosCheckmarkCircle />,
-          text: "1,000's of Templates",
+          text: "1 service",
           isAvailable: true,
         },
         {
           id: 3,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Blog Support Tools',
+          text: '5 entries/services',
           isAvailable: true,
         },
         {
           id: 4,
           icon: <IoIosCloseCircle />,
-          text: 'eCommerce Store ',
+          text: 'Basic Support',
           isAvailable: true,
         },
       ],
     },
     {
       id: 2,
-      name: 'Business king',
-      description: 'For Enterprise business',
-      priceWithUnit: '$15',
-      buttonText: 'Create account',
-      anotherOption: 'Or Start 14 Days trail',
+      name: 'Basic',
+      description: '',
+      priceWithUnit: '$26',
+      buttonText: 'Start',
+      anotherOption: '',
       points: [
         {
           id: 1,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Drag & Drop Builder',
+          text: '3 user',
           isAvailable: true,
         },
         {
           id: 2,
           icon: <IoIosCheckmarkCircle />,
-          text: "1,000's of Templates",
+          text: "5 service",
           isAvailable: true,
         },
         {
           id: 3,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Blog Support Tools',
+          text: '50 entries/services',
           isAvailable: true,
         },
         {
           id: 4,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'eCommerce Store ',
+          icon: <IoIosCloseCircle />,
+          text: 'Basic Support',
           isAvailable: true,
         },
       ],
@@ -81,139 +81,69 @@ const packages = {
       id: 3,
       header: 'Suggested',
       headerIcon: <IoIosCheckmarkCircle />,
-      name: 'Pro Master',
-      description: 'For pro level developers',
-      priceWithUnit: '$24',
-      buttonText: 'Create account',
-      anotherOption: 'Or Start 14 Days trail',
+      name: 'Premium',
+      description: '',
+      priceWithUnit: '$118',
+      buttonText: 'Start',
+      anotherOption: '',
       points: [
         {
           id: 1,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Drag & Drop Builder',
+          text: '15 user',
           isAvailable: true,
         },
         {
           id: 2,
           icon: <IoIosCheckmarkCircle />,
-          text: "1,000's of Templates",
+          text: "20 service",
           isAvailable: true,
         },
         {
           id: 3,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Blog Support Tools',
-          isAvailable: true,
-        },
-        {
-          id: 4,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'eCommerce Store ',
-          isAvailable: true,
-        },
-      ],
-    },
-  ],
-  annual: [
-    {
-      id: 1,
-      name: 'Free Plan',
-      description: 'For Small teams or office',
-      buttonText: 'Start free trail',
-      priceWithUnit: '$0',
-      points: [
-        {
-          id: 1,
-          icon: <IoIosCheckmarkCircle />,
-          text: "1,000's of Templates",
-          isAvailable: true,
-        },
-        {
-          id: 2,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'Drag & Drop Builder',
-          isAvailable: true,
-        },
-        {
-          id: 3,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'Blog Support Tools',
+          text: '5000 entries/services',
           isAvailable: true,
         },
         {
           id: 4,
           icon: <IoIosCloseCircle />,
-          text: 'eCommerce Store ',
+          text: 'Priority Support',
           isAvailable: true,
         },
       ],
     },
     {
-      id: 2,
-      name: 'Business king',
-      description: 'For Enterprise business',
-      priceWithUnit: '$25',
-      buttonText: 'Create account',
-      anotherOption: 'Or Start 10 Days trail',
-      points: [
-        {
-          id: 1,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'eCommerce Store',
-          isAvailable: true,
-        },
-        {
-          id: 2,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'Blog Support Tools',
-          isAvailable: true,
-        },
-        {
-          id: 3,
-          icon: <IoIosCheckmarkCircle />,
-          text: "1,000's of Templates",
-          isAvailable: true,
-        },
-        {
-          id: 4,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'Drag & Drop Builder ',
-          isAvailable: true,
-        },
-      ],
-    },
-    {
-      id: 3,
-      header: 'Suggested',
+      id: 4,
       headerIcon: <IoIosCheckmarkCircle />,
-      name: 'Pro Master',
-      description: 'For pro level developers',
-      priceWithUnit: '$39',
-      buttonText: 'Create account',
-      anotherOption: 'Or Start 10 Days trail',
+      name: 'Unlimited **',
+      description: '',
+      priceWithUnit: '$589',
+      buttonText: 'Start',
+      anotherOption: '',
       points: [
         {
           id: 1,
           icon: <IoIosCheckmarkCircle />,
-          text: 'eCommerce Store',
+          text: 'Unlimited user',
           isAvailable: true,
         },
         {
           id: 2,
           icon: <IoIosCheckmarkCircle />,
-          text: 'Blog Support Tools',
+          text: "Unlimited service",
           isAvailable: true,
         },
         {
           id: 3,
           icon: <IoIosCheckmarkCircle />,
-          text: "1,000's of Templates",
+          text: 'Unl. entries/services',
           isAvailable: true,
         },
         {
           id: 4,
-          icon: <IoIosCheckmarkCircle />,
-          text: 'Drag & Drop Builder ',
+          icon: <IoIosCloseCircle />,
+          text: '24/7 Support',
           isAvailable: true,
         },
       ],
@@ -224,7 +154,7 @@ const packages = {
 const responsive = {
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3,
+    items: 4,
     draggable: false,
   },
   tablet: {
@@ -292,38 +222,21 @@ export default function Package() {
           slogan="Pricing Plan"
           title="Choose your pricing policy"
         />
-        <Flex sx={styles.buttonGroup}>
-          <Box sx={styles.buttonGroupInner}>
-            <button
-              className={state.active === 'monthly' ? 'active' : ''}
-              type="button"
-              aria-label="Monthly"
-              onClick={() => handlePricingPlan('monthly')}
-            >
-              Monthly Plan
-            </button>
-            <button
-              className={state.active === 'annual' ? 'active' : ''}
-              type="button"
-              aria-label="Annual"
-              onClick={() => handlePricingPlan('annual')}
-            >
-              Annual Plan
-            </button>
-          </Box>
-        </Flex>
         <Box sx={styles.pricingWrapper} className="pricing__wrapper">
           <Carousel {...sliderParams}>
             {state.pricingPlan.map((packageData) => (
               <Box
-                sx={styles.pricingItem}
-                key={`${state.active}-card--key${packageData.id}`}
+              sx={styles.pricingItem}
+              key={`${state.active}-card--key${packageData.id}`}
               >
                 <PriceCard data={packageData} />
               </Box>
             ))}
           </Carousel>
         </Box>
+        <h3>If the above plans do not meet your needs please feel free to reach out to us and we will setup a custom plan!</h3>
+        <p>* The above are suggestions, NOT legally binding contracts! Please review your contract in full before signing! By signing - digitally or physically - and using this product, you are accepting all the contract terms as presented at the time of the signing!</p>
+        <p>** If your data volume on our servers exceeds 3TB we reserve the right to renegotiate the contract and/or terminate if no agreement is reached.</p>
       </Container>
     </section>
   );

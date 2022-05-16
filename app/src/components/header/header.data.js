@@ -11,8 +11,8 @@ export default [
     path: 'pricing',
     label: 'Pricing',
   },
-  {
-    path: 'testimonial',
-    label: 'About Us',
-  },
+  // {
+  //   path: 'testimonial',
+  //   label: 'About Us',
+  // },
 ];

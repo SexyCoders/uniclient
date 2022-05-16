@@ -6,49 +6,25 @@ export default {
   widgets: [
     {
       id: 1,
-      iconSrc: Chat,
-      altText: 'Community',
-      title: 'Join the Community',
-      description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiusmod tempor.',
-    },
-    {
-      id: 2,
       iconSrc: Community,
       altText: 'Chat',
       title: 'Chat Communication',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiusmod tempor.',
+        'team@sexycoders.org',
     },
     {
-      id: 3,
+      id: 2,
       iconSrc: Github,
       altText: 'Github',
       title: 'Github Access',
       description:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit sed eiusmod tempor.',
+        'https://github.com/SexyCoders',
     },
   ],
   menuItem: [
     {
       path: '/',
-      label: 'Home',
-    },
-    {
-      path: '/',
-      label: 'Adversite',
-    },
-    {
-      path: '/',
-      label: 'Supports',
-    },
-    {
-      path: '/',
-      label: 'Marketing',
-    },
-    {
-      path: '/',
-      label: 'Contact',
-    },
+      label: 'Back to the top',
+    }
   ],
 };
