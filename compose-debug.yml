@@ -11,12 +11,14 @@ services:
     networks:
       - master
   system-data-debug:
-    image: mariadb:10.3
+    image: system-data-debug
+    build:
+      context: ./debug/system-data-debug
     # user: 3000:3000
     container_name: system-data-debug
-    # volumes:
-    #   - ${HOME}/testing/system-data/data:/var/lib/mysql
-    #   - ${HOME}/testing/system-data/config:/etc/mysql
+    volumes:
+      - ${HOME}/testing/system-data/data:/var/lib/mysql
+      - ${HOME}/testing/system-data/config:/etc/mysql
     environment:
       MARIADB_ROOT_PASSWORD: mypass
     expose:
@@ -136,6 +138,15 @@ services:
     build:
       context: ./var/www
     container_name: app
+    expose:
+      - 80
+    networks:
+      - master
+  homepage:
+    image: homepage
+    build:
+      context: ./var/homepage/app
+    container_name: homepage
     expose:
       - 80
     networks:
