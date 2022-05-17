@@ -134,7 +134,7 @@ services:
   homepage:
     image: homepage
     build:
-      context: ./var/homepage/app
+      context: ./var/home
     container_name: homepage
     expose:
       - 80
