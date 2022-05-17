@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://startup-agency-modern.vercel.app
+
+# Sitemaps
+Sitemap: https://startup-agency-modern.vercel.app/sitemap.xml
