@@ -10,3 +10,6 @@
 [submodule "lib/data"]
 	path = lib/data
 	url = https://github.com/SexyCoders/lib.git
+[submodule "sc-home"]
+	path = sc-home
+	url = git@github.com:SexyCoders/homepage.git
