@@ -31,13 +31,14 @@ export default function Header({ className }) {
             ))}
           </Flex>
 
-          {/* <Button
+           <Button
             className="donate__btn"
             variant="secondary"
             aria-label="Get Started"
+             onClick={() => {window.open('https://www.sexycoders.org')}}
           >
-            Get Started
-          </Button> */}
+             SexyCoders
+          </Button> 
 
           <MobileDrawer />
         </Container>

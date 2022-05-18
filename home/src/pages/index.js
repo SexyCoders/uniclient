@@ -24,12 +24,12 @@ export default function IndexPage() {
           <SEO title="UniClient" />
           <Banner />
           <KeyFeature />
+          <Package />
           {/* <Feature /> */}
           <ServiceSection />
           {/* <CoreFeature /> */}
-          <TeamSection />
+          {/*<TeamSection />*/}
           {/* <WorkFlow /> */}
-          <Package />
           {/* <TestimonialCard /> */}
           {/* <BlogSection /> */}
           {/* <Subscribe /> */}
