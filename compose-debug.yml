@@ -147,6 +147,8 @@ services:
     build:
       context: ./home
     container_name: homepage
+    volumes:
+      - /data/source/home:/data
     expose:
       - 80
     networks:
@@ -156,6 +158,8 @@ services:
     build:
       context: ./sc-home
     container_name: sc-home
+    volumes:
+      - /data/source/sc-home:/data
     expose:
       - 80
     networks:
