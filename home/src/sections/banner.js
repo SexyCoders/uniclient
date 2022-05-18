@@ -11,17 +11,16 @@ export default function Banner() {
       <Container sx={styles.banner.container}>
         <Box sx={styles.banner.contentBox}>
           <Heading as="h1" variant="heroPrimary">
-            TheBig4
+            UniClient
           </Heading>
           <Text as="p" variant="heroSecondary">
             Innovation through corporate governance excellence!
           </Text>
-          <Button variant="primary">Explore</Button>
+          {/*<Button variant="primary">Explore</Button>*/}
         </Box>
-
-        <Box sx={styles.banner.imageBox}>
-          <Image src={BannerImg} alt="banner" />
-        </Box>
+        {/*<Box sx={styles.banner.imageBox}>*/}
+        {/*  <Image src={BannerImg} alt="banner" />*/}
+        {/*</Box>*/}
       </Container>
     </section>
   );
