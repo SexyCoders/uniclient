@@ -54,6 +54,24 @@ services:
       - 3306
     networks:
       - master
+  homepage:
+    image: homepage
+    build:
+      context: ./var/home
+    container_name: homepage
+    expose:
+      - 80
+    networks:
+      - master
+  sc-home:
+    image: sc-home
+    build:
+      context: ./var/sc-home
+    container_name: sc-home
+    expose:
+      - 80
+    networks:
+      - master
   #mail:
     #image: sexycoders/mailserver:2.2
     #container_name: mail
