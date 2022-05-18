@@ -14,7 +14,7 @@ export default function Banner() {
             UniClient
           </Heading>
           <Text as="p" variant="heroSecondary">
-            Innovation through corporate governance excellence!
+             An online, completely modular, company management platform, for anyone, anywhere!
           </Text>
           {/*<Button variant="primary">Explore</Button>*/}
         </Box>
