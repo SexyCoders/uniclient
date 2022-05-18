@@ -145,8 +145,17 @@ services:
   homepage:
     image: homepage
     build:
-      context: ./var/homepage/app
+      context: ./home
     container_name: homepage
+    expose:
+      - 80
+    networks:
+      - master
+  sc-home:
+    image: home
+    build:
+      context: ./sc-home
+    container_name: sc-home
     expose:
       - 80
     networks:
