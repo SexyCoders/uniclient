@@ -57,7 +57,7 @@ services:
   homepage:
     image: homepage
     build:
-      context: ./var/home
+      context: ./home
     container_name: homepage
     expose:
       - 80
@@ -66,7 +66,7 @@ services:
   sc-home:
     image: sc-home
     build:
-      context: ./var/sc-home
+      context: ./sc-home
     container_name: sc-home
     expose:
       - 80
