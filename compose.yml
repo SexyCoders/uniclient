@@ -60,7 +60,7 @@ services:
       context: ./home
     container_name: homepage
     volumes:
-      - /data/source/home:/data
+      - /data/source/home/out:/data
     expose:
       - 80
     networks:
