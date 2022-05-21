@@ -16,7 +16,7 @@ export default function Banner() {
           <Text as="p" variant="heroSecondary">
              An online, completely modular, company management platform, for anyone, anywhere!
           </Text>
-          {/*<Button variant="primary">Explore</Button>*/}
+          <Button variant="primary" onClick={() => {window.open('https://app.uniclient.org');}}>Explore</Button>
         </Box>
         {/*<Box sx={styles.banner.imageBox}>*/}
         {/*  <Image src={BannerImg} alt="banner" />*/}
