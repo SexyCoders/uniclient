@@ -124,6 +124,7 @@ services:
       - 443:443
     networks:
       - master
+      - gitea
   auth:
     image: auth
     build:
@@ -202,3 +203,6 @@ services:
 networks:
   master:
     name: master
+  gitea:
+    external:
+      name: git_gitea 
